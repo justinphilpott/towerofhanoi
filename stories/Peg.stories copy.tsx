@@ -1,6 +1,6 @@
 import React from "react";
 import { Story, Meta } from '@storybook/react/types-6-0';
-import { Peg, PegProps } from './Peg';
+import { Peg, PegProps } from '../components/Peg';
 
 export default {
   title: 'Tower of Hanoi peg',

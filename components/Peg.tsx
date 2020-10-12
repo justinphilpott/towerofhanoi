@@ -2,7 +2,7 @@ import React from "react";
 import { Disk } from "./Disk"
 
 export interface PegProps {
-  pegData: [number];
+  pegData: number[];
   pegWidth: number;
   diskSize: number;
 }
@@ -13,9 +13,7 @@ export interface PegProps {
 export const Peg: React.FC<PegProps> = ({ pegData, pegWidth, diskSize }) => (
   <>
     <ul>
-      {pegData.map((diskNumber: number) => {
-        return <Disk diskNumber={diskNumber} diskSize={diskSize} key={diskNumber} />;
-      })}
+      {pegData.map(diskNum => <Disk diskNumber={diskNum} diskSize={diskSize} key={diskNum} />)}
     </ul>
     <style jsx>{`
       ul {
