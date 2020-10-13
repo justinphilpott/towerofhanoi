@@ -2,7 +2,7 @@ import React, { MouseEvent } from 'react'
 import { Peg } from './Peg'
 
 export interface PuzzleProps {
-  initialState: number[][];
+  puzzleState: number[][];
 }
 
 /**
@@ -24,13 +24,12 @@ export interface PuzzleProps {
  *
  * @param {*} props
  */
-export const Puzzle: React.FC<PuzzleProps> = ({ initialState }) => {
+export const Puzzle: React.FC<PuzzleProps> = ({ puzzleState }) => {
 
-  const puzzleState = initialState;
 
-  const pegLengths: number[] = initialState.map((peg: number[]) => { return peg.length; })
+  const pegLengths: number[] = puzzleState.map((peg: number[]) => { return peg.length; })
   const numDisks: number = pegLengths.reduce((a, b) => { return a + b });
-  const numPegs = initialState.length;
+  const numPegs = puzzleState.length;
 
   const diskHeight = 32;
 
