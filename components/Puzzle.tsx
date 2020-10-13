@@ -18,6 +18,10 @@ export interface PuzzleProps {
  * - but good to be able to user contol and algo control in same wrapper...
  * - think...
  *
+ * what controls are needed?
+ * - reset to initialState
+ * - 
+ *
  * @param {*} props
  */
 export const Puzzle: React.FC<PuzzleProps> = ({ initialState }) => {
@@ -50,9 +54,9 @@ export const Puzzle: React.FC<PuzzleProps> = ({ initialState }) => {
     <>
       <button onClick={(event) => reset(event)}>reset</button>
       <button />
-      <div className="toh_puzzle" style={{ height: puzzleState.totalDisks * (diskHeight + 2), width: '600px', marginTop: '20px', borderBottom: '10px solid #cba', display: 'flex', flexDirection: 'row' }}>
+      <div className="toh_puzzle" style={{ height: numDisks * (diskHeight + 2), width: '600px', marginTop: '20px', borderBottom: '10px solid #cba', display: 'flex', flexDirection: 'row' }}>
         {
-          puzzleState.pegs.map((pegData) => {
+          puzzleState.map((pegData) => {
             return (
               <Peg pegData={pegData} pegWidth={pegWidth} diskSize={diskSize} />
             )
