@@ -3,7 +3,7 @@ import { Story, Meta } from '@storybook/react/types-6-0';
 import { Peg, PegProps } from '../components/Peg';
 
 export default {
-  title: 'Tower of Hanoi peg',
+  title: 'Peg',
   component: Peg,
 } as Meta;
 

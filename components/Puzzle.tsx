@@ -1,5 +1,9 @@
-import React from 'react'
+import React, { MouseEvent } from 'react'
 import { Peg } from './Peg'
+
+export interface PuzzleProps {
+  initialState: number[][];
+}
 
 /**
  * what does the puzzle need to know... state is maintained externally
@@ -7,49 +11,69 @@ import { Peg } from './Peg'
  * we need to feed in the puzzle state
  * as we are treating react here and just the view layer
  *
+ * xstate?
+ *
+ * - consider a puzzle as simple view
+ * - to be rendered either as game or as testbed
+ * - but good to be able to user contol and algo control in same wrapper...
+ * - think...
+ *
  * @param {*} props
  */
-export const ToHPuzzle = () => {
+export const Puzzle: React.FC<PuzzleProps> = ({ initialState }) => {
 
-    // input from puzzleStaten external game state store...
-    const puzzleState = {
-        pegs: [[3, 4, 5, 6, 7, 8, 9, 10], [1], [2]],
-        totalDisks: 10
-    };
+  const puzzleState = initialState;
 
-    const diskHeight = 32;
+  const pegLengths: number[] = initialState.map((peg: number[]) => { return peg.length; })
+  const numDisks: number = pegLengths.reduce((a, b) => { return a + b });
+  const numPegs = initialState.length;
 
-    const numPegs = puzzleState.pegs.length;
-    const diskSize = 16;
-    const pegWidth = 100;
+  const diskHeight = 32;
 
-    
-    /*
-    const moveDisk = (from, to) => {
-        // trigger two step move
+  const diskSize = 16;
+  const pegWidth = 100;
 
-    }
-    */
+  /*
+  const moveDisk = (from, to) => {
+      // trigger two step move
 
-    const reset = () => {
-        // trigger reset action dispatch
-//        , justifyContent: 'space-around', flexFlow: 'row wrap', alignItems: 'stretch'
-    }
+  }
+  */
 
-    return (
-        <>
-            <button onClick={reset()}>reset</button>
-            <button />
-            <div className="toh_puzzle" style={{ height: puzzleState.totalDisks*(diskHeight+2), width: '600px', marginTop: '20px', borderBottom: '10px solid #cba', display: 'flex', flexDirection: 'row' }}>
-                {
-                    puzzleState.pegs.map((pegData) => {
-                        return (
-                            <Peg pegData={pegData} pegWidth={pegWidth} diskSize={diskSize} />
-                        )
-                    })
-                }
-            </div>
-            <div className="info"><span>{}</span></div>
-        </>
-    );
+  const reset = (event: MouseEvent) => {
+    // trigger reset action dispatch
+    //        , justifyContent: 'space-around', flexFlow: 'row wrap', alignItems: 'stretch'
+    return false;
+  }
+
+  return (
+    <>
+      <button onClick={(event) => reset(event)}>reset</button>
+      <button />
+      <div className="toh_puzzle" style={{ height: puzzleState.totalDisks * (diskHeight + 2), width: '600px', marginTop: '20px', borderBottom: '10px solid #cba', display: 'flex', flexDirection: 'row' }}>
+        {
+          puzzleState.pegs.map((pegData) => {
+            return (
+              <Peg pegData={pegData} pegWidth={pegWidth} diskSize={diskSize} />
+            )
+          })
+        }
+      </div>
+      <div className="info"><span>{}</span></div>
+      <style jsx>{`
+                  ul {
+                      border: 1px solid #aaaaaa;
+                      width: ${pegWidth}px;
+                      list-style: none;
+                      margin: 0;
+                      padding: 0;
+                      display: flex;
+                      flex-grow: 1;
+                      flex-direction: column;
+                      justify-content: flex-end;
+                      align-items: center;
+                  }
+              `}</style>
+    </>
+  );
 }
