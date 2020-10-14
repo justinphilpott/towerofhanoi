@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react'
+import React, { useState, MouseEvent } from 'react'
 import { Peg } from './Peg'
 
 export interface PuzzleProps {
@@ -36,6 +36,9 @@ export const Puzzle: React.FC<PuzzleProps> = ({ puzzleState }) => {
   const diskSize = 16;
   const pegWidth = 100;
 
+  const [selectedDisk, setSelectedDisk] = useState(1);
+
+
   /*
   const moveDisk = (from, to) => {
       // trigger two step move
@@ -51,9 +54,9 @@ export const Puzzle: React.FC<PuzzleProps> = ({ puzzleState }) => {
 
   return (
     <>
-      <button onClick={(event) => reset(event)}>reset</button>
-      <button />
-      <div className="toh_puzzle" style={{ height: numDisks * (diskHeight + 2), width: '600px', marginTop: '20px', borderBottom: '10px solid #cba', display: 'flex', flexDirection: 'row' }}>
+      {/*<button onClick={(event) => reset(event)}>reset</button>
+      <button />*/}
+      <div className="toh_puzzle">
         {
           puzzleState.map((pegData) => {
             return (
@@ -64,19 +67,14 @@ export const Puzzle: React.FC<PuzzleProps> = ({ puzzleState }) => {
       </div>
       <div className="info"><span>{}</span></div>
       <style jsx>{`
-                  ul {
-                      border: 1px solid #aaaaaa;
-                      width: ${pegWidth}px;
-                      list-style: none;
-                      margin: 0;
-                      padding: 0;
-                      display: flex;
-                      flex-grow: 1;
-                      flex-direction: column;
-                      justify-content: flex-end;
-                      align-items: center;
-                  }
-              `}</style>
+        .toh_puzzle {
+          height: numDisks * (diskHeight + 2);
+          margin-top: 20px;
+          border-bottom: 10px solid #cba;
+          display: flex;
+          flex-direction: row;
+        }
+      `}</style>
     </>
   );
 }

@@ -9,9 +9,9 @@ export default {
 
 const Template: Story<DiskProps> = (args) => <Disk {...args} />;
 
-export const Default1 = Template.bind({});
-Default1.args = {
-  diskNumber: 10,
+export const std = Template.bind({});
+std.args = {
+  diskNumber: 1,
   diskSize: 30
 };
 

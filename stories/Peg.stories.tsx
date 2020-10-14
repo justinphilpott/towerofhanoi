@@ -12,6 +12,6 @@ const Template: Story<PegProps> = (args) => <Peg {...args} />;
 export const Default1 = Template.bind({});
 Default1.args = {
   pegData: [1, 2, 3, 4, 5, 6, 7],
-  pegWidth: 100,
+  pegWidth: 500,
   diskSize: 30
 };

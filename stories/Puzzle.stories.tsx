@@ -11,5 +11,5 @@ const Template: Story<PuzzleProps> = (args) => <Puzzle {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  initialState: [[1, 2, 3, 4, 5, 6, 7], [8], [9]]
+  puzzleState: [[1, 2, 3, 4, 5, 6, 7], [8], [9]]
 };
