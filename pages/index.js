@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import { Puzzle } from '../components/Puzzle'
 
 export default function Home() {
   return (
@@ -47,6 +48,8 @@ export default function Home() {
               Instantly deploy your Next.js site to a public URL with Vercel.
             </p>
           </a>
+
+          <Puzzle puzzleState={[[1, 2, 3], [], []]} />
         </div>
       </main>
 

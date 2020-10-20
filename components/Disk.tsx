@@ -18,7 +18,7 @@ export const Disk: React.FC<DiskProps> = ({ diskNumber, diskSize }) => {
     <>
       <li
         className={ selected ? 'disk disk-selected' : 'disk disk-unselected' }
-        style={{ width: ((diskNumber * diskSize)+20) +'px' }}
+        style={{ width: ((diskNumber * diskSize)+48) +'px' }}
         onClick={(event) => handleDiskClick(event)}
         key={diskNumber}>
         <span>{diskNumber} {/*{diskSize} { selected ? 'true' : 'false' } */}</span>
@@ -26,35 +26,26 @@ export const Disk: React.FC<DiskProps> = ({ diskNumber, diskSize }) => {
       <style jsx>{`
         li.disk {
           display: flex;
-
           height: 32px;
-
-
-          border-top: 1px solid #96d1f8;
-
-          background: -webkit-gradient(linear, left top, left bottom, from(#b3cce4), to(#81a3c5));
-          background: -webkit-linear-gradient(top, #b3cce4, #81a3c5);
-          background: -moz-linear-gradient(top, #b3cce4, #81a3c5);
-          background: -ms-linear-gradient(top, #b3cce4, #81a3c5);
-          background: -o-linear-gradient(top, #b3cce4, #81a3c5);
-          -webkit-border-radius: 10px;
-          -moz-border-radius: 10px;
-          border-radius: 10px;
-
+          -webkit-border-radius: 16px;
+          -moz-border-radius: 16px;
+          border-radius: 16px;
           color: black;
           margin: 0;
           align-items: center;
           justify-content: center;
-          border-top: 1px solid rgb(183, 212, 236);
           border-bottom: 0px;
+          user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+        }
+
+        li.disk-unselected {
+          background: linear-gradient(#b3cce4, #81a3c5);
         }
         li.disk-selected {
-          background-color: rgb(172, 137, 92);
-        }
-        li.disk-unselected {
-          background-color: rgb(255, 187, 97);
+          background: linear-gradient(#8da3b8, #5b7692);
         }
       `}</style>
     </>
   );
 };
+export { Disk as Default }

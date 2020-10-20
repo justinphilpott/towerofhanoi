@@ -4,12 +4,26 @@ import { Puzzle, PuzzleProps } from '../components/Puzzle';
 
 export default {
   title: 'Puzzle',
-  component: Puzzle,
+  component: Puzzle
 } as Meta;
 
 const Template: Story<PuzzleProps> = (args) => <Puzzle {...args} />;
 
-export const Default = Template.bind({});
-Default.args = {
-  puzzleState: [[1, 2, 3, 4, 5, 6, 7], [8], [9]]
+export const TowersOfHanoi = Template.bind({});
+TowersOfHanoi.args = {
+  puzzleState: [[1, 2, 3, 4, 5, 6, 7], [], []]
+};
+export const TowersOfHanoiMidGame = Template.bind({});
+TowersOfHanoiMidGame.args = {
+  puzzleState: [[ 5, 6, 7], [4], [1, 2, 3]],
+};
+
+
+export const RevesPuzzle = Template.bind({});
+RevesPuzzle.args = {
+  puzzleState: [[1, 2, 3, 4, 5, 6, 7], [], [], []],
+};
+export const RevesMidGame = Template.bind({});
+RevesMidGame.args = {
+  puzzleState: [[5, 6, 7], [1], [2, 3], [4]],
 };

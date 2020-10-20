@@ -29,7 +29,7 @@ export const Puzzle: React.FC<PuzzleProps> = ({ puzzleState }) => {
 
   const pegLengths: number[] = puzzleState.map((peg: number[]) => { return peg.length; })
   const numDisks: number = pegLengths.reduce((a, b) => { return a + b });
-  const numPegs = puzzleState.length;
+  {/*const numPegs = puzzleState.length;*/}
 
   const diskHeight = 32;
 
@@ -68,9 +68,9 @@ export const Puzzle: React.FC<PuzzleProps> = ({ puzzleState }) => {
       <div className="info"><span>{}</span></div>
       <style jsx>{`
         .toh_puzzle {
-          height: numDisks * (diskHeight + 2);
+          height: ${(numDisks+1) * diskHeight}px;
           margin-top: 20px;
-          border-bottom: 10px solid #cba;
+          border-bottom: 16px solid #cba;
           display: flex;
           flex-direction: row;
         }
@@ -78,3 +78,4 @@ export const Puzzle: React.FC<PuzzleProps> = ({ puzzleState }) => {
     </>
   );
 }
+
