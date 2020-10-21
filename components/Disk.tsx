@@ -24,13 +24,14 @@ export const Disk: React.FC<DiskProps> = ({ diskNumber, diskSize }) => {
         <span>{diskNumber} {/*{diskSize} { selected ? 'true' : 'false' } */}</span>
       </li>
       <style jsx>{`
+        $color: purple;
         li.disk {
           display: flex;
           height: 32px;
           -webkit-border-radius: 16px;
           -moz-border-radius: 16px;
           border-radius: 16px;
-          color: black;
+          color: $color;
           margin: 0;
           align-items: center;
           justify-content: center;

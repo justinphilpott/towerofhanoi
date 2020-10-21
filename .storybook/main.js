@@ -9,10 +9,5 @@ module.exports = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/preset-scss"
-  ],
-  "babel": {
-    "plugins": [
-      "styled-jsx/babel"
-    ]
-  }
+  ]
 }
