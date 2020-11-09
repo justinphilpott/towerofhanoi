@@ -15,7 +15,7 @@ TowersOfHanoi.args = {
 };
 export const TowersOfHanoiMidGame = Template.bind({});
 TowersOfHanoiMidGame.args = {
-  puzzleState: [[ 5, 6, 7], [4], [1, 2, 3]],
+  puzzleState: [[1], [2], [3]],
 };
 
 

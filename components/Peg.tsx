@@ -2,29 +2,33 @@ import React from "react";
 import { Disk } from "./Disk"
 
 export interface PegProps {
-  pegData: number[];
-  pegWidth: number;
+  pegDiscs: number[];
   diskSize: number;
+  numPegs: number;
 }
 
 /**
  * @param {*} props
- * 
+ *
  * knowledge of which peg has been clicked and which is therefore active, must be done at the peg level, and then also
  * at the puzzle level...
- * 
+ *
  * or! let the peg simply be active... and choose whichever is the top disk to be the active disk... 
  * then disks don't need a click handler... possibly...
- * 
+ *
+ * @todo find how to pass methods... usereducer, useMethods? try that...
  */
-export const Peg: React.FC<PegProps> = ({ pegData, pegWidth, diskSize }: any) => (
-  <>
+export const Peg = ({ pegDiscs, numPegs, diskSize }: PegProps) => {
+
+  
+
+  return (<>
     <ul className={'peg'}>
-      {pegData.map((diskNum: number) => <Disk diskNumber={diskNum} diskSize={diskSize} key={diskNum} />)}
+      {pegDiscs.map((diskNum: number) => <Disk diskNumber={diskNum} diskSize={diskSize} key={diskNum} />)}
     </ul>
     <style jsx>{`
       ul.peg {
-        width: ${pegWidth}px;
+        flex-basis: calc(100%/${numPegs});
       }
     `}</style>
     <style jsx>{`
@@ -58,6 +62,6 @@ export const Peg: React.FC<PegProps> = ({ pegData, pegWidth, diskSize }: any) =>
           ) 1 100%;
             }
           `}</style>
-  </>
-);
+  </>)
+}
 export { Peg as default }

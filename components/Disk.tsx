@@ -6,13 +6,17 @@ export interface DiskProps {
   key: number;
 }
 
-export const Disk: React.FC<DiskProps> = ({ diskNumber, diskSize }) => {
+export const Disk = ({ diskNumber, diskSize }: DiskProps) => {
 
   const [selected, setSelected] = useState(false);
 
   const handleDiskClick = (event: MouseEvent) => {
+
+
     setSelected(!selected);
   };
+
+  // fire a callback (or method?)
 
   return (
     <>
@@ -24,7 +28,7 @@ export const Disk: React.FC<DiskProps> = ({ diskNumber, diskSize }) => {
         <span>{diskNumber} {/*{diskSize} { selected ? 'true' : 'false' } */}</span>
       </li>
       <style jsx>{`
-        $color: purple;
+        $color: black;
         li.disk {
           display: flex;
           height: 32px;

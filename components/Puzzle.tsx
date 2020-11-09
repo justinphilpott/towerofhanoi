@@ -1,5 +1,6 @@
 import React, { useState, MouseEvent } from 'react'
 import { Peg } from './Peg'
+import useMethods from 'use-methods';
 
 export interface PuzzleProps {
   puzzleState: number[][];
@@ -24,33 +25,24 @@ export interface PuzzleProps {
  *
  * @param {*} props
  */
-export const Puzzle: React.FC<PuzzleProps> = ({ puzzleState }) => {
-
+export const Puzzle = ({ puzzleState }: PuzzleProps) => {
 
   const pegLengths: number[] = puzzleState.map((peg: number[]) => { return peg.length; })
   const numDisks: number = pegLengths.reduce((a, b) => { return a + b });
-  {/*const numPegs = puzzleState.length;*/}
+  const numPegs = puzzleState.length;
 
   const diskHeight = 32;
-
   const diskSize = 16;
-  const pegWidth = 100;
-
-  const [selectedDisk, setSelectedDisk] = useState(1);
 
 
-  /*
-  const moveDisk = (from, to) => {
-      // trigger two step move
 
-  }
-  */
+  const [
+    { state }, // <- latest state
+    { reset, selectDisk }, // <- callbacks for modifying state
+  ] = useMethods(methods, puzzleState);
 
-  const reset = (event: MouseEvent) => {
-    // trigger reset action dispatch
-    //        , justifyContent: 'space-around', flexFlow: 'row wrap', alignItems: 'stretch'
-    return false;
-  }
+
+
 
   return (
     <>
@@ -58,18 +50,19 @@ export const Puzzle: React.FC<PuzzleProps> = ({ puzzleState }) => {
       <button />*/}
       <div className="toh_puzzle">
         {
-          puzzleState.map((pegData) => {
+          puzzleState.map((pegDiscs) => {
             return (
-              <Peg pegData={pegData} pegWidth={pegWidth} diskSize={diskSize} />
+              <Peg pegDiscs={pegDiscs} numPegs={numPegs} diskSize={diskSize} />
             )
           })
         }
       </div>
-      <div className="info"><span>{}</span></div>
+      <div className="info"><span></span></div>
+      <div className="controls"><span>Reset </span></div>
       <style jsx>{`
         .toh_puzzle {
           height: ${(numDisks+1) * diskHeight}px;
-          margin-top: 20px;
+          margin: 40px;
           border-bottom: 16px solid #cba;
           display: flex;
           flex-direction: row;
@@ -79,3 +72,20 @@ export const Puzzle: React.FC<PuzzleProps> = ({ puzzleState }) => {
   );
 }
 
+const methods = state => ({
+  reset(event: MouseEvent) {
+    return initialState;
+  },
+  selectDisk() {
+
+
+    state.count++;
+  },
+  goBack() {
+    // this needs to be a pointer to an array that saves moves
+
+  },
+  goForward() {
+
+  }
+});
