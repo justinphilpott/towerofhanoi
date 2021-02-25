@@ -16,7 +16,7 @@ export const Disk = ({ diskNumber, diskSize }: DiskProps) => {
     setSelected(!selected);
   };
 
-  // fire a callback (or method?)
+  // fire a callback (or method?) on selection to get the puzzle to 
 
   return (
     <>

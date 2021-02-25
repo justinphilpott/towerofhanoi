@@ -21,7 +21,7 @@ export interface PuzzleProps {
  *
  * what controls are needed?
  * - reset to initialState
- * - 
+ * -
  *
  * @param {*} props
  */
@@ -33,13 +33,6 @@ export const Puzzle = ({ puzzleState }: PuzzleProps) => {
 
   const diskHeight = 32;
   const diskSize = 16;
-
-
-
-  const [
-    { state }, // <- latest state
-    { reset, selectDisk }, // <- callbacks for modifying state
-  ] = useMethods(methods, puzzleState);
 
 
 
@@ -57,8 +50,12 @@ export const Puzzle = ({ puzzleState }: PuzzleProps) => {
           })
         }
       </div>
-      <div className="info"><span></span></div>
-      <div className="controls"><span>Reset </span></div>
+      <div className="info">
+        <span></span>
+        </div>
+      <div className="controls">
+        <span>Reset </span>
+      </div>
       <style jsx>{`
         .toh_puzzle {
           height: ${(numDisks+1) * diskHeight}px;
