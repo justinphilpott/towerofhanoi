@@ -52,9 +52,6 @@ export const Puzzle = ({ puzzleState }: PuzzleProps) => {
       </div>
       <div className="info">
         <span></span>
-        </div>
-      <div className="controls">
-        <span>Reset </span>
       </div>
       <style jsx>{`
         .toh_puzzle {
@@ -63,6 +60,7 @@ export const Puzzle = ({ puzzleState }: PuzzleProps) => {
           border-bottom: 16px solid #cba;
           display: flex;
           flex-direction: row;
+          flex-basis: auto;
         }
       `}</style>
     </>

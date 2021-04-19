@@ -32,9 +32,9 @@ export const Disk = ({ diskNumber, diskSize }: DiskProps) => {
         li.disk {
           display: flex;
           height: 32px;
-          -webkit-border-radius: 16px;
-          -moz-border-radius: 16px;
-          border-radius: 16px;
+          -webkit-border-radius: 2px;
+          -moz-border-radius: 2px;
+          border-radius: 2px;
           color: $color;
           margin: 0;
           align-items: center;
