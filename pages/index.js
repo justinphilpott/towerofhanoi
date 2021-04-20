@@ -10,12 +10,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-
-        <div>
-          <Puzzle puzzleState={[[1, 2, 3, 4], [5, 6], [7]]} />
-        </div>
-      </main>
+      <div className={styles.main}>
+        <Puzzle puzzleState={[[1, 2, 3, 4, 5, 6, 7], [], []]} />
+      </div>
     </div>
   )
 }

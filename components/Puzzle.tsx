@@ -41,26 +41,24 @@ export const Puzzle = ({ puzzleState }: PuzzleProps) => {
     <>
       {/*<button onClick={(event) => reset(event)}>reset</button>
       <button />*/}
-      <div className="toh_puzzle">
+      <div className="puzzle">
         {
-          puzzleState.map((pegDiscs) => {
+          puzzleState.map((pegDiscs: Array<number>, index) => {
             return (
-              <Peg pegDiscs={pegDiscs} numPegs={numPegs} diskSize={diskSize} />
+              <Peg pegDiscs={pegDiscs} numPegs={numPegs} diskSize={diskSize} key={index} />
             )
           })
         }
       </div>
-      <div className="info">
-        <span></span>
-      </div>
       <style jsx>{`
-        .toh_puzzle {
+        .puzzle {
           height: ${(numDisks+1) * diskHeight}px;
-          margin: 40px;
-          border-bottom: 16px solid #cba;
           display: flex;
           flex-direction: row;
-          flex-basis: auto;
+          justify-content: center;
+          width: 100%;
+          padding-left: 10%;
+          padding-right: 10%;
         }
       `}</style>
     </>

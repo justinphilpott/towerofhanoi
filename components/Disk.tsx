@@ -17,37 +17,38 @@ export const Disk = ({ diskNumber, diskSize }: DiskProps) => {
   };
 
   // fire a callback (or method?) on selection to get the puzzle to 
+  // style={{ width: ((diskNumber * diskSize)+48) +'px' }}
 
   return (
     <>
       <li
         className={ selected ? 'disk disk-selected' : 'disk disk-unselected' }
-        style={{ width: ((diskNumber * diskSize)+48) +'px' }}
         onClick={(event) => handleDiskClick(event)}
-        key={diskNumber}>
+        key={diskNumber.toString()}>
         <span>{diskNumber} {/*{diskSize} { selected ? 'true' : 'false' } */}</span>
       </li>
       <style jsx>{`
         $color: black;
         li.disk {
-          display: flex;
           height: 32px;
-          -webkit-border-radius: 2px;
-          -moz-border-radius: 2px;
-          border-radius: 2px;
+          -webkit-border-radius: 4px;
+          -moz-border-radius: 4px;
+          border-radius: 4px;
           color: $color;
           margin: 0;
-          align-items: center;
-          justify-content: center;
           border-bottom: 0px;
           user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+          width: calc(80% - ${diskNumber/10}px);
+          justify-content: center;
+          align-items: center;
+          display: flex;
         }
 
         li.disk-unselected {
-          background: linear-gradient(#b3cce4, #81a3c5);
+          background: linear-gradient(to right, #81a3c5 0%, #b3cce4 20%, #d8f2fa 20.5%, #b3cce4 21%, #536c84 60%, #334c64 80%, #536c84 90%, #7193b5 100%);
         }
         li.disk-selected {
-          background: linear-gradient(#8da3b8, #5b7692);
+          background: linear-gradient(to right, #b3cce4, #81a3c5);
         }
       `}</style>
     </>

@@ -20,48 +20,41 @@ export interface PegProps {
  */
 export const Peg = ({ pegDiscs, numPegs, diskSize }: PegProps) => {
 
-  
-
   return (<>
-    <ul className={'peg'}>
+    <ul className="peg">
       {pegDiscs.map((diskNum: number) => <Disk diskNumber={diskNum} diskSize={diskSize} key={diskNum} />)}
     </ul>
     <style jsx>{`
       ul.peg {
-        flex-basis: calc(100%/${numPegs});
-      }
-    `}</style>
-    <style jsx>{`
-      ul.peg {
+        flex: 1 0 auto;
+        border-bottom: 16px solid #cba;
         list-style: none;
         margin: 0;
         padding: 0;
-        padding-top: 32px;
-        display: flex;
-        flex-grow: 1;
+        display: inline-flex;
         flex-direction: column;
         justify-content: flex-end;
         align-items: center;
         position: relative;
       }
       ul.peg:after {
-        content:"";
+        content: "";
         position: absolute;
         z-index: -1;
         top: 0;
         bottom: 0;
         left: 50%;
-        border-left: 6px solid #cba;
+        border-left: 10px solid #cba;
         transform: translate(-50%);
         border-image:
           linear-gradient(
             to right,
-            #cba,
-            rgba(0, 0, 0, 0),
-            #cba
+            #876 0%,
+            #dcb 25%,
+            #765 100%,
           ) 1 100%;
-            }
-          `}</style>
+        }
+      `}</style>
   </>)
 }
 export { Peg as default }
