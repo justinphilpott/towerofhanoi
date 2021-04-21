@@ -17,7 +17,8 @@
     "next": "9.5.4",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "use-methods": "^0.5.1"
+    "use-methods": "^0.5.1",
+    "use-sound": "^2.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",

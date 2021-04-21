@@ -11,7 +11,7 @@ export default function Home() {
       </Head>
 
       <div className={styles.main}>
-        <Puzzle puzzleState={[[1, 2, 3, 4, 5, 6, 7], [8], [9]]} />
+        <Puzzle puzzleState={[[1, 2, 3, 4, 5, 6, 7], [], []]} />
       </div>
     </div>
   )

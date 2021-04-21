@@ -26,16 +26,23 @@ export const Peg = ({ pegDiscs, numPegs, diskSize }: PegProps) => {
     </ul>
     <style jsx>{`
       ul.peg {
-        flex: 1 0 auto;
-        border-bottom: 16px solid #cba;
+
         list-style: none;
         margin: 0;
-        padding: 0;
-        display: inline-flex;
+        padding: 32px 0 0;
+        display: flex;
         flex-direction: column;
         justify-content: flex-end;
         align-items: center;
         position: relative;
+        flex: 0 0 ${
+          numPegs === 3 ? '300px' :
+          numPegs === 4 ? '230px' :
+          numPegs === 5 ? '180px' : '180px'         
+          };
+        border-bottom: 20px solid #000;
+        border-image:
+          linear-gradient(to bottom, #738ca4 0%, #eee 100%) 100% 0;
       }
       ul.peg:after {
         content: "";
@@ -54,7 +61,7 @@ export const Peg = ({ pegDiscs, numPegs, diskSize }: PegProps) => {
             rgb(201, 201, 201) 25%,
             rgb(94, 94, 94) 100%,
           ) 1 100%;
-        }
+      }
       `}</style>
   </>)
 }

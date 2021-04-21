@@ -43,16 +43,13 @@ export const Puzzle = ({ puzzleState }: PuzzleProps) => {
       <button />*/}
       <div className="puzzle">
         {
-          puzzleState.map((pegDiscs: Array<number>, index) => {
-            return (
-              <Peg pegDiscs={pegDiscs} numPegs={numPegs} diskSize={diskSize} key={index} />
-            )
-          })
+          puzzleState.map((pegDiscs: Array<number>, index) => 
+            <Peg pegDiscs={pegDiscs} numPegs={numPegs} diskSize={diskSize} key={index} />
+          )
         }
       </div>
       <style jsx>{`
         .puzzle {
-          height: ${(numDisks+1) * diskHeight}px;
           display: flex;
           flex-direction: row;
           justify-content: center;
