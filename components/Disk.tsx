@@ -31,14 +31,14 @@ export const Disk = ({ diskNumber, diskSize }: DiskProps) => {
         $color: black;
         li.disk {
           height: 32px;
-          -webkit-border-radius: 4px;
-          -moz-border-radius: 4px;
-          border-radius: 4px;
+          -webkit-border-radius: 10%;
+          -moz-border-radius: 10%;
+          border-radius: 10%;
           color: $color;
           margin: 0;
           border-bottom: 0px;
           user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
-          width: calc(80% - ${diskNumber/10}px);
+          width: ${(diskNumber+5)*20}px;
           justify-content: center;
           align-items: center;
           display: flex;

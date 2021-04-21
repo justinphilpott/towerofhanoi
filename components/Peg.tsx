@@ -45,13 +45,14 @@ export const Peg = ({ pegDiscs, numPegs, diskSize }: PegProps) => {
         bottom: 0;
         left: 50%;
         border-left: 10px solid #cba;
+        border-radius: 50%;
         transform: translate(-50%);
         border-image:
           linear-gradient(
             to right,
-            #876 0%,
-            #dcb 25%,
-            #765 100%,
+            rgb(181, 181, 181) 0%,
+            rgb(201, 201, 201) 25%,
+            rgb(94, 94, 94) 100%,
           ) 1 100%;
         }
       `}</style>
