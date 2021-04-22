@@ -1,10 +1,24 @@
 import React, { useState, MouseEvent } from 'react'
 import { Peg } from './Peg'
-import useMethods from 'use-methods';
 
+
+/*
 export interface PuzzleProps {
-  puzzleState: number[][];
+  puzzleState: {
+    towers: number[][],
+    activePeg: number
+  ];
 }
+
+interface PuzzleState {
+
+}
+
+interface Peg {
+
+}
+
+*/
 
 /**
  * what does the puzzle need to know... state is maintained externally
@@ -25,26 +39,23 @@ export interface PuzzleProps {
  *
  * @param {*} props
  */
-export const Puzzle = ({ puzzleState }: PuzzleProps) => {
+export const Puzzle = ({ puzzleState }) => {
 
-  const pegLengths: number[] = puzzleState.map((peg: number[]) => { return peg.length; })
+  const pegLengths: number[] = puzzleState.towers.map((peg: number[]) => { return peg.length; })
   const numDisks: number = pegLengths.reduce((a, b) => { return a + b });
-  const numPegs = puzzleState.length;
+  const numPegs: number = puzzleState.towers.length;
 
   const diskHeight = 32;
   const diskSize = 16;
 
-
-
+  const selected = puzzleState.activePeg;
 
   return (
     <>
-      {/*<button onClick={(event) => reset(event)}>reset</button>
-      <button />*/}
       <div className="puzzle">
         {
-          puzzleState.map((pegDiscs: Array<number>, index) => 
-            <Peg pegDiscs={pegDiscs} numPegs={numPegs} diskSize={diskSize} key={index} />
+          puzzleState.towers.map((pegDiscs: Array<number>, index: number) => 
+            <Peg pegDiscs={pegDiscs} numPegs={numPegs} diskSize={diskSize} key={index} selected={selected === index} pegNum={index} />
           )
         }
       </div>
@@ -61,21 +72,3 @@ export const Puzzle = ({ puzzleState }: PuzzleProps) => {
     </>
   );
 }
-
-const methods = state => ({
-  reset(event: MouseEvent) {
-    return initialState;
-  },
-  selectDisk() {
-
-
-    state.count++;
-  },
-  goBack() {
-    // this needs to be a pointer to an array that saves moves
-
-  },
-  goForward() {
-
-  }
-});

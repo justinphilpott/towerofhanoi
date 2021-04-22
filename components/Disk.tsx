@@ -9,6 +9,10 @@ export interface DiskProps {
 
 export const Disk = ({ diskNumber, diskSize, selected }: DiskProps) => {
 
+  const diskClickHandler = (event: MouseEvent) => {
+    console.log(event);
+  }
+
   return (
     <>
       <li
@@ -19,6 +23,7 @@ export const Disk = ({ diskNumber, diskSize, selected }: DiskProps) => {
       <style jsx>{`
         $color: black;
         li.disk {
+          z-index: 2;
           height: 32px;
           border-radius: 10%;
           color: $color;
@@ -29,7 +34,10 @@ export const Disk = ({ diskNumber, diskSize, selected }: DiskProps) => {
           justify-content: center;
           align-items: center;
           display: flex;
-          background: linear-gradient(to right, #81a3c5 0%, #b3cce4 20%, #d8f2fa 20.5%, #b3cce4 21%, #536c84 60%, #334c64 80%, #536c84 90%, #7193b5 100%);
+          background: linear-gradient(to right, #cfbb4b 0%, #e9ce56 20%, #fde86e 20.5%, #ebd55a 21%, #837527 60%, #615618 80%, #867d29 90%, #b6ad36 100%);
+        }
+        li.disk:first-child {
+          color: ${ selected ? '#fff' : '#000' };
         }
       `}</style>
     </>
