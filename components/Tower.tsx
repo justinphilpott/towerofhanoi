@@ -1,39 +1,34 @@
 import React, { MouseEvent } from "react";
 import { Disk } from "./Disk"
 
-export interface PegProps {
-  pegDiscs: number[];
+export interface TowerProps {
+  towerDiscs: number[];
   diskSize: number;
-  numPegs: number;
+  numTowers: number;
   selected: boolean;
-  pegNum: number;
+  towerNum: number;
 }
 
 /**
  * @param {*} props
- *
- * knowledge of which peg has been clicked and which is therefore active, must be done at the peg level, and then also
- * at the puzzle level...
- *
- * or! let the peg simply be active... and choose whichever is the top disk to be the active disk...
- * then disks don't need a click handler... possibly...
- *
+ * 
  * @todo find how to pass methods... usereducer, useMethods? try that...
  */
-export const Peg = ({ pegDiscs, numPegs, diskSize, selected, pegNum }: PegProps) => {
+export const Tower = ({ towerDiscs, numTowers, diskSize, selected, towerNum, send }: TowerProps) => {
 
-  const pegClickHandler = (index: number) => {
-    console.log('call state machine passing the index of the clicked peg', index);
+  const towerClickHandler = (index: number) => {
+    console.log('call state machine passing the index of the clicked tower', index);
+    send('');
   }
 
   return (<>
     <ul
-      onClick={() => pegClickHandler(pegNum)}
-      className="peg">
-      {pegDiscs.map((diskNum: number) => <Disk diskNumber={diskNum} diskSize={diskSize} key={diskNum} selected={selected} />)}
+      onClick={() => towerClickHandler(towerNum)}
+      className="tower">
+      {towerDiscs.map((diskNum: number) => <Disk diskNumber={diskNum} diskSize={diskSize} key={diskNum} selected={selected} />)}
     </ul>
     <style jsx>{`
-      ul.peg {
+      ul.tower {
         z-index: 2;
         list-style: none;
         margin: 0;
@@ -44,15 +39,15 @@ export const Peg = ({ pegDiscs, numPegs, diskSize, selected, pegNum }: PegProps)
         align-items: center;
         position: relative;
         flex: 0 0 ${
-          numPegs === 3 ? '300px' :
-          numPegs === 4 ? '230px' :
-          numPegs === 5 ? '180px' : '180px'
+          numTowers === 3 ? '300px' :
+          numTowers === 4 ? '230px' :
+          numTowers === 5 ? '180px' : '180px'
           };
         border-bottom: 20px solid #000;
         border-image:
           linear-gradient(to bottom, #738ca4 0%, #eee 100%) 100% 0;
       }
-      ul.peg:after {
+      ul.tower:after {
         content: "";
         position: absolute;
         z-index: 0;
@@ -73,4 +68,4 @@ export const Peg = ({ pegDiscs, numPegs, diskSize, selected, pegNum }: PegProps)
       `}</style>
   </>)
 }
-export { Peg as default }
+export { Tower as default }
