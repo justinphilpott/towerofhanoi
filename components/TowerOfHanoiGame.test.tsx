@@ -1,11 +1,19 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, fireEvent } from '@testing-library/react';
-
+import { render} from '@testing-library/react';
 import { TowerOfHanoiGame } from './TowerOfHanoiGame';
+import { screenMachine } from "../state/screenMachine";
 
 describe('Tower of Hanoi Game', () => {
-  test('Renders', () => {
-    const { getByText, getByLabelText } = render(<TowerOfHanoiGame />)
+  const result = render(<TowerOfHanoiGame />)
+
+  it('renders the start screen initially', () => {
+ 
+
+
+    expect()
   })
+
+  
+
 })

@@ -10,7 +10,14 @@ I wish to be able to
 
 
 Start screen:
-- info, form to choose disk and tower number and "Play" button
+- info, 
+- "Choose your puzzle setup":
+-- "Number of disks"
+-- "Number of towers"
+-- "Play" button
+
+
+
 
 Game screen:
 - Game board containing the chosen number of towers and disks 

@@ -5,7 +5,7 @@ export const hanoiUIMachine = Machine({
     initial: 'initial',
     context: {
       puzzleState: {
-        towers: [[1, 2, 3, 4, 5, 6, 7], [8], [9]],
+        towers: [[1, 2, 3, 4, 5], [], []],
         activePeg: 0
       }
     },
@@ -59,13 +59,13 @@ export const hanoiUIMachine = Machine({
           RESET: 'initial'
         }
       },
-    },
-    {
+    }
+/*    {
       guards: {
         isValidMoveSrc,
         isValidMoveDest
       }
-    }
+    }*/
   });
 
 

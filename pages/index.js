@@ -1,27 +1,20 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { Puzzle } from '../components/Puzzle'
-import { createMachine, assign } from "xstate";
-import { useMachine } from "@xstate/react";
-import { hanoiMachine } from "../state/hanoiMachine"
+import { Puzzle } from '../components/GameBoard'
+import { Flex } from '@chakra-ui/react'
+import { TowerOfHanoiGame } from '../components/TowerOfHanoiGame'
 
 export default function Home() {
 
-  const [current, send] = useMachine(toggleMachine);
-
-
-
   return (
-    <>
+    <Flex height="100vh" alignItems="center" justifyContent="center" border="10px solid 000">
       <Head>
         <title>Tower of Hanoi</title>
         <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <div className={styles.container}>
-        <div className={styles.main}>
-          <TowerOfHanoiGame />
-        </div>
-      </div>
-    </>
+      </Head>        
+      <Flex direction="column" background="gray.100" p="12" rounded="6">
+        <TowerOfHanoiGame />
+      </Flex>
+    </Flex>
   )
 }
