@@ -19,7 +19,6 @@ export const ScreenGame = ({ onPlay: object }) => {
   return (
     <>
       <Heading mb={6}>Game:</Heading>
-
       <Button colorScheme="orange" onClick={() => onNewGame()}>Reset Puzzle</Button>
       <Button colorScheme="orange" onClick={() => onResetPuzzle()}>Reset Puzzle</Button>
     </>
