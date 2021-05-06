@@ -1,5 +1,7 @@
 import React, { MouseEvent } from "react";
 import { Disk } from "./Disk"
+import { useMachine } from '@xstate/react'
+import { hanoiMachine } from '../state/hanoiMachine'
 
 export interface TowerProps {
   towerDiscs: number[];
@@ -14,11 +16,12 @@ export interface TowerProps {
  * 
  * @todo find how to pass methods... usereducer, useMethods? try that...
  */
-export const Tower = ({ towerDiscs, numTowers, diskSize, selected, towerNum, send }: TowerProps) => {
+export const Tower = ({ towerDiscs, numTowers, diskSize, selected, towerNum }: TowerProps) => {
+
+  const [state, send] = useMachine(hanoiMachine);
 
   const towerClickHandler = (index: number) => {
     console.log('call state machine passing the index of the clicked tower', index);
-    send('');
   }
 
   return (<>
@@ -68,4 +71,3 @@ export const Tower = ({ towerDiscs, numTowers, diskSize, selected, towerNum, sen
       `}</style>
   </>)
 }
-export { Tower as default }

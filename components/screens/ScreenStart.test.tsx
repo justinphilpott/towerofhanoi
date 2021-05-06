@@ -6,11 +6,10 @@ import { ScreenStart } from './ScreenStart';
 
 describe('Screen: Start', () => {
 test('Renders', () => {
-    const { getByText, getByLabelText } = render(<ScreenStart />)
-    expect(getByText('Choose your puzzle setup:')).toBeVisible();
-    expect(getByLabelText('Number of disks')).toBeVisible();
-    expect(getByLabelText('Number of towers')).toBeVisible();
+    const { getByText, getByLabelText } = render(<ScreenStart onPlay={} />)
+    expect(getByText('Choose puzzle setup:')).toBeVisible();
+    expect(getByText('Pegs')).toBeVisible();
+    expect(getByText('Disks')).toBeVisible();
     expect(getByText('Play')).toBeVisible();
-
   })
 })

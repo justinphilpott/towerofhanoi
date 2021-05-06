@@ -1,7 +1,6 @@
 import Head from 'next/head'
-import { Puzzle } from '../components/GameBoard'
 import { Flex } from '@chakra-ui/react'
-import { TowerOfHanoiGame } from '../components/TowerOfHanoiGame'
+import { PuzzleWrapper } from '../components/PuzzleWrapper'
 
 export default function Home() {
 
@@ -12,7 +11,7 @@ export default function Home() {
         <title>Tower of Hanoi</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <TowerOfHanoiGame />
+      <PuzzleWrapper />
     </Flex>
   )
 }

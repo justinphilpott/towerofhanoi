@@ -1,6 +1,4 @@
-import { useCheckboxGroupContext } from '@chakra-ui/checkbox';
 import { Machine } from 'xstate'
-
 
 const gameStarted = (context, event) => {
   return context.gameStarted;

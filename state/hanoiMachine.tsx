@@ -1,6 +1,6 @@
+import { Machine } from 'xstate'
 
-
-export const hanoiUIMachine = Machine({
+export const hanoiMachine = Machine({
     id: 'hanoiUIMachine',
     initial: 'initial',
     context: {

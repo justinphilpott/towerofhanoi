@@ -43,4 +43,3 @@ export const Disk = ({ diskNumber, diskSize, selected }: DiskProps) => {
     </>
   );
 };
-export { Disk as Default }

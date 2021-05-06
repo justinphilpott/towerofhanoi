@@ -6,6 +6,9 @@ import { ScreenGame } from './ScreenGame';
 
 describe('Screen: Game', () => {
   test('Renders', () => {
-    const { getByText, getByLabelText } = render(<ScreenGame />)
+    const renderArray = render(<ScreenGame />)
+    console.log(renderArray)
+//    expect(getByText('New game')).toBeVisible();
+//    expect(getByText('Reset game')).toBeVisible();
   })
 })

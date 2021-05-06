@@ -1,17 +1,13 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render} from '@testing-library/react';
-import { TowerOfHanoiGame } from './TowerOfHanoiGame';
-import { screenMachine } from "../state/screenMachine";
+import { PuzzleWrapper } from './PuzzleWrapper';
 
 describe('Tower of Hanoi Game', () => {
-  const result = render(<TowerOfHanoiGame />)
+  const result = render(<PuzzleWrapper />)
 
   it('renders the start screen initially', () => {
  
-
-
-    expect()
   })
 
   
