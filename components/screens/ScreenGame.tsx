@@ -19,8 +19,8 @@ export const ScreenGame = ({ onNewGame }:{ onNewGame:any }) => {
   return (
     <Flex direction="column" background="rgba(255, 255, 255, 0.9)" p="12" rounded="6" boxShadow="md">
       <Puzzle puzzleState={state.context.puzzleState} />
-      <Button colorScheme="orange" onClick={() => onNewGame()}>New game</Button>
-      <Button colorScheme="orange" onClick={() => onResetPuzzle()}>Reset game</Button>
+      <Button colorScheme="teal" onClick={() => onNewGame()}>New game</Button>
+      <Button colorScheme="teal" onClick={() => onResetPuzzle()}>Reset game</Button>
     </Flex>
   )
 }

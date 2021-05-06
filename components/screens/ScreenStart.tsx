@@ -15,13 +15,15 @@ export const ScreenStart = ({ onPlay }:{ onPlay:any } ) => {
   const [numPegs, setNumPegs] = useState(3);
   const [numDisks, setNumDisks] = useState(5);
 
-  let minMoves = (pegs:number, disks:number) => {
-    if(pegs === 3) return (Math.pow(2, numDisks)-1);
-    // trivial case
-    if(disks < pegs) return 2*disks-1;
-
-    // @todo FS algorithm or something like that for 4 pegs and 4 or more disks
-  }
+  // minmoves will change potentially rapidly on element drag
+  // therefore don't calc, perform a simple lookup - the
+  // data space is small for our game scope
+  const minMovesLookupTable = [
+    [1,3,7,15,31,63,127,255,511,1023],
+    [1,3,5,9,13,17,25,33,45,57],
+    [1,2,3,5,7,11,15,19,23,27,31]
+  ]
+  let minMoves = (pegs:number, disks:number) => minMovesLookupTable[pegs-3][disks-1];
 
   return (
     <Flex direction="column" background="rgba(255, 255, 255, 0.9)" p="12" rounded="6" boxShadow="md">
@@ -31,7 +33,7 @@ export const ScreenStart = ({ onPlay }:{ onPlay:any } ) => {
 
       <Text>Pegs</Text>
       <Box ml={3} mr={3}>
-      <Slider value={numPegs} onChange={(v) => setNumPegs(v)} defaultValue={numPegs} mb={6} min={2} max={5}>
+      <Slider value={numPegs} onChange={(v) => setNumPegs(v)} defaultValue={numPegs} mb={6} min={3} max={5}>
         <SliderTrack>
           <SliderFilledTrack bg="teal.400" />
         </SliderTrack>
@@ -48,9 +50,7 @@ export const ScreenStart = ({ onPlay }:{ onPlay:any } ) => {
         <SliderThumb boxShadow="teal.400" fontSize="sm" boxSize="32px" children={numDisks} />
       </Slider>
       <Text mb={6}>
-        {numPegs === 2 && (numDisks === 1 ? "Number of moves: 1" : "Impossible.")}
-        {numPegs === 3 && (numDisks === 1 ? "Number of moves: 1" : "Min. number of moves: " + (minMoves(3, numDisks)))}
-        {numPegs > 3 && ("Min. number of moves:" + (minMoves(numPegs, numDisks)))}
+        {("Min. number of moves: " + (minMoves(numPegs, numDisks)))}
       </Text>
       </Box>
 
