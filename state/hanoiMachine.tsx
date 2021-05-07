@@ -1,16 +1,20 @@
 import { Machine } from 'xstate'
 
-export const hanoiMachine = Machine({
+export const hanoiMachineDef = {
     id: 'hanoiUIMachine',
     initial: 'initial',
     context: {
-      puzzleState: {
-        towers: [[1, 2, 3, 4, 5], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5]],
+      gameState: {
+        numDisks: 0,
+        numPegs: 0,
+        gameBoard: [],
         activePeg: 0
       }
     },
     states: {
       initial: {
+        // entry actions
+        entry: ['buildTowers'],
         on: {
           SELECTSRC: 'srcSelected'
         }
@@ -49,12 +53,12 @@ export const hanoiMachine = Machine({
       },
       moveComplete: {
         on: {
-          PUZZLECOMPLETE: 'puzzleComplete',
+          GAMECOMPLETE: 'gameComplete',
           SELECTSRC: 'srcSelected',
           RESET: 'initial'
         }
       },
-      puzzleComplete: {
+      gameComplete: {
         on: {
           RESET: 'initial'
         }
@@ -66,7 +70,8 @@ export const hanoiMachine = Machine({
         isValidMoveDest
       }
     }*/
-  });
+  };
+
 
 
 const isValidMoveSrc = (context, event) => {
@@ -79,5 +84,24 @@ const isValidMoveDest = (context, event) => {
 
 }
 
+/**
+ * Build the initial towers structure with
+ * "disks" disks on the first of "pegs" pegs.
+ *
+ * e.g. pegs=3, disks=5 gives
+ * [[1, 2, 3, 4, 5], [], []]
+ *
+ * @param pegs
+ * @param disks
+ */
+const initialGameState = (pegs:number, disks:number) => {
+  const towers:number[][] = Array(pegs);
+  towers[0] = [...Array(disks+1).keys()] // place the disks on the first peg
+  towers[0].shift(); // make 1 based
+}
 
+// const isValidMove = (startPeg:number, destPeg:number) => {}
+// const performMove = (startPeg:number, destPeg:number) => {}
+// const isComplete = () => {}
 
+// 

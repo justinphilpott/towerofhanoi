@@ -1,30 +1,30 @@
 import React, { useState, MouseEvent } from 'react'
 import { Tower } from './Tower'
 
-export const Puzzle = ({ puzzleState }: { puzzleState:any }) => {
+export const Game = ({ gameState }: { gameState:any }) => {
 
-  console.log(puzzleState);
+  console.log(gameState);
 
-  const towerLengths: number[] = puzzleState.towers.map((tower: number[]) => { return tower.length; })
+  const towerLengths: number[] = gameState.towers.map((tower: number[]) => { return tower.length; })
   const numDisks: number = towerLengths.reduce((a, b) => { return a + b });
-  const numTowers: number = puzzleState.towers.length;
+  const numTowers: number = gameState.towers.length;
 
   const diskHeight = 32;
   const diskSize = 16;
 
-  const selected = puzzleState.activeTower;
+  const selected = gameState.activeTower;
 
   return (
     <>
-      <div className="puzzle">
+      <div className="game">
         {
-          puzzleState.towers.map((towerDiscs: Array<number>, index: number) =>
+          gameState.towers.map((towerDiscs: Array<number>, index: number) =>
             <Tower towerDiscs={towerDiscs} numTowers={numTowers} diskSize={diskSize} key={index} selected={selected === index} towerNum={index} />
           )
         }
       </div>
       <style jsx>{`
-        .puzzle {
+        .game {
           display: flex;
           flex-direction: row;
           justify-content: center;

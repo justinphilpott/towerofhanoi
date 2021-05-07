@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { Flex } from '@chakra-ui/react'
-import { PuzzleWrapper } from '../components/PuzzleWrapper'
+import { ScreenWrapper } from '../components/ScreenWrapper'
 
 export default function Home() {
 
@@ -11,7 +11,7 @@ export default function Home() {
         <title>Tower of Hanoi</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <PuzzleWrapper />
+      <ScreenWrapper />
     </Flex>
   )
 }

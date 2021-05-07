@@ -25,7 +25,7 @@ export const Disk = ({ diskNumber, diskSize, selected }: DiskProps) => {
         li.disk {
           z-index: 2;
           height: 32px;
-          border-radius: 10%;
+          border-radius: 0;
           color: $color;
           margin: 0;
           border-bottom: 0px;

@@ -29,7 +29,7 @@ export const ScreenStart = ({ onPlay }:{ onPlay:any } ) => {
     <Flex direction="column" background="rgba(255, 255, 255, 0.9)" p="12" rounded="6" boxShadow="md">
 
       <Heading as="h1" size="lg" mb={6}>The Tower of Hanoi</Heading>
-      <Heading as="h2" size="md" mb={6}>Choose puzzle setup:</Heading>
+      <Heading as="h2" size="md" mb={6}>Choose game setup:</Heading>
 
       <Text>Pegs</Text>
       <Box ml={3} mr={3}>

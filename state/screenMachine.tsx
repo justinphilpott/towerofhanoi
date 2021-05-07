@@ -35,6 +35,6 @@ export const screenMachine = Machine({
       }
     },
     guards: {
-      gameStarted: (context) => context.gameStarted
+      gameStarted: (context) => context.gameStarted === false
     }
   });

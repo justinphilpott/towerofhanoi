@@ -5,7 +5,7 @@ import { ScreenGame } from './screens/ScreenGame';
 import { useMachine } from '@xstate/react'
 import { Flex } from '@chakra-ui/react'
 
-export const PuzzleWrapper = () => {
+export const ScreenWrapper = () => {
   const [state, send] = useMachine(screenMachine, { devTools: true });
 
   return (
@@ -16,7 +16,9 @@ export const PuzzleWrapper = () => {
         } />
       }
       {state.matches("screenGame") &&
-        <ScreenGame onNewGame={() => send("NEWGAME")} />
+        <Flex height="100vh" alignItems="flex-end" justifyContent="center">
+          <ScreenGame onNewGame={() => send("NEWGAME")} />
+        </Flex>
       }
     </>
   )
