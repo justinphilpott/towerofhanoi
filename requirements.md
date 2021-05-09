@@ -28,4 +28,27 @@ Game screen:
 - "New game" button which returns the game to the start screen
 
 
+State control:
+
+Screen fsm
+Hanoi fsm
+
+Screen scope
+- Start
+-- Choose options. Options are the game start info.
+they could well be on the same page, they are not internal to the game but they define the type of game
+and must be supplied to the game component and the game fsm
+
+-> play can be selected at any time as one cannot select an invalid game setup or no game.
+
+- Play
+-- The game start data set above must be supplied to the game fsm which in turn will supply updated state to the component via
+
+-> reset game -> send an event to the hanoi fsm... resets params to the initial state that we started with
+-> new game -> send an event to the screen fsm to show confirm screen
+
+
+
+
+
 

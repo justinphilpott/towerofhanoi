@@ -4,12 +4,10 @@ export const hanoiMachineDef = {
     id: 'hanoiUIMachine',
     initial: 'initial',
     context: {
-      gameState: {
-        numDisks: 0,
-        numPegs: 0,
-        gameBoard: [],
-        activePeg: 0
-      }
+      numDisks: 0,
+      numPegs: 0,
+      gameBoard: [],
+      activePeg: 0
     },
     states: {
       initial: {
@@ -63,14 +61,15 @@ export const hanoiMachineDef = {
           RESET: 'initial'
         }
       },
+    },
+  },
+  {
+    actions: {
+    },
+    guards: {
     }
-/*    {
-      guards: {
-        isValidMoveSrc,
-        isValidMoveDest
-      }
-    }*/
-  };
+  }
+};
 
 
 

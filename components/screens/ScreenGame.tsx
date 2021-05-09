@@ -4,15 +4,17 @@ import {
   Flex
 } from "@chakra-ui/react"
 import { hanoiMachineDef } from '../../state/hanoiMachine';
-import { Game } from '../Game'
 import { useMachine } from '@xstate/react'
 import { createMachine } from 'xstate'
+import { Game } from '../Game'
 
 type CallbackFunction = () => void;
 
 interface GameConfig {
-  numDisks: number;
-  numPegs: number;
+  numDisks: number,
+  numPegs: number,
+  gameBoard: number[],
+  activePeg: number|boolean
 }
 
 /**
@@ -25,10 +27,20 @@ interface GameConfig {
  */
 export const ScreenGame = (numDisks:number, numPegs:number, { onNewGame }:{ onNewGame:any }) => {
 
-  const chosenGameConfig:GameConfig = { numDisks: numDisks, numPegs: numPegs}
+  /// create initial tower
+
+  // this could also be done by sending an event to the hanoiMachine in the screen wrapper
+  // which would setup up all the following, and no need to have so many params...
+  // reducing params is good. But state machines get more complex. Logical separation of concerns is good.
+  const initialGameContext:GameConfig = { 
+    numDisks: numDisks,
+    numPegs: numPegs,
+    gameBoard: [],
+    activePeg: false
+  }
 
   const hanoiMachine = createMachine(hanoiMachineDef);
-  hanoiMachine.withContext({ "gameState": chosenGameConfig }); // set up the initial towers structure
+  hanoiMachine.withContext(initialGameContext); // set up the initial towers structure
 
   const [state, send] = useMachine(hanoiMachine, { devTools: true });
 

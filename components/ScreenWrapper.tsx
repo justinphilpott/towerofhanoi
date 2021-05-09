@@ -6,18 +6,19 @@ import { useMachine } from '@xstate/react'
 import { Flex } from '@chakra-ui/react'
 
 export const ScreenWrapper = () => {
-  const [state, send] = useMachine(screenMachine, { devTools: true });
+  const [screenState, send] = useMachine(screenMachine, { devTools: true });
+ // const [hanoiState, send] = useMachine(hanoiMachine, { devTools: true });
 
   return (
     <>
-      {state.matches("screenStart") &&
+      {screenState.matches("screenStart") &&
         <ScreenStart onPlay={
           (numDisks: number, numPegs: number) => send("PLAY", { numDisks, numPegs })
         } />
       }
-      {state.matches("screenGame") &&
+      {screenState.matches("screenGame") &&
         <Flex height="100vh" alignItems="flex-end" justifyContent="center">
-          <ScreenGame onNewGame={() => send("NEWGAME")} />
+          <ScreenGame disks={state.context.numDisks} pegs  onNewGame={() => send("NEWGAME")} />
         </Flex>
       }
     </>
