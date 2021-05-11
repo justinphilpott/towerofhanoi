@@ -1,7 +1,7 @@
 import React, { MouseEvent } from "react";
 import { Disk } from "./Disk"
 import { useMachine } from '@xstate/react'
-import { hanoiMachine } from '../state/hanoiMachine'
+import { hanoiFSM } from '../state/hanoiFSM'
 
 export interface TowerProps {
   towerDiscs: number[];
@@ -18,10 +18,10 @@ export interface TowerProps {
  */
 export const Tower = ({ towerDiscs, numTowers, diskSize, selected, towerNum }: TowerProps) => {
 
-  const [state, send] = useMachine(hanoiMachine);
+  const [state, send] = useMachine(hanoiFSM);
 
   const towerClickHandler = (index: number) => {
-    console.log('call state machine passing the index of the clicked tower', index);
+    console.log('call fsm passing the index of the clicked tower', index);
   }
 
   return (<>

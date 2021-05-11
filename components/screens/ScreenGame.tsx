@@ -3,7 +3,7 @@ import { Button, ButtonGroup } from '@chakra-ui/react'
 import {
   Flex
 } from "@chakra-ui/react"
-import { hanoiMachineDef } from '../../state/hanoiMachine';
+import { hanoiFSMDef } from '../../state/hanoiFSM';
 import { useMachine } from '@xstate/react'
 import { createMachine } from 'xstate'
 import { Game } from '../Game'
@@ -29,9 +29,9 @@ export const ScreenGame = (numDisks:number, numPegs:number, { onNewGame }:{ onNe
 
   /// create initial tower
 
-  // this could also be done by sending an event to the hanoiMachine in the screen wrapper
+  // this could also be done by sending an event to the hanoiFSM in the screen wrapper
   // which would setup up all the following, and no need to have so many params...
-  // reducing params is good. But state machines get more complex. Logical separation of concerns is good.
+  // reducing params is good. But fsms get more complex. Logical separation of concerns is good.
   const initialGameContext:GameConfig = { 
     numDisks: numDisks,
     numPegs: numPegs,
@@ -39,10 +39,10 @@ export const ScreenGame = (numDisks:number, numPegs:number, { onNewGame }:{ onNe
     activePeg: false
   }
 
-  const hanoiMachine = createMachine(hanoiMachineDef);
-  hanoiMachine.withContext(initialGameContext); // set up the initial towers structure
+  const hanoiFSM = createMachine(hanoiFSMDef);
+  hanoiFSM.withContext(initialGameContext); // set up the initial towers structure
 
-  const [state, send] = useMachine(hanoiMachine, { devTools: true });
+  const [state, send] = useMachine(hanoiFSM, { devTools: true });
 
   const onResetGame = () => {
     console.log("Implement onResetGame");

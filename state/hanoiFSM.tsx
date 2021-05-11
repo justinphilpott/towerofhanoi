@@ -1,7 +1,7 @@
 import { Machine } from 'xstate'
 
-export const hanoiMachineDef = {
-    id: 'hanoiUIMachine',
+export const hanoiFSMDef = {
+    id: 'hanoiFSM',
     initial: 'initial',
     context: {
       numDisks: 0,
@@ -65,11 +65,14 @@ export const hanoiMachineDef = {
   },
   {
     actions: {
+
     },
     guards: {
+
     }
   }
 };
+
 
 
 
