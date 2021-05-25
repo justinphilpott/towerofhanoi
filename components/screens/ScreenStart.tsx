@@ -9,20 +9,24 @@ import {
   Box,
   Flex
 } from "@chakra-ui/react"
+import  { useScreenSend } from './fsm/ScreenFSMProvider';
 
-export const ScreenStart = ({ onPlay }:{ onPlay:any } ) => {
+export const ScreenStart = () => {
 
+  const send = useScreenSend();
+
+  // could use an event with a assign to update these figures... is it worth it?
   const [numPegs, setNumPegs] = useState(3);
   const [numDisks, setNumDisks] = useState(5);
 
-  // minmoves will change potentially rapidly on element drag
-  // therefore don't calc, perform a simple lookup - the
-  // data space is small for our game scope
   const minMovesLookupTable = [
     [1,3,7,15,31,63,127,255,511,1023],
     [1,3,5,9,13,17,25,33,45,57],
-    [1,2,3,5,7,11,15,19,23,27,31]
+    [1,3,5,7,11,15,19,23,27,31]
   ]
+  // minmoves will change potentially rapidly on element drag
+  // therefore don't calc, perform a simple lookup - the
+  // data space is small for our game scope
   let minMoves = (pegs:number, disks:number) => minMovesLookupTable[pegs-3][disks-1];
 
   return (
@@ -54,7 +58,7 @@ export const ScreenStart = ({ onPlay }:{ onPlay:any } ) => {
       </Text>
       </Box>
 
-      <Button colorScheme="teal" onClick={() => onPlay(numDisks, numPegs)}>Play</Button>
+      <Button colorScheme="teal" onClick={() => send({ type: "PLAY", "numDisks": numDisks, "numPegs": numPegs })}>Play</Button>
     </Flex>
   )
 }

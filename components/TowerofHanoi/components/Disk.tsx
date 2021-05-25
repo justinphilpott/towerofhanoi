@@ -9,10 +9,6 @@ export interface DiskProps {
 
 export const Disk = ({ diskNumber, diskSize, selected }: DiskProps) => {
 
-  const diskClickHandler = (event: MouseEvent) => {
-    console.log(event);
-  }
-
   return (
     <>
       <li

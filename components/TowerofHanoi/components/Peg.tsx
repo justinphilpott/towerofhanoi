@@ -1,14 +1,13 @@
 import React, { MouseEvent } from "react";
 import { Disk } from "./Disk"
-import { useMachine } from '@xstate/react'
-import { hanoiFSM } from '../state/hanoiFSM'
 
-export interface TowerProps {
-  towerDiscs: number[];
+
+export interface PegProps {
+  pegDiscs: number[];
   diskSize: number;
-  numTowers: number;
+  numPegs: number;
   selected: boolean;
-  towerNum: number;
+  pegNum: number;
 }
 
 /**
@@ -16,22 +15,21 @@ export interface TowerProps {
  * 
  * @todo find how to pass methods... usereducer, useMethods? try that...
  */
-export const Tower = ({ towerDiscs, numTowers, diskSize, selected, towerNum }: TowerProps) => {
+export const Peg = ({ pegDiscs, numPegs, diskSize, selected, pegNum }: PegProps) => {
 
-  const [state, send] = useMachine(hanoiFSM);
 
-  const towerClickHandler = (index: number) => {
-    console.log('call fsm passing the index of the clicked tower', index);
+  const pegClickHandler = (index: number) => {
+    console.log('call fsm passing the index of the clicked peg', index);
   }
 
   return (<>
     <ul
-      onClick={() => towerClickHandler(towerNum)}
-      className="tower">
-      {towerDiscs.map((diskNum: number) => <Disk diskNumber={diskNum} diskSize={diskSize} key={diskNum} selected={selected} />)}
+      onClick={() => pegClickHandler(pegNum)}
+      className="peg">
+      {pegDiscs.map((diskNum: number) => <Disk diskNumber={diskNum} diskSize={diskSize} key={diskNum} selected={selected} />)}
     </ul>
     <style jsx>{`
-      ul.tower {
+      ul.peg {
         z-index: 2;
         list-style: none;
         margin: 0;
@@ -42,15 +40,15 @@ export const Tower = ({ towerDiscs, numTowers, diskSize, selected, towerNum }: T
         align-items: center;
         position: relative;
         flex: 0 0 ${
-          numTowers === 3 ? '300px' :
-          numTowers === 4 ? '230px' :
-          numTowers === 5 ? '180px' : '180px'
+          numPegs === 3 ? '300px' :
+          numPegs === 4 ? '230px' :
+          numPegs === 5 ? '180px' : '180px'
           };
         border-bottom: 20px solid #000;
         border-image:
           linear-gradient(to bottom, #738ca4 0%, #eee 100%) 100% 0;
       }
-      ul.tower:after {
+      ul.peg:after {
         content: "";
         position: absolute;
         z-index: 0;
