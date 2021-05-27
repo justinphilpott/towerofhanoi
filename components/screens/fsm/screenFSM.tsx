@@ -12,12 +12,23 @@ export const screenFSM = Machine(
   {
     id: 'screenFSM',
     initial: 'start',
+    // set a simple default
     context: {
-      numPegs: 0,
-      numDisks: 0
+      numPegs: 3,
+      numDisks: 5
     },
     states: {
       start: {
+        on: {
+          PLAY: {
+            target: 'game',
+          },
+          SETTINGS: {
+            target: 'settings',
+          }
+        }
+      },
+      settings: {
         on: {
           PLAY: {
             target: 'game',
@@ -39,7 +50,6 @@ export const screenFSM = Machine(
           data: {
             numDisks: (context) => context.numDisks,
             numPegs: (context) => context.numPegs,
-            gameState: (context) => initialGameState(context.numPegs, context.numDisks),
             activePeg: null
           },
 

@@ -13,10 +13,16 @@ export const ScreenWrapper = () => {
       {screenState.matches("start") &&
         <ScreenStart />
       }
+      {screenState.matches("settings") &&
+        <ScreenSettings />
+      }
       {screenState.matches("game") &&
-        <Flex height="100vh" alignItems="flex-end" justifyContent="center">
+        <Flex height="100vh" width="100vw" alignItems="center" justifyContent="center">
           <ScreenGame />
         </Flex>
+      }
+      {screenState.matches("credits") &&
+        <ScreenCredits />
       }
     </>
   )

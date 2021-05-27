@@ -5,7 +5,7 @@ import { ScreenProvider } from '../components/screens/fsm/ScreenFSMProvider'; //
 
 export default function Home() {
   return (
-    <Flex height="100vh" alignItems="center" justifyContent="center" border="10px solid 000" backgroundImage="url('/crane_bg.jpg')"  background-blend-mode="screen" bgPosition="center"
+    <Flex height="100vh" width="100vw" alignItems="center" justifyContent="center" border="10px solid 000" backgroundImage="url('/crane_bg.jpg')"  background-blend-mode="screen" bgPosition="center"
     bgRepeat="repeat" backgroundSize="cover">
       <Head>
         <title>Tower of Hanoi</title>

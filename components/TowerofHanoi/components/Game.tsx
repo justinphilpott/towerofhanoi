@@ -5,7 +5,7 @@ import { Peg } from './Peg'
 
 /**
  * 
- * @param param0 
+ * @param param0
  * @returns 
  */
 export const Game = ({ state }: { state:any }) => {
@@ -37,7 +37,8 @@ export const Game = ({ state }: { state:any }) => {
           width: 100%;
           padding-left: 10%;
           padding-right: 10%;
-          border: 1px solid red
+          border: 1px solid red;
+          margin-bottom: 2em;
         }
       `}</style>
     </>

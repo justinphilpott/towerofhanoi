@@ -1,4 +1,19 @@
-import { Machine } from 'xstate'
+import { Machine, assign } from 'xstate'
+
+/**
+ * 
+ * @param pegs 
+ * @param disks 
+ * @returns 
+ */
+ const initialGameState = (pegs:number, disks:number) => {
+  const towers:number[][] = Array(pegs);
+  towers[0] = [...Array(disks+1).keys()] // place the disks on the first peg
+  towers[0].shift(); // make 1 based
+  towers.fill([], 1);
+  return towers;
+}
+
 
 /**
  * hanoiFSM
@@ -15,6 +30,7 @@ import { Machine } from 'xstate'
     },
     states: {
       initial: {
+        entry: ['initialiseGameState'],
         on: {
           SELECTSRC: 'srcSelected',
           NEWGAME: 'newGame'
@@ -76,26 +92,14 @@ import { Machine } from 'xstate'
   },
   {
     actions: {
-      initialGameState: (context: any, event: any) => initialGameState(context.numPegs, context.numDisks)
+      initialiseGameState: assign({
+        gameState: (context, event) => initialGameState(context.numPegs, context.numDisks)
+      })
     }
   }
 );
 
-/**
- * 
- * @param pegs 
- * @param disks 
- * @returns 
- */
-const initialGameState = (pegs:number, disks:number) => {
-  const towers:number[][] = Array(pegs);
-  towers[0] = [...Array(disks+1).keys()] // place the disks on the first peg
-  towers[0].shift(); // make 1 based
-  return towers;
-}
-
-
-//
+// ...
 const isMidGame = (context, event) => {
   // check hanoi fsm
   console.log('check state on hanoi fsm to determine if we have started and not finished the game...');

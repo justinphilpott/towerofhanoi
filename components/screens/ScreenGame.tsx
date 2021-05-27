@@ -64,9 +64,9 @@ export const ScreenGame = () => {
   }
 
   return (
-    <Flex direction="column" alignItems="flex-end" justifyContent="flex-end" background="rgba(255, 255, 255, 0.9)" p="12" rounded="6" boxShadow="md">
+    <Flex direction="column" width="100vw" alignItems="flex-end" justifyContent="flex-end" background="rgba(255, 255, 255, 0.9)" p="12" rounded="6" boxShadow="md">
       <Game state={hanoiState} />
-      <ButtonGroup>
+      <ButtonGroup >
         <Button colorScheme="teal" onClick={() => onNewGame()}>New game</Button>
         <Button colorScheme="orange" onClick={() => onResetGame()}>Reset game</Button>
       </ButtonGroup>
