@@ -7,15 +7,17 @@ import {
   SliderThumb,
   Text,
   Box,
-  Flex
+  Flex,
+  ButtonGroup
 } from "@chakra-ui/react"
+import { ArrowBackIcon } from '@chakra-ui/icons';
 import  { useScreenSend } from './fsm/ScreenFSMProvider';
 
 export const ScreenSettings = () => {
 
   const send = useScreenSend();
 
-  // could use an event with a assign to update these figures... is it worth it?
+  // read these settings from the FSM defaults?
   const [numPegs, setNumPegs] = useState(3);
   const [numDisks, setNumDisks] = useState(5);
 
@@ -30,36 +32,44 @@ export const ScreenSettings = () => {
   let minMoves = (pegs:number, disks:number) => minMovesLookupTable[pegs-3][disks-1];
 
   return (
-    <Flex direction="row" background="rgba(255, 255, 255, 0.9)" p="12" rounded="6" boxShadow="md">
+    <Flex direction="column" width="100vw" background="rgba(255, 255, 255, 0.9)" p="12" rounded="6" boxShadow="md">
 
-      <div>
-        <Heading as="h2" size="lg" mb={6}>Settings</Heading>
+      <Heading as="h2" size="lg" mb={6}>Settings</Heading>
+{/*
         <Text mb={6}>
           {("Min. number of moves: " + (minMoves(numPegs, numDisks)))}
         </Text>
-      </div>
+*/}
+      <Flex direction="row" width="100%">
+        <Flex direction="column" flexGrow={1}>
+          <Text>Pegs</Text>
+          <Box ml={6} mr={6}>
+          <Slider value={numPegs} onChange={(v) => setNumPegs(v)} defaultValue={numPegs} mb={6} min={3} max={5}>
+            <SliderTrack>
+              <SliderFilledTrack bg="teal.400" />
+            </SliderTrack>
+            <SliderThumb fontSize="sm" boxSize="32px" children={numPegs} />
+          </Slider>
+          </Box>
+        </Flex>
 
-      <div>
-        <Text>Pegs</Text>
-        <Box ml={3} mr={3}>
-        <Slider value={numPegs} onChange={(v) => setNumPegs(v)} defaultValue={numPegs} mb={6} min={3} max={5}>
-          <SliderTrack>
-            <SliderFilledTrack bg="teal.400" />
-          </SliderTrack>
-          <SliderThumb fontSize="sm" boxSize="32px" children={numPegs} />
-        </Slider>
-        </Box>
-        <Text>Disks</Text>
-        <Box ml={3} mr={3}>
-        <Slider value={numDisks} onChange={(v) => setNumDisks(v)} defaultValue={numDisks} mb={6} min={1} max={7}>
-          <SliderTrack>
-            <SliderFilledTrack bg="teal.400" />
-          </SliderTrack>
-          <SliderThumb boxShadow="teal.400" fontSize="sm" boxSize="32px" children={numDisks} />
-        </Slider>
-        </Box>
-        <Button colorScheme="teal" onClick={() => send({ type: "PLAY", "numDisks": numDisks, "numPegs": numPegs })}>Play</Button>
-      </div>
+        <Flex direction="column" flexGrow={1}>
+          <Text>Disks</Text>
+          <Box ml={6} mr={6}>
+          <Slider value={numDisks} onChange={(v) => setNumDisks(v)} defaultValue={numDisks} mb={6} min={1} max={7}>
+            <SliderTrack>
+              <SliderFilledTrack bg="teal.400" />
+            </SliderTrack>
+            <SliderThumb boxShadow="teal.400" fontSize="sm" boxSize="32px" children={numDisks} />
+          </Slider>
+          </Box>
+        </Flex>
+      </Flex>
+
+      <Flex direction="row">
+        <Button flexGrow={1} flexBasis={0} colorScheme="teal" m="0 0.5em 0 0.5em" onClick={() => send({ type: "PLAY", numPegs: numPegs, numDisks: numDisks })}>Play</Button>
+        <Button flexGrow={1} flexBasis={0} colorScheme="orange" m="0 0.5em 0 0.5em" onClick={() => send({ type: "START" })}>Main menu</Button>
+      </Flex>
 
     </Flex>
   )

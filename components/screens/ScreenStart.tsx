@@ -20,7 +20,6 @@ export const ScreenStart = () => {
         <Flex direction="row" background="rgba(255, 255, 255, 0.9)" p="6" rounded="6">
             <Button flexGrow={1} flexBasis={0} colorScheme="teal" m="0 0.5em 0 0.5em" onClick={() => send("PLAY")}>Play</Button>
             <Button flexGrow={1} flexBasis={0} colorScheme="orange" m="0 0.5em 0 0.5em" onClick={() => send("SETTINGS")}>Settings</Button>
-            <Button flexGrow={1} flexBasis={0} colorScheme="purple" m="0 0.5em 0 0.5em" onClick={() => send("TUTORIAL")}>Tutorial</Button>
         </Flex>
       </Flex>
     </>

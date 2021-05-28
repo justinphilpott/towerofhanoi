@@ -23,18 +23,12 @@ export const Peg = ({ pegDiscs, numPegs, diskSize, selected, pegNum }: PegProps)
   }
 
   return (<>
-    <ul className="test-peg">
-      <div className="invisible-peg">test peg...</div>
-    </ul>
-    {/*<ul
+    <ul
       onClick={() => pegClickHandler(pegNum)}
       className="peg">
       {pegDiscs.map((diskNum: number) => <Disk diskNumber={diskNum} diskSize={diskSize} key={diskNum} selected={selected} />)}
-    </ul>*/}
+    </ul>
     <style jsx>{`
-      ul.test-peg {
-
-      }
       ul.peg {
         z-index: 2;
         list-style: none;
@@ -45,11 +39,9 @@ export const Peg = ({ pegDiscs, numPegs, diskSize, selected, pegNum }: PegProps)
         justify-content: flex-end;
         align-items: center;
         position: relative;
-        flex: 0 0 ${
-          numPegs === 3 ? '300px' :
-          numPegs === 4 ? '230px' :
-          numPegs === 5 ? '180px' : '180px'
-          };
+        flex-grow: 1;
+        flex-basis: 0;
+
         border-bottom: 20px solid #000;
         border-image:
           linear-gradient(to bottom, #738ca4 0%, #eee 100%) 100% 0;

@@ -1,0 +1,7 @@
+{
+  "name": "towerofhanoi",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

@@ -1,12 +1,13 @@
 import React from 'react'
 import { Button, ButtonGroup } from '@chakra-ui/react'
 import {
-  Flex
+  Flex, Spacer
 } from "@chakra-ui/react"
 import { Game } from '../TowerofHanoi/components/Game';
 import { hanoiFSM } from '../TowerofHanoi/fsm/hanoiFSM';
 import { useScreenService, useScreenInterpreter } from './fsm/ScreenFSMProvider';
-import { useService } from '@xstate/react';
+import { useActor } from '@xstate/react';
+import { XStateInspectLoaderProps } from 'xstate-helpers';
 
 type CallbackFunction = () => void;
 
@@ -36,7 +37,8 @@ export const ScreenGame = () => {
   const [screenState, screenSend] = useScreenService();
 
   const screenInterpreter = useScreenInterpreter();
-  const [hanoiState, hanoiSend] = useService(screenInterpreter.children.get('hanoiFSM'));
+  // this could return undefined if the FSM wasn't there, but it will be so we !
+  const [hanoiState, hanoiSend] = useActor(screenInterpreter.children.get('hanoiFSM')!); 
 
   // console.log("hanoiState", hanoiState);
 
@@ -56,20 +58,15 @@ export const ScreenGame = () => {
     })
   }
 
-  const onNewGame = () => {
-    console.log('test');
-    hanoiSend({
-      type: 'NEWGAME'
-    });
-  }
-
   return (
-    <Flex direction="column" width="100vw" alignItems="flex-end" justifyContent="flex-end" background="rgba(255, 255, 255, 0.9)" p="12" rounded="6" boxShadow="md">
-      <Game state={hanoiState} />
-      <ButtonGroup >
-        <Button colorScheme="teal" onClick={() => onNewGame()}>New game</Button>
-        <Button colorScheme="orange" onClick={() => onResetGame()}>Reset game</Button>
-      </ButtonGroup>
-    </Flex>
+    <>
+      <Flex direction="column" width="100vw" height="100vh" alignItems="center" justifyContent="space-between">
+        <Flex direction="row" width="100vw"  justifyContent="space-between" background="rgba(15, 55, 56, 0.2)" p="2">
+          <Button colorScheme="teal" m="0 0.5em 0 0.5em" onClick={() => screenSend("SETTINGS")}>New game</Button>
+          <Button colorScheme="teal" m="0 0.5em 0 0.5em" onClick={() => onResetGame()}>Reset game</Button>
+        </Flex>
+        <Game state={hanoiState} />
+      </Flex>
+    </>
   )
 }

@@ -1,18 +1,5 @@
-import { Machine, assign } from 'xstate'
-
-/**
- * 
- * @param pegs 
- * @param disks 
- * @returns 
- */
- const initialGameState = (pegs:number, disks:number) => {
-  const towers:number[][] = Array(pegs);
-  towers[0] = [...Array(disks+1).keys()] // place the disks on the first peg
-  towers[0].shift(); // make 1 based
-  towers.fill([], 1);
-  return towers;
-}
+import { Machine, assign } from 'xstate';
+import { initialGameState } from './actions/hanoiFSMActions';
 
 
 /**
@@ -25,7 +12,7 @@ import { Machine, assign } from 'xstate'
     context: {
       numDisks: 0,
       numPegs: 0,
-      gameState: [],
+      gameState: Array(Array()),
       activePeg: 0
     },
     states: {
@@ -98,38 +85,3 @@ import { Machine, assign } from 'xstate'
     }
   }
 );
-
-// ...
-const isMidGame = (context, event) => {
-  // check hanoi fsm
-  console.log('check state on hanoi fsm to determine if we have started and not finished the game...');
-  return true;
-};
-
-
-
-
-
-/**
- * Build the initial towers structure with
- * "disks" disks on the first of "pegs" pegs.
- *
- * e.g. pegs=3, disks=5 gives
- * [[1, 2, 3, 4, 5], [], []]
- *
- */
-
-// const isValidMove = (startPeg:number, destPeg:number) => {}
-// const performMove = (startPeg:number, destPeg:number) => {}
-// const isComplete = () => {}
-
-
-const isValidMoveSrc = (context, event) => {
-
-
-
-}
-
-const isValidMoveDest = (context, event) => {
-
-}

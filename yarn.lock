@@ -1314,6 +1314,14 @@
   dependencies:
     "@chakra-ui/utils" "1.8.0"
 
+"@chakra-ui/icons@^1.0.13":
+  version "1.0.13"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/icons/-/icons-1.0.13.tgz#d8eb04479b048d8023ae90d76205cd4a0bf7dd79"
+  integrity sha512-twDpFz2uPVboMTEI4QA2y3EJND3G4+/9AVs730fgnnfhTw4EOJt0Lhfm4Spq1qi1LgHF16x4/Lao1E2imB5lWw==
+  dependencies:
+    "@chakra-ui/icon" "1.1.9"
+    "@types/react" "^17.0.0"
+
 "@chakra-ui/image@1.0.15":
   version "1.0.15"
   resolved "https://registry.yarnpkg.com/@chakra-ui/image/-/image-1.0.15.tgz#57aaf7e22d2793b9278481aab56b27063a922e5b"
@@ -3285,6 +3293,15 @@
   version "16.14.6"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.14.6.tgz#d933a2a6bc1bfe320a5eea480e8f45ba8126d6ee"
   integrity sha512-Ol/aFKune+P0FSFKIgf+XbhGzYGyz0p7g5befSt4rmbzfGLaZR0q7jPew9k7d3bvrcuaL8dPy9Oz3XGZmf9n+w==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@^17.0.0":
+  version "17.0.8"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.8.tgz#fe76e3ba0fbb5602704110fd1e3035cf394778e3"
+  integrity sha512-3sx4c0PbXujrYAKwXxNONXUtRp9C+hE2di0IuxFyf5BELD+B+AXL8G7QrmSKhVwKZDbv0igiAjQAMhXj8Yg3aw==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -10376,6 +10393,11 @@ react-helmet-async@^1.0.7:
     prop-types "^15.7.2"
     react-fast-compare "^3.2.0"
     shallowequal "^1.1.0"
+
+react-icons@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.2.0.tgz#6dda80c8a8f338ff96a1851424d63083282630d0"
+  integrity sha512-rmzEDFt+AVXRzD7zDE21gcxyBizD/3NqjbX6cmViAgdqfJ2UiLer8927/QhhrXQV7dEj/1EGuOTPp7JnLYVJKQ==
 
 react-inspector@^5.1.0:
   version "5.1.1"

@@ -1,5 +1,8 @@
-import { Machine, assign } from 'xstate'
+import { createMachine, assign } from 'xstate'
+import { createModel } from 'xstate/lib/model';
 import { hanoiFSM } from '../../TowerofHanoi/fsm/hanoiFSM'
+import { PlayEvent } from './types/screenFSMTypes';
+import { HanoiContext } from '../../TowerofHanoi/fsm/types/hanoiFSMTypes'
 
 /**
  * controls the screen logic, transitions between screens
@@ -8,15 +11,15 @@ import { hanoiFSM } from '../../TowerofHanoi/fsm/hanoiFSM'
  *
  * States are keys of states, CAPS keys are events.
  */
-export const screenFSM = Machine(
+const hanoiDefault = createModel({
+  numPegs: 3,
+  numDisks: 5
+})
+
+export const screenFSM = createMachine<typeof hanoiDefault>(
   {
     id: 'screenFSM',
     initial: 'start',
-    // set a simple default
-    context: {
-      numPegs: 3,
-      numDisks: 5
-    },
     states: {
       start: {
         on: {
@@ -33,9 +36,12 @@ export const screenFSM = Machine(
           PLAY: {
             target: 'game',
             actions: [
-              assign({ numPegs: (context, event) => event.numPegs }),
-              assign({ numDisks: (context, event) => event.numDisks }),
+              hanoiDefault.assign({ numPegs: (context, event: PlayEvent) => event.numPegs }),
+
             ]
+          },
+          START: {
+            target: 'start'
           }
         }
       },
@@ -48,8 +54,8 @@ export const screenFSM = Machine(
 
           // here we can construct the initial state based on the values set in screenStart
           data: {
-            numDisks: (context) => context.numDisks,
-            numPegs: (context) => context.numPegs,
+            numDisks: (context: HanoiContext) => context.numDisks,
+            numPegs: (context: HanoiContext) => context.numPegs,
             activePeg: null
           },
 
@@ -58,6 +64,12 @@ export const screenFSM = Machine(
             target: 'start',
           }
         },
+
+        on: {
+          SETTINGS: {
+            target: "settings"
+          }
+        }
       }
     }
   },
@@ -73,7 +85,3 @@ export const screenFSM = Machine(
     }
   }
 );
-
-
-
-
