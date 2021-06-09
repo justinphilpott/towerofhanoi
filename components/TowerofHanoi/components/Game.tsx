@@ -3,39 +3,35 @@ import { Machine, assign } from 'xstate'
 
 import { Peg } from './Peg'
 
-interface GameConfig {
-  numDisks: number,
-  numPegs: number,
-  gameBoard: number[],
-  activePeg: number|boolean
+
+export interface GameProps {
+  state: GameConfig;
+  selectHandler: () => void;
 }
 
 
 /**
- * 
+ *
  * @param param0
- * @returns 
+ * @returns
  */
-export const Game = ({ state }: { state:GameConfig }, { selectHandler }:{ selectHandler: () => void }) => {
+export const Game = ({ state, selectHandler }: GameProps) => {
 
-  const game = state.gameState;
+  console.log(selectHandler, typeof selectHandler);
+
+  const game = state.gameBoard;
   const pegLengths: number[] = game.map((peg: number[]) => { return peg.length; })
   const numDisks: number = pegLengths.reduce((a, b) => { return a + b });
   const numPegs: number = game.length;
 
   const selected = state.activePeg;
 
-  const diskHeight = 32;
-  const diskSize = 16;
-
-  console.log(selectHandler, typeof selectHandler);
-
   return (
     <>
       <div className="game">
         {
           game.map((pegDiscs: Array<number>, index: number) =>
-            <Peg pegDiscs={pegDiscs} numPegs={numPegs} diskSize={diskSize} key={index} selected={selected === index} pegNum={index} selectHandler={selectHandler} />
+            <Peg pegDiscs={pegDiscs} numPegs={numPegs} key={index} selected={selected === index} pegNum={index} selectHandler={selectHandler} />
           )
         }
       </div>

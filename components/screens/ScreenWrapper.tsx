@@ -11,12 +11,12 @@ export const ScreenWrapper = () => {
 
   return (
     <>
-      {screenState.value === "start" && (
+      {screenState.value === "start" &&
         <Fade in={true}>
           <ScreenStart />
         </Fade>
-      )}
-      {screenState.value === "game" && (
+      }
+      {screenState.matches("game") &&
         <Fade in={true}>
           <Flex
             height="100vh"
@@ -27,8 +27,8 @@ export const ScreenWrapper = () => {
             <ScreenGame />
           </Flex>
         </Fade>
-      )}
-      {screenState.value === "settings" && (
+      }
+      {screenState.value === "settings" &&
         <Fade in={true}>
           <Flex
             height="100vh"
@@ -40,8 +40,8 @@ export const ScreenWrapper = () => {
             <ScreenSettings />
           </Flex>
         </Fade>
-      )}
-      {screenState.matches("tutorial") && (
+      }
+      {screenState.matches("tutorial") &&
         <Fade in={true}>
           <Flex
             height="100vh"
@@ -53,7 +53,7 @@ export const ScreenWrapper = () => {
             <ScreenTutorial />
           </Flex>
         </Fade>
-      )}
+      }
     </>
   );
 };

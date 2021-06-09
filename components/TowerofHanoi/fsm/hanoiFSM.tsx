@@ -11,7 +11,7 @@ import { initialGameState } from './actions/hanoiFSMActions';
     context: {
       numDisks: 0,
       numPegs: 0,
-      gameState: Array(Array()),
+      gameBoard: Array(Array()),
       activePeg: 0
     },
     states: {
@@ -79,7 +79,7 @@ import { initialGameState } from './actions/hanoiFSMActions';
   {
     actions: {
       initializeGameState: assign({
-        gameState: (context, event) => initialGameState(context.numPegs, context.numDisks)
+        gameBoard: (context, event) => initialGameState(context.numPegs, context.numDisks)
       })
     }
   }

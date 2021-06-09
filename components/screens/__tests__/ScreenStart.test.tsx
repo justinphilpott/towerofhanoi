@@ -2,7 +2,7 @@ import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, fireEvent } from '@testing-library/react';
 
-import { ScreenStart } from './ScreenStart';
+import { ScreenStart } from '../ScreenStart';
 
 /** need screen provider here */
 describe('Screen: Start', () => {

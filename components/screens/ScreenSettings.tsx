@@ -34,7 +34,7 @@ export const ScreenSettings = () => {
   let minMoves = minMovesLookupTable[numPegs-3][numDisks-1];
 
   return (
-    <Flex direction="column" width="100vw" background="rgba(255, 255, 255, 0.9)" p="12" rounded="6" boxShadow="md">
+    <Flex direction="column" width="100vw" background="rgba(255, 255, 255, 0.9)" p="12" rounded="6">
 
       <Flex direction="row" flexWrap="wrap" width="100%" justifyContent="space-between">
         <Heading as="h2" size="lg" mb={6} mr={3}>Settings</Heading>
@@ -70,7 +70,7 @@ export const ScreenSettings = () => {
       </Flex>
 
       <Flex direction="row">
-        <Button colorScheme="salmon" onClick={() => screenSend({ type: "SAVE", numPegs: numPegs, numDisks: numDisks })}>OK</Button>
+        <Button colorScheme="purple" onClick={() => screenSend({ type: "SAVE", numPegs: numPegs, numDisks: numDisks })}>Done</Button>
       </Flex>
 
     </Flex>

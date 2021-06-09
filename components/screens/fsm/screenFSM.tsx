@@ -64,6 +64,12 @@ export const screenFSM = createMachine<typeof screenFSMModel>(
           },
           pageThree: {
             on: {
+              NEXT: { target: 'pageFour' },
+              CLOSE: { target: 'finish' }
+            }
+          },
+          pageFour: {
+            on: {
               CLOSE: { target: 'finish' }
             }
           },
@@ -96,10 +102,31 @@ export const screenFSM = createMachine<typeof screenFSMModel>(
           SETTINGS: {
             target: 'settings'
           },
-          START: {
-            target: 'start'
+        },
+        initial: 'default',
+        states: {
+          default: {
+            on: {
+              QUITCHECK: {
+                target: 'quitDialog'
+              }
+            }
+          },
+          quitDialog: {
+            on: {
+              STAY: {
+                target: 'default'
+              },
+              QUIT: {
+                target: 'finish'
+              },
+            }
+          },
+          finish: {
+            type: 'final'
           }
         },
+        onDone: 'start'
       }
     }
   },

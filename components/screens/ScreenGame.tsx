@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, ButtonGroup, Flex, Text } from "@chakra-ui/react"
+import { Button, ButtonGroup, Flex, Text, Heading } from "@chakra-ui/react"
 import { Game } from '../TowerofHanoi/components/Game';
 import { useScreenService, useScreenInterpreter } from './fsm/ScreenFSMProvider';
 import { useActor } from '@xstate/react';
@@ -21,17 +21,18 @@ export const ScreenGame = () => {
 
   const [screenState, screenSend] = useScreenService();
 
-  const screenInterpreter = useScreenInterpreter();
-
   // this could return undefined if the FSM wasn't there, but it will be so we !
-  const [hanoiState, hanoiSend] = useActor(screenInterpreter.children.get('hanoiFSM')!);
+  const [hanoiState, hanoiSend] = useActor(useScreenInterpreter().children.get('hanoiFSM')!);
 
   const disks = hanoiState.context.numDisks;
   const pegs = hanoiState.context.numPegs;
 
-  const fn = () => {
+  // note that this provides a manner of abstraction in that the actual game
+  // component doesn't care what manner of state management we use, it is merely a view
+
+  const selectHandler = () => {
     // call the hanoi send method passing the selected index
-    console.log('test');
+    console.log('select handler');
   }
 
   /**
@@ -52,14 +53,27 @@ export const ScreenGame = () => {
 
   return (
     <>
-      <Flex direction="column" width="100vw" height="100vh" alignItems="center" background="rgba(0, 0, 0, 0.6)" justifyContent="space-between">
+      <Flex direction="column" width="100vw" height="100vh" alignItems="center" background="rgba(0, 0, 0, 0.6)" justifyContent="space-between" position="relative">
+        
         <Flex direction="row" width="100vw" justifyContent="space-between" p="2">
-          <Button colorScheme="salmon" m="0 0.5em 0 0.5em" onClick={() => screenSend("START")}>Back</Button>
+          <Button colorScheme="purple" m="0 0.5em 0 0.5em" onClick={() => screenSend("QUITCHECK")}>Quit</Button>
           <Button colorScheme="teal" m="0 0.5em 0 0.5em" onClick={() => hanoiSend('RESET')}>Restart</Button>
         </Flex>
         <Flex direction="row" width="100vw" justifyContent="center" p="12">
-          <Game state={hanoiState.context} selectHandler={fn} />
+          <Game state={hanoiState.context} selectHandler={selectHandler} />
         </Flex>
+
+        {screenState.matches("game.quitDialog") &&
+          <Flex position="absolute" direction="column" width="100vw" height="100vh" alignItems="center" background="rgba(0, 0, 0, 0.6)" justifyContent="center" zIndex={1000}>
+            <Flex direction="column" width="300px" background="rgba(255, 255, 255, 0.9)" p="12" rounded="6">
+              <Flex direction="column" flexWrap="wrap" width="100%" justifyContent="center">
+                <Heading as="h2" size="lg" mb={6} mr={3}>Really quit?</Heading>
+                <Button colorScheme="teal" mb={6} onClick={() => screenSend({ type: "STAY"})}>Play on</Button>
+                <Button colorScheme="purple" onClick={() => screenSend({ type: "QUIT"})}>Quit</Button>
+              </Flex>
+            </Flex>
+          </Flex>
+        }
       </Flex>
     </>
   )

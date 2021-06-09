@@ -5,17 +5,17 @@ import { ScreenProvider } from '../components/screens/fsm/ScreenFSMProvider'; //
 
 export default function Home() {
   return (
-    <Fade in={true}>
-    <Flex height="100vh" width="100vw" alignItems="center" justifyContent="center" border="10px solid 000" backgroundImage="url('/crane_bg2.jpg')"  background-blend-mode="screen" bgPosition="center"
-    bgRepeat="repeat" backgroundSize="cover">
-      <Head>
-        <title>Tower of Hanoi</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <ScreenProvider name="screen">
-        <ScreenWrapper />
-      </ScreenProvider>
-    </Flex>
-    </Fade>
+    <ScreenProvider name="screen">
+      <Fade in={true}>
+        <Flex height="100vh" width="100vw" alignItems="center" justifyContent="center" border="10px solid 000" backgroundImage="url('/crane_bg2.jpg')"  background-blend-mode="screen" bgPosition="center"
+        bgRepeat="repeat" backgroundSize="cover">
+          <Head>
+            <title>Tower of Hanoi</title>
+            <link rel="icon" href="/favicon.ico" />
+          </Head>
+          <ScreenWrapper />
+      </Flex>
+      </Fade>
+    </ScreenProvider>
   )
 }

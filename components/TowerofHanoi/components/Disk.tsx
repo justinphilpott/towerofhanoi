@@ -2,12 +2,11 @@ import React, { MouseEvent } from 'react';
 
 export interface DiskProps {
   diskNumber: number;
-  diskSize: number;
   key: number;
   selected: boolean;
 }
 
-export const Disk = ({ diskNumber, diskSize, selected }: DiskProps) => {
+export const Disk = ({ diskNumber, selected }: DiskProps) => {
 
   return (
     <>

@@ -4,7 +4,6 @@ import { Disk } from "./Disk"
 
 export interface PegProps {
   pegDiscs: number[];
-  diskSize: number;
   numPegs: number;
   selected: boolean;
   pegNum: number;
@@ -16,7 +15,9 @@ export interface PegProps {
  * 
  * @todo find how to pass methods... usereducer, useMethods? try that...
  */
-export const Peg = ({ pegDiscs, numPegs, diskSize, selected, pegNum, selectHandler }: PegProps) => {
+export const Peg = ({ pegDiscs, numPegs, selected, pegNum, selectHandler }: PegProps) => {
+
+       
 
   const pegClickHandler = (index: number) => {
     console.log('call selectHandler with index', index);
@@ -27,7 +28,7 @@ export const Peg = ({ pegDiscs, numPegs, diskSize, selected, pegNum, selectHandl
     <ul
       onClick={() => pegClickHandler(pegNum)}
       className="peg">
-      {pegDiscs.map((diskNum: number) => <Disk diskNumber={diskNum} diskSize={diskSize} key={diskNum} selected={selected} />)}
+      {pegDiscs.map((diskNum: number) => <Disk diskNumber={diskNum} key={diskNum} selected={selected} />)}
     </ul>
     <style jsx>{`
       ul.peg {
