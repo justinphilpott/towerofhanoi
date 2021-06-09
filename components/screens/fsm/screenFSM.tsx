@@ -1,8 +1,9 @@
 import { createMachine, assign } from 'xstate'
 import { createModel } from 'xstate/lib/model';
 import { hanoiFSM } from '../../TowerofHanoi/fsm/hanoiFSM'
-import { PlayEvent } from './types/screenFSMTypes';
+import { PlayEvent, ScreenContext } from './types/screenFSMTypes';
 import { HanoiContext } from '../../TowerofHanoi/fsm/types/hanoiFSMTypes'
+import { start } from 'xstate/lib/actions';
 
 /**
  * controls the screen logic, transitions between screens
@@ -11,15 +12,16 @@ import { HanoiContext } from '../../TowerofHanoi/fsm/types/hanoiFSMTypes'
  *
  * States are keys of states, CAPS keys are events.
  */
-const hanoiDefault = createModel({
+const screenFSMModel = createModel({
   numPegs: 3,
   numDisks: 5
 })
 
-export const screenFSM = createMachine<typeof hanoiDefault>(
+export const screenFSM = createMachine<typeof screenFSMModel>(
   {
     id: 'screenFSM',
     initial: 'start',
+    context: screenFSMModel.initialContext,
     states: {
       start: {
         on: {
@@ -28,25 +30,50 @@ export const screenFSM = createMachine<typeof hanoiDefault>(
           },
           SETTINGS: {
             target: 'settings',
+          },
+          TUTORIAL: {
+            target: 'tutorial',
           }
         }
       },
       settings: {
         on: {
-          PLAY: {
-            target: 'game',
+          SAVE: {
+            target: 'start',
             actions: [
-              hanoiDefault.assign({ numPegs: (context, event: PlayEvent) => event.numPegs }),
-
+              screenFSMModel.assign({ numPegs: (context, event: PlayEvent) => { console.log("pegs ", event.numPegs); return event.numPegs} }),
+              screenFSMModel.assign({ numDisks: (context, event: PlayEvent) => { console.log("disks ", event.numDisks); return event.numDisks} }),
             ]
-          },
-          START: {
-            target: 'start'
           }
         }
       },
+      tutorial: {
+        initial: 'pageOne',
+        states: {
+          pageOne: {
+            on: {
+              NEXT: { target: 'pageTwo' },
+              CLOSE: { target: 'finish' }
+            }
+          },
+          pageTwo: {
+            on: {
+              NEXT: { target: 'pageThree' },
+              CLOSE: { target: 'finish' }
+            }
+          },
+          pageThree: {
+            on: {
+              CLOSE: { target: 'finish' }
+            }
+          },
+          finish: {
+            type: 'final'
+          }
+        },
+        onDone: 'start'
+      },
       game: {
-
         // now we invoke the hanoiFSM setting the initial state
         invoke: {
           id: 'hanoiFSM',
@@ -64,12 +91,15 @@ export const screenFSM = createMachine<typeof hanoiDefault>(
             target: 'start',
           }
         },
-
         on: {
+          // go to the setting screen
           SETTINGS: {
-            target: "settings"
+            target: 'settings'
+          },
+          START: {
+            target: 'start'
           }
-        }
+        },
       }
     }
   },
@@ -80,8 +110,7 @@ export const screenFSM = createMachine<typeof hanoiDefault>(
       }
     },
     guards: {
-      // this will need to go direct to the hanoi fsm to determine as that is the source of truth for game status
-      // true === is not initial and is not complete
+
     }
   }
 );

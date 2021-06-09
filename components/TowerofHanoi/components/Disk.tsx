@@ -26,11 +26,11 @@ export const Disk = ({ diskNumber, diskSize, selected }: DiskProps) => {
           margin: 0;
           border-bottom: 0px;
           user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
-          width: ${(diskNumber+5)*18}px;
+          width: 100%;
           justify-content: center;
           align-items: center;
           display: flex;
-          background: linear-gradient(to right, #cfbb4b 0%, #e9ce56 20%, #fde86e 20.5%, #ebd55a 21%, #837527 60%, #615618 80%, #867d29 90%, #b6ad36 100%);
+          background: linear-gradient(to left, #cfbb4b 0%, #e9ce56 20%, #fde86e 20.5%, #ebd55a 21%, #837527 60%, #615618 80%, #867d29 90%, #b6ad36 100%);
         }
         li.disk:first-child {
           color: ${ selected ? '#fff' : '#000' };

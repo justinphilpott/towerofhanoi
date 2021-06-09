@@ -1,0 +1,23 @@
+dev_tones Free Edition - License for use
+
+Please note: to use the free tones, attribution is required:
+http://creativecommons.org/licenses/by/3.0/us/
+
+Attribution can be made to "RCP", "RCP Tones", or "dev_tones" with either of the following links:
+http://rcptones.com
+http://rcptones.com/dev_tones/
+
+You are allowed to use the 8 tones in our sample pack free of charge and royalty free in your projects (such as films, videos, games, presentations, animations, stage plays, radio plays, audio books, apps) be it for commercial or non-commercial purposes (with attribution).
+
+But you are NOT allowed to:
+-post or resell the tones (as sound effects or ringtones) on any website or anywhere for others to download, copy or use
+-use them as a raw material to create sound effects or ringtones that you will sell, distribute or offer for downloading
+-sell or license the tones (as sound effects or ringtones) to anyone else
+-claim the tones as yours
+-share the tones with non-purchasers of dev_tones
+-distribute the tones in apps or programs that are clearly sound related in nature (such as sound machine, funny tones app, sound therapy app, ringtone maker, etc.).
+-distribute the tones in apps or programs that use the tones as the program's sound resource library for other people's use (such as animation creator, video editing app, song maker software, ebook creator, etc.). If you are developing such programs, contact us for licensing options.
+-use the tones to create so-called 'video sound effects'. An example would be a video titled 'dog sound effect' that simply plays a dog sound effect.
+-use the tones in any form of "easy app builder" tools or websites. Xcode is acceptable; point-and-click app creator websites are not
+-use the tones in a way that encourages downstream distribution. This means no templates or skins or theme kits or similar uses. (The person using the theme or template might not know where the icons came from and thus wouldn't be following the license.)
+EXCEPT TO THE EXTENT REQUIRED BY APPLICABLE LAW, IN NO EVENT WILL LICENSOR BE LIABLE TO YOU ON ANY LEGAL THEORY FOR ANY SPECIAL, INCIDENTAL, CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES ARISING OUT OF THIS LICENSE OR THE USE OF THE WORK, EVEN IF LICENSOR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.

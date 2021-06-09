@@ -8,6 +8,7 @@ export interface PegProps {
   numPegs: number;
   selected: boolean;
   pegNum: number;
+  selectHandler: (pegIndex: number) => void;
 }
 
 /**
@@ -15,11 +16,11 @@ export interface PegProps {
  * 
  * @todo find how to pass methods... usereducer, useMethods? try that...
  */
-export const Peg = ({ pegDiscs, numPegs, diskSize, selected, pegNum }: PegProps) => {
-
+export const Peg = ({ pegDiscs, numPegs, diskSize, selected, pegNum, selectHandler }: PegProps) => {
 
   const pegClickHandler = (index: number) => {
-    console.log('call fsm passing the index of the clicked peg', index);
+    console.log('call selectHandler with index', index);
+    return selectHandler(index);
   }
 
   return (<>
@@ -33,7 +34,6 @@ export const Peg = ({ pegDiscs, numPegs, diskSize, selected, pegNum }: PegProps)
         z-index: 2;
         list-style: none;
         margin: 0;
-        padding: 32px 0 0;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
@@ -41,10 +41,9 @@ export const Peg = ({ pegDiscs, numPegs, diskSize, selected, pegNum }: PegProps)
         position: relative;
         flex-grow: 1;
         flex-basis: 0;
-
         border-bottom: 20px solid #000;
         border-image:
-          linear-gradient(to bottom, #738ca4 0%, #eee 100%) 100% 0;
+          linear-gradient(to top, #455463 0%, rgb(184, 183, 183) 100%) 100% 0;
       }
       ul.peg:after {
         content: "";

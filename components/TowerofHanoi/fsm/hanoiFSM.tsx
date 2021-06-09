@@ -1,7 +1,6 @@
 import { Machine, assign } from 'xstate';
 import { initialGameState } from './actions/hanoiFSMActions';
 
-
 /**
  * hanoiFSM
  */
@@ -17,7 +16,7 @@ import { initialGameState } from './actions/hanoiFSMActions';
     },
     states: {
       initial: {
-        entry: ['initialiseGameState'],
+        entry: ['initializeGameState'],
         on: {
           SELECTSRC: 'srcSelected',
           NEWGAME: 'newGame'
@@ -79,7 +78,7 @@ import { initialGameState } from './actions/hanoiFSMActions';
   },
   {
     actions: {
-      initialiseGameState: assign({
+      initializeGameState: assign({
         gameState: (context, event) => initialGameState(context.numPegs, context.numDisks)
       })
     }

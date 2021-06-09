@@ -1,28 +1,13 @@
 import React from 'react'
-import { Button, ButtonGroup } from '@chakra-ui/react'
-import {
-  Flex, Spacer
-} from "@chakra-ui/react"
+import { Button, ButtonGroup, Flex, Text } from "@chakra-ui/react"
 import { Game } from '../TowerofHanoi/components/Game';
-import { hanoiFSM } from '../TowerofHanoi/fsm/hanoiFSM';
 import { useScreenService, useScreenInterpreter } from './fsm/ScreenFSMProvider';
 import { useActor } from '@xstate/react';
 import { XStateInspectLoaderProps } from 'xstate-helpers';
 
 type CallbackFunction = () => void;
 
-interface GameConfig {
-  numDisks: number,
-  numPegs: number,
-  gameBoard: number[],
-  activePeg: number|boolean
-}
 
-interface GameWrapper {
-
-
-
-}
 
 /**
  * ScreenGame
@@ -37,10 +22,17 @@ export const ScreenGame = () => {
   const [screenState, screenSend] = useScreenService();
 
   const screenInterpreter = useScreenInterpreter();
-  // this could return undefined if the FSM wasn't there, but it will be so we !
-  const [hanoiState, hanoiSend] = useActor(screenInterpreter.children.get('hanoiFSM')!); 
 
-  // console.log("hanoiState", hanoiState);
+  // this could return undefined if the FSM wasn't there, but it will be so we !
+  const [hanoiState, hanoiSend] = useActor(screenInterpreter.children.get('hanoiFSM')!);
+
+  const disks = hanoiState.context.numDisks;
+  const pegs = hanoiState.context.numPegs;
+
+  const fn = () => {
+    // call the hanoi send method passing the selected index
+    console.log('test');
+  }
 
   /**
    * onResetGame
@@ -60,12 +52,14 @@ export const ScreenGame = () => {
 
   return (
     <>
-      <Flex direction="column" width="100vw" height="100vh" alignItems="center" justifyContent="space-between">
-        <Flex direction="row" width="100vw"  justifyContent="space-between" background="rgba(15, 55, 56, 0.2)" p="2">
-          <Button colorScheme="teal" m="0 0.5em 0 0.5em" onClick={() => screenSend("SETTINGS")}>New game</Button>
-          <Button colorScheme="teal" m="0 0.5em 0 0.5em" onClick={() => onResetGame()}>Reset game</Button>
+      <Flex direction="column" width="100vw" height="100vh" alignItems="center" background="rgba(0, 0, 0, 0.6)" justifyContent="space-between">
+        <Flex direction="row" width="100vw" justifyContent="space-between" p="2">
+          <Button colorScheme="salmon" m="0 0.5em 0 0.5em" onClick={() => screenSend("START")}>Back</Button>
+          <Button colorScheme="teal" m="0 0.5em 0 0.5em" onClick={() => hanoiSend('RESET')}>Restart</Button>
         </Flex>
-        <Game state={hanoiState} />
+        <Flex direction="row" width="100vw" justifyContent="center" p="12">
+          <Game state={hanoiState.context} selectHandler={fn} />
+        </Flex>
       </Flex>
     </>
   )

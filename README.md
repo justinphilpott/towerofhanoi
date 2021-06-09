@@ -28,3 +28,26 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+
+
+Tutorial:
+
+Aim of the puzzle:
+
+Move the tower of disks from the first peg to the last peg.
+
+Rules
+- You can only move a single disk at a time.
+- A larger disk can never be placed onto a smaller one.
+
+Disks
+- For every extra disk the number of required
+moves to solve the puzzle doubles. Change the number of disks in 'settings'.
+
+Pegs
+- The standard setup is the three disk puzzle. With four or more pegs the puzzle gets easier to solve, however working out the optimal solution is not easy. Change the number of pegs in 'settings'.
+
+
+

@@ -15,6 +15,7 @@ export interface ScreenStateSchema {
 export interface ScreenContext {
   numDisks: number;
   numPegs: number;
+  tutorialPage: number;
 }
 
 export type PlayEvent = {
@@ -22,9 +23,3 @@ export type PlayEvent = {
   numPegs: number;
   numDisks: number;
 }
-
-/*
-| { type: 'PLAY'; numPegs: number; numDisks: number; }
-| { type: 'SETTINGS' }
-| { type: 'START' };
-*/
