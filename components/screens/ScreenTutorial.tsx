@@ -57,7 +57,7 @@ export const ScreenTutorial = () => {
         {(!screenState.matches("tutorial.pageFour")) &&
           <Button colorScheme="teal" mt="1em" onClick={() => screenSend({ type: "NEXT" })}>Next</Button>
         }
-        <Button alignSelf="flex-end" colorScheme="purple" m="1em 0 0 1em" onClick={() => screenSend({ type: "CLOSE" })}>Close</Button>
+        <Button alignSelf="flex-end" colorScheme="purple" onClick={() => screenSend({ type: "CLOSE" })}>Close</Button>
       </Flex>
 
     </Flex>

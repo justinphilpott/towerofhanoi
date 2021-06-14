@@ -8,7 +8,8 @@ import {
   Text,
   Box,
   Flex,
-  ButtonGroup
+  ButtonGroup,
+  SlideFade
 } from "@chakra-ui/react"
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { useScreenService } from './fsm/ScreenFSMProvider';

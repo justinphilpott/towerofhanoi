@@ -53,7 +53,7 @@ export const Peg = ({ pegDiscs, numPegs, selected, pegNum, selectHandler }: PegP
         top: 0;
         bottom: 0;
         left: 50%;
-        border-left: 10px solid #cba;
+        border-left: 6px solid #cba;
         border-radius: 50%;
         transform: translate(-50%);
         border-image:

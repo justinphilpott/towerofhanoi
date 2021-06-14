@@ -22,15 +22,31 @@ export const initialGameState = (pegs:number, disks:number): number[][] => {
   return towers;
 }
 
+/**
+ * if(activePeg === 0) { // src has not been selected
+ *
+ *   if (legal src selection) {
+ *     target: set activePeg == chosen peg
+ *   } else {
+ *     target: set error message, invalid source peg/disk
+ *   }
+ *
+ * } else { // src peg HAS been selected
+ *
+ *   if (legal dest selection) {
+ *     update gameBoard from previous gameBoard
+ *     set activePeg === 0
+ *   } else {
+ *     target: set error message, invalid dest peg
+ *   }
+ *
+ * }
+ */
+export const processSelect = (context, event) => {
 
-// ...
-const isMidGame = (context: HanoiContext, event: Event) => {
-  // check hanoi fsm
-  console.log('check state on hanoi fsm to determine if we have started and not finished the game...');
-  return true;
-};
 
 
+}
 
 
 
@@ -47,10 +63,7 @@ const isMidGame = (context: HanoiContext, event: Event) => {
 // const performMove = (startPeg:number, destPeg:number) => {}
 // const isComplete = () => {}
 
-
 const isValidMoveSrc = (context: HanoiContext, event: Event) => {
-
-
 
 }
 

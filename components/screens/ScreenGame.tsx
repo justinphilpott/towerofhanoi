@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, ButtonGroup, Flex, Text, Heading } from "@chakra-ui/react"
+import { Button, ButtonGroup, Flex, Text, Heading, ScaleFade, SlideFade } from "@chakra-ui/react"
 import { Game } from '../TowerofHanoi/components/Game';
 import { useScreenService, useScreenInterpreter } from './fsm/ScreenFSMProvider';
 import { useActor } from '@xstate/react';
@@ -33,6 +33,9 @@ export const ScreenGame = () => {
   const selectHandler = () => {
     // call the hanoi send method passing the selected index
     console.log('select handler');
+    hanoiSend({
+      type: "SELECT"
+    })
   }
 
   /**
@@ -55,17 +58,23 @@ export const ScreenGame = () => {
     <>
       <Flex direction="column" width="100vw" height="100vh" alignItems="center" background="rgba(0, 0, 0, 0.6)" justifyContent="space-between" position="relative">
         
+      <SlideFade in={true} offsetY="-20px">
         <Flex direction="row" width="100vw" justifyContent="space-between" p="2">
           <Button colorScheme="purple" m="0 0.5em 0 0.5em" onClick={() => screenSend("QUITCHECK")}>Quit</Button>
+          {/*<Button colorScheme="salmon" m="0 0.5em 0 0.5em" onClick={() => hanoiSend('RESET')}>Restart</Button>*/}
           <Button colorScheme="teal" m="0 0.5em 0 0.5em" onClick={() => hanoiSend('RESET')}>Restart</Button>
         </Flex>
-        <Flex direction="row" width="100vw" justifyContent="center" p="12">
+      </SlideFade>
+
+      <ScaleFade in={true} initialScale={0.5}>
+        <Flex direction="column" width="100vw" alignItems="center" p="3">
           <Game state={hanoiState.context} selectHandler={selectHandler} />
         </Flex>
+      </ScaleFade>
 
         {screenState.matches("game.quitDialog") &&
           <Flex position="absolute" direction="column" width="100vw" height="100vh" alignItems="center" background="rgba(0, 0, 0, 0.6)" justifyContent="center" zIndex={1000}>
-            <Flex direction="column" width="300px" background="rgba(255, 255, 255, 0.9)" p="12" rounded="6">
+            <Flex direction="column" width="300px" background="rgba(255, 255, 255, 0.9)" p={6} rounded={8}>
               <Flex direction="column" flexWrap="wrap" width="100%" justifyContent="center">
                 <Heading as="h2" size="lg" mb={6} mr={3}>Really quit?</Heading>
                 <Button colorScheme="teal" mb={6} onClick={() => screenSend({ type: "STAY"})}>Play on</Button>
