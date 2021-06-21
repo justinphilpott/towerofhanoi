@@ -1,4 +1,4 @@
-import { HanoiContext } from '../types/hanoiFSMTypes';
+import { HanoiContext } from './types/hanoiFSMTypes';
 
 /**
  * @param pegs
@@ -11,9 +11,7 @@ import { HanoiContext } from '../types/hanoiFSMTypes';
  *
  * [[1, 2, 3, 4, 5], [0], [0]]
  */
-export const initialGameState = (pegs:number, disks:number): number[][] => {
-  console.log(pegs, disks);
-
+export const initialGameBoardState = (pegs:number, disks:number): number[][] => {
   const towers:number[][] = Array(pegs);
   const firstTower = Array(disks+1).keys();
   towers[0] = [...firstTower]; // place the disks on the first peg
@@ -45,28 +43,5 @@ export const initialGameState = (pegs:number, disks:number): number[][] => {
 export const processSelect = (context, event) => {
 
 
-
-}
-
-
-
-/**
- * Build the initial towers structure with
- * "disks" disks on the first of "pegs" pegs.
- *
- * e.g. pegs=3, disks=5 gives
- * [[1, 2, 3, 4, 5], [], []]
- *
- */
-
-// const isValidMove = (startPeg:number, destPeg:number) => {}
-// const performMove = (startPeg:number, destPeg:number) => {}
-// const isComplete = () => {}
-
-const isValidMoveSrc = (context: HanoiContext, event: Event) => {
-
-}
-
-const isValidMoveDest = (context: HanoiContext, event: Event) => {
 
 }

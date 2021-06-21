@@ -17,8 +17,6 @@ export interface GameProps {
  */
 export const Game = ({ state, selectHandler }: GameProps) => {
 
-  console.log(selectHandler, typeof selectHandler);
-
   const game = state.gameBoard;
   const pegLengths: number[] = game.map((peg: number[]) => { return peg.length; })
   const numDisks: number = pegLengths.reduce((a, b) => { return a + b });

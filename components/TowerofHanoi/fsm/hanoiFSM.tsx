@@ -1,60 +1,117 @@
-import { Machine, assign } from 'xstate';
-import { initialGameState, processSelect } from './actions/hanoiFSMActions';
+import { createMachine, assign } from 'xstate';
+import { createModel } from 'xstate/lib/model';
+import { initialGameBoardState, processSelect } from './hanoiFSMActions';
+import { validDiskSelection, validMoveSelection } from './hanoiFSMGuards';
+import { HanoiContext, HanoiEvent } from './types/hanoiFSMTypes';
+
+
+const HanoiFSMModel = createModel({
+  numDisks: 0,
+  numPegs: 0,
+  gameBoard: Array(Array()),
+  activePeg: 0,
+  moves: Array(Array()),
+  errorMessage: '',
+})
+
 
 /**
  * hanoiFSM
- * 
+ *
  * select needs to determine if this is the first selection
  * or the move selection, if the selection is legal or not etc....
- *
- * 
  */
- export const hanoiFSM = Machine(
+ export const hanoiFSM = createMachine<typeof HanoiFSMModel, HanoiContext, HanoiEvent>(
   {
     id: 'hanoiFSM',
     initial: 'playing',
-    context: {
-      numDisks: 0,
-      numPegs: 0,
-      gameBoard: Array(Array()),
-      activePeg: 0,
-      moves: Array(Array()),
-      errorMessage: '',
-    },
     states: {
       playing: {
-        initial: 'awaitingSelection',
+        initial: 'awaitingDiskSelection',
         states: {
-          awaitingSelection: {
+
+
+
+
+
+          // 
+          awaitingDiskSelection: {
             initial: 'start',
             states: {
               start: {
                 entry: ['initializeGameState']
               },
-              midGame: {
-                on: {
-                  SELECT: {
-
-                  }
+              midGame: {}
+            },
+            on: {
+              SELECT: [
+                {
+                  target: 'diskSelected',
+                  cond: validDiskSelection
+                },
+                {
+                  target: 'invalidDiskSelection'
                 }
-              }
+              ]
+            }
+          },
+
+
+
+
+
+
+          invalidDiskSelection: {
+            on: {
+              SELECT: [
+                {
+                  target: 'moveSelected',
+                  cond: validMoveSelection
+                },
+                {
+                  target: 'invalidMoveSelected'
+                }
+              ]
             }
           },
           diskSelected: {
-
-          },
-          invalidDiskSelection: {
-
-          },
-          moveSelected: {
-
+            on: {
+              SELECT: [
+                {
+                  target: 'moveSelected',
+                  cond: validMoveSelection
+                },
+                {
+                  target: 'invalidMoveSelected'
+                }
+              ]
+            }
           },
           invalidMoveSelected: {
-
+            on: {
+              SELECT: [
+                {
+                  target: 'moveSelected',
+                  cond: validMoveSelection
+                },
+                {
+                  target: 'invalidMoveSelected'
+                }
+              ]
+            }
+          },
+          moveSelected: {
+            // do the actual move...
+            
           },
           movingDisk: {
 
+            // this will be
           },
+          moveComplete: {
+
+            // this will be transitioned too when
+          }
         },
       },
       gameComplete: {
@@ -74,20 +131,20 @@ import { initialGameState, processSelect } from './actions/hanoiFSMActions';
        * set up the default game position, all disks on the left hand peg
        */
       initializeGameState: assign({
-        gameBoard: (context) => initialGameState(context.numPegs, context.numDisks)
+        gameBoard: (context) => initialGameBoardState(context.numPegs, context.numDisks)
       }),
 
       /**
-       * 
+       *
        */
-      updateGameState: assign((context, event) => {
+      updateGameState: assign((context: HanoiContext, event) => {
 
         // obtain these from the event
         const srcPeg = 0;
         const destPeg = 2;
 
         // work on a copy, then assign. At this point we've already verified move legality
-        let newGameBoard = context.gameBoard;
+        let newGameBoard: any[][] = context.gameBoard;
         newGameBoard[destPeg].push(newGameBoard[srcPeg].pop());
 
         return {
@@ -101,82 +158,11 @@ import { initialGameState, processSelect } from './actions/hanoiFSMActions';
 
     },
     guards: {
-
+      validDiskSelection,
+      validMoveSelection
     },
     services: {
 
     }
   }
 );
-
-
-
-
-/*
-      awaitingInput: {
-        states: {
-          invalidSelection: {
-            on: {
-              SELECT: 'srcSelected',
-              RESET: 'initial',
-              NEWGAME: 'newGame'
-            }
-          },
-          srcSelected: {
-            on: {
-              
-               * analyse gameBoard to see if this peg can be a dest peg, i.e.
-               * - is empty
-               * - or, has disk that is larger than the top disk on src peg (activePeg)
-               *
-               * if (legal dest selection) {
-               *    target: 'moveSelected'
-               * } else {
-               *    target: 'invalidMove'
-               * }
-               
-               SELECT: 'moveSelected',
-    
-               RESET: 'initial',
-               NEWGAME: 'newGame'
-             }
-           },
-           invalidMove: {
-             on: {
-               SELECT: 'moveSelected',
-               RESET: 'initial',
-               NEWGAME: 'newGame'
-             }
-           },
-             
-         }
-       }
-
-       moveSelected: {
-         on: {
-           MOVE: 'moveInProgress',
-           REJECTMOVE: 'invalidMove',
-           RESET: 'initial',
-           NEWGAME: 'newGame'
-         }
-       },
-     
-       moveInProgress: {
-         on: {
- 
-           MOVECOMPLETE: 'moveComplete',
-         }
-       },
-       
-       moveComplete: {
-         // on entry, check if game is complete...
-         // GAMECOMPLETE: 'gameComplete'
-         on: {
-           SELECT: 'srcSelected',
-           RESET: 'initial',
-           NEWGAME: 'newGame'
-         }
-       },
-
-
-       */

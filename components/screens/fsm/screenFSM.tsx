@@ -17,7 +17,7 @@ const screenFSMModel = createModel({
   numDisks: 5
 })
 
-export const screenFSM = createMachine<typeof screenFSMModel>(
+export const screenFSM = createMachine<typeof screenFSMModel, >(
   {
     id: 'screenFSM',
     initial: 'start',
@@ -41,8 +41,8 @@ export const screenFSM = createMachine<typeof screenFSMModel>(
           SAVE: {
             target: 'start',
             actions: [
-              screenFSMModel.assign({ numPegs: (context, event: PlayEvent) => { console.log("pegs ", event.numPegs); return event.numPegs} }),
-              screenFSMModel.assign({ numDisks: (context, event: PlayEvent) => { console.log("disks ", event.numDisks); return event.numDisks} }),
+              screenFSMModel.assign({ numPegs: (context: HanoiContext, event: PlayEvent) => { return event.numPegs}}),
+              screenFSMModel.assign({ numDisks: (context: HanoiContext, event: PlayEvent) => { return event.numDisks}}),
             ]
           }
         }
@@ -132,9 +132,7 @@ export const screenFSM = createMachine<typeof screenFSMModel>(
   },
   {
     actions: {
-      setGameParams: (context, event) => {
-        console.log('set params...');
-      }
+
     },
     guards: {
 
