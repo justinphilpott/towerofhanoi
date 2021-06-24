@@ -15,11 +15,15 @@ export interface ScreenStateSchema {
 export interface ScreenContext {
   numDisks: number;
   numPegs: number;
-  tutorialPage: number;
 }
 
-export type PlayEvent = {
-  type: 'PLAY',
-  numPegs: number;
-  numDisks: number;
-}
+export type ScreenEvent =
+  | { type: 'PLAY', numPegs: number, numDisks: number }
+  | { type: 'SETTINGS', numPegs: number, numDisks: number }
+  | { type: 'TUTORIAL' }
+  | { type: 'SAVE', numPegs: number, numDisks: number }
+  | { type: 'NEXT' }
+  | { type: 'CLOSE' }
+  | { type: 'QUITCHECK' }
+  | { type: 'STAY' }
+  | { type: 'QUIT' };

@@ -6,7 +6,7 @@ import { Peg } from './Peg'
 
 export interface GameProps {
   state: GameConfig;
-  selectHandler: () => void;
+  selectHandler: (pegIndex: number) => void;
 }
 
 

@@ -1,6 +1,3 @@
-// ScreenProvider.tsx
-
-import React from 'react';
 import { useInterpret } from '@xstate/react';
 import { createReactContextHelpers } from 'xstate-helpers';
 import { useErrorHandler } from 'react-error-boundary';

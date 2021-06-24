@@ -1,4 +1,4 @@
-import { HanoiContext } from './types/hanoiFSMTypes';
+import { HanoiContext, HanoiEvent } from './types/hanoiFSMTypes';
 
 
 
@@ -23,10 +23,29 @@ import { HanoiContext } from './types/hanoiFSMTypes';
  * @param context 
  * @param event 
  */
-export const validDiskSelection = (context, event) => {
+export const validDiskSelection = (context: HanoiContext, event: HanoiEvent): boolean => {
+  console.log('validDiskSelection');
+  console.log(context.gameBoard);
+  console.log(event);
+
+  // is the peg empty
+
+  // disk to move is
+  const chosenDisk = context.gameBoard[event.pegIndex]
+
   return true;
 }
 
-const validMoveSelection = (context, event) => {
-  return true
+export const validMoveSelection = (context: HanoiContext, event: HanoiEvent): boolean => {
+  console.log('validMoveSelection');
+  console.log(context.gameBoard);
+  console.log(event);
+  return true;
+}
+
+export const gameCompleteCheck = (context: HanoiContext, event: HanoiEvent): boolean => {
+  console.log('gameCompleteCheck');
+  console.log(context.gameBoard);
+  console.log(event);
+  return true;
 }

@@ -1,7 +1,7 @@
 import { createMachine, assign } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { initialGameBoardState, processSelect } from './hanoiFSMActions';
-import { validDiskSelection, validMoveSelection } from './hanoiFSMGuards';
+import { initialGameBoardState } from './hanoiFSMActions';
+import { validDiskSelection, validMoveSelection, gameCompleteCheck } from './hanoiFSMGuards';
 import { HanoiContext, HanoiEvent } from './types/hanoiFSMTypes';
 
 
@@ -21,107 +21,84 @@ const HanoiFSMModel = createModel({
  * select needs to determine if this is the first selection
  * or the move selection, if the selection is legal or not etc....
  */
- export const hanoiFSM = createMachine<typeof HanoiFSMModel, HanoiContext, HanoiEvent>(
+ export const hanoiFSM = createMachine<HanoiContext, HanoiEvent>(
   {
     id: 'hanoiFSM',
-    initial: 'playing',
+    initial: 'init',
     states: {
-      playing: {
-        initial: 'awaitingDiskSelection',
-        states: {
-
-
-
-
-
-          // 
-          awaitingDiskSelection: {
-            initial: 'start',
-            states: {
-              start: {
-                entry: ['initializeGameState']
-              },
-              midGame: {}
+      init: {
+        entry: ['initializeGameState'],
+        always: { target: 'diskSelection' }
+      },
+      // handle choosing which disk we will move
+      diskSelection: {
+        on: {
+          SELECT: [
+            {
+              target: 'moveSelection',
+              cond: validDiskSelection
             },
-            on: {
-              SELECT: [
-                {
-                  target: 'diskSelected',
-                  cond: validDiskSelection
-                },
-                {
-                  target: 'invalidDiskSelection'
-                }
-              ]
+            {
+              target: '.invalidDiskAttempt'
             }
-          },
-
-
-
-
-
-
-          invalidDiskSelection: {
-            on: {
-              SELECT: [
-                {
-                  target: 'moveSelected',
-                  cond: validMoveSelection
-                },
-                {
-                  target: 'invalidMoveSelected'
-                }
-              ]
-            }
-          },
-          diskSelected: {
-            on: {
-              SELECT: [
-                {
-                  target: 'moveSelected',
-                  cond: validMoveSelection
-                },
-                {
-                  target: 'invalidMoveSelected'
-                }
-              ]
-            }
-          },
-          invalidMoveSelected: {
-            on: {
-              SELECT: [
-                {
-                  target: 'moveSelected',
-                  cond: validMoveSelection
-                },
-                {
-                  target: 'invalidMoveSelected'
-                }
-              ]
-            }
-          },
-          moveSelected: {
-            // do the actual move...
-            
-          },
-          movingDisk: {
-
-            // this will be
-          },
-          moveComplete: {
-
-            // this will be transitioned too when
-          }
+          ],
+          RESET: 'init'
         },
+        initial: 'awaitSelection',
+        states: {
+          awaitSelection: {},
+          invalidDiskAttempt: {},
+        }
+      },
+
+      // handle choosing where to place that disk
+      moveSelection: {
+        on: {
+          SELECT: [
+            {
+              target: 'moveSelected',
+              cond: validMoveSelection
+            },
+            {
+              target: '.invalidMoveAttempt'
+            }
+          ],
+          RESET: 'init'
+        },
+        initial: 'awaitSelection',
+        states: {
+          awaitSelection: {},
+          invalidMoveAttempt: {},
+        }
+      },
+
+      // complete the move
+      moveSelected: {
+        always: [
+          { target: 'gameComplete', cond: 'gameCompleteCheck' },
+          { target: 'movingDisk' }
+        ],
+
+        // do the actual move...
+        // trigger animation
+      },
+      movingDisk: {
+        // animating state
+        always: { target: 'moveComplete' }
+      },
+      moveComplete: {
+        // this will be transitioned too when the animation is complete
+        entry: ['updateGameState'],
+
+        always: [
+          { target: 'gameComplete', cond: 'gameCompleteCheck' },
+          { target: 'movingDisk' }
+        ],
       },
       gameComplete: {
         on: {
-          RESET: 'playing',
-          NEWGAME: 'newGame'
+          RESET: 'init',
         }
-      },
-      newGame: {
-        type: 'final'
       }
     }
   },
@@ -130,8 +107,10 @@ const HanoiFSMModel = createModel({
       /**
        * set up the default game position, all disks on the left hand peg
        */
-      initializeGameState: assign({
-        gameBoard: (context) => initialGameBoardState(context.numPegs, context.numDisks)
+      initializeGameState: assign((context: HanoiContext, event) => {
+        return {
+          gameBoard: initialGameBoardState(context.numPegs, context.numDisks)
+        }
       }),
 
       /**
@@ -151,15 +130,11 @@ const HanoiFSMModel = createModel({
           gameBoard: newGameBoard
         };
       }),
-
-      /**
-       * 
-       */
-
     },
     guards: {
       validDiskSelection,
-      validMoveSelection
+      validMoveSelection,
+      gameCompleteCheck
     },
     services: {
 

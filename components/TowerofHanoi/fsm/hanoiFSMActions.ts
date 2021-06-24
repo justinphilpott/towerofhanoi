@@ -19,29 +19,3 @@ export const initialGameBoardState = (pegs:number, disks:number): number[][] => 
   towers.fill([], 1);
   return towers;
 }
-
-/**
- * if(activePeg === 0) { // src has not been selected
- *
- *   if (legal src selection) {
- *     target: set activePeg == chosen peg
- *   } else {
- *     target: set error message, invalid source peg/disk
- *   }
- *
- * } else { // src peg HAS been selected
- *
- *   if (legal dest selection) {
- *     update gameBoard from previous gameBoard
- *     set activePeg === 0
- *   } else {
- *     target: set error message, invalid dest peg
- *   }
- *
- * }
- */
-export const processSelect = (context, event) => {
-
-
-
-}

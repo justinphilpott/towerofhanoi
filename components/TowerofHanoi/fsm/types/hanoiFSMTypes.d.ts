@@ -30,6 +30,5 @@ export interface HanoiContext {
 }
 
 export type HanoiEvent =
-  | { type: 'SELECT' }
+  | { type: 'SELECT', pegIndex: number }
   | { type: 'RESET' }
-  | { type: 'NEWGAME' };

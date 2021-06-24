@@ -17,10 +17,7 @@ export interface PegProps {
  */
 export const Peg = ({ pegDiscs, numPegs, selected, pegNum, selectHandler }: PegProps) => {
 
-       
-
   const pegClickHandler = (index: number) => {
-    console.log('call selectHandler with index', index);
     return selectHandler(index);
   }
 

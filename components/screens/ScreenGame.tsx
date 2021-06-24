@@ -30,11 +30,12 @@ export const ScreenGame = () => {
   // note that this provides a manner of abstraction in that the actual game
   // component doesn't care what manner of state management we use, it is merely a view
 
-  const selectHandler = () => {
+  const selectHandler = (pegIndex: number) => {
     // call the hanoi send method passing the selected index
-    console.log('select handler');
+    console.log('selectHandler', pegIndex);
     hanoiSend({
-      type: "SELECT"
+      type: "SELECT",
+      pegIndex: pegIndex
     })
   }
 

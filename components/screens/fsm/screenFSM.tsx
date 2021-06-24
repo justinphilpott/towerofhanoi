@@ -1,7 +1,7 @@
 import { createMachine, assign } from 'xstate'
 import { createModel } from 'xstate/lib/model';
 import { hanoiFSM } from '../../TowerofHanoi/fsm/hanoiFSM'
-import { PlayEvent, ScreenContext } from './types/screenFSMTypes';
+import { ScreenEvent, ScreenContext } from './types/screenFSMTypes';
 import { HanoiContext } from '../../TowerofHanoi/fsm/types/hanoiFSMTypes'
 import { start } from 'xstate/lib/actions';
 
@@ -17,7 +17,7 @@ const screenFSMModel = createModel({
   numDisks: 5
 })
 
-export const screenFSM = createMachine<typeof screenFSMModel, >(
+export const screenFSM = createMachine<ScreenContext>(
   {
     id: 'screenFSM',
     initial: 'start',
@@ -40,10 +40,7 @@ export const screenFSM = createMachine<typeof screenFSMModel, >(
         on: {
           SAVE: {
             target: 'start',
-            actions: [
-              screenFSMModel.assign({ numPegs: (context: HanoiContext, event: PlayEvent) => { return event.numPegs}}),
-              screenFSMModel.assign({ numDisks: (context: HanoiContext, event: PlayEvent) => { return event.numDisks}}),
-            ]
+            actions: ['saveSettings']
           }
         }
       },
@@ -132,9 +129,12 @@ export const screenFSM = createMachine<typeof screenFSMModel, >(
   },
   {
     actions: {
-
-    },
-    guards: {
+      saveSettings: assign((context: ScreenContext, event) => {
+        return {
+          numPegs: event.numPegs,
+          numDisks: event.numDisks
+        };
+      })
 
     }
   }
