@@ -1,9 +1,8 @@
 import { createMachine, assign } from 'xstate'
 import { createModel } from 'xstate/lib/model';
 import { hanoiFSM } from '../../TowerofHanoi/fsm/hanoiFSM'
-import { ScreenEvent, ScreenContext } from './types/screenFSMTypes';
+import { ScreenContext } from './types/screenFSMTypes';
 import { HanoiContext } from '../../TowerofHanoi/fsm/types/hanoiFSMTypes'
-import { start } from 'xstate/lib/actions';
 
 /**
  * controls the screen logic, transitions between screens
@@ -86,7 +85,7 @@ export const screenFSM = createMachine<ScreenContext>(
           data: {
             numDisks: (context: HanoiContext) => context.numDisks,
             numPegs: (context: HanoiContext) => context.numPegs,
-            activePeg: null
+            // we will at some point pass more here in different use cases...
           },
 
           // onDone will be set when the hanoiFSM reaches its final state
@@ -135,7 +134,6 @@ export const screenFSM = createMachine<ScreenContext>(
           numDisks: event.numDisks
         };
       })
-
     }
   }
 );

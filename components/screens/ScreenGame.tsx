@@ -27,9 +27,6 @@ export const ScreenGame = () => {
   const disks = hanoiState.context.numDisks;
   const pegs = hanoiState.context.numPegs;
 
-  // note that this provides a manner of abstraction in that the actual game
-  // component doesn't care what manner of state management we use, it is merely a view
-
   const selectHandler = (pegIndex: number) => {
     // call the hanoi send method passing the selected index
     console.log('selectHandler', pegIndex);
@@ -39,15 +36,6 @@ export const ScreenGame = () => {
     })
   }
 
-  /**
-   * onResetGame
-   *
-   * What does this need to do:
-   * - the FSM need to go to the initial state
-   * - which means setting up the start position of the game
-   * - which means assigning to the numPegs and numDisks
-   * -
-   */
   const onResetGame = () => {
     console.log("Implement onResetGame");
     hanoiSend({
@@ -58,20 +46,20 @@ export const ScreenGame = () => {
   return (
     <>
       <Flex direction="column" width="100vw" height="100vh" alignItems="center" background="rgba(0, 0, 0, 0.6)" justifyContent="space-between" position="relative">
-        
-      <SlideFade in={true} offsetY="-20px">
-        <Flex direction="row" width="100vw" justifyContent="space-between" p="2">
-          <Button colorScheme="purple" m="0 0.5em 0 0.5em" onClick={() => screenSend("QUITCHECK")}>Quit</Button>
-          {/*<Button colorScheme="salmon" m="0 0.5em 0 0.5em" onClick={() => hanoiSend('RESET')}>Restart</Button>*/}
-          <Button colorScheme="teal" m="0 0.5em 0 0.5em" onClick={() => hanoiSend('RESET')}>Restart</Button>
-        </Flex>
-      </SlideFade>
 
-      <ScaleFade in={true} initialScale={0.5}>
-        <Flex direction="column" width="100vw" alignItems="center" p="3">
-          <Game state={hanoiState.context} selectHandler={selectHandler} />
-        </Flex>
-      </ScaleFade>
+        <SlideFade in={true} offsetY="-20px">
+          <Flex direction="row" width="100vw" justifyContent="space-between" p="2">
+            <Button colorScheme="purple" m="0 0.5em 0 0.5em" onClick={() => screenSend("QUITCHECK")}>Quit</Button>
+            <Heading as="h2" size="lg" m={3} color="#fff">{hanoiState.context.message}</Heading>
+            <Button colorScheme="teal" m="0 0.5em 0 0.5em" onClick={() => hanoiSend('RESET')}>Restart</Button>
+          </Flex>
+        </SlideFade>
+
+        <ScaleFade in={true} initialScale={0.5}>
+          <Flex direction="column" width="100vw" alignItems="center" p="3">
+            <Game state={hanoiState.context} selectHandler={selectHandler} />
+          </Flex>
+        </ScaleFade>
 
         {screenState.matches("game.quitDialog") &&
           <Flex position="absolute" direction="column" width="100vw" height="100vh" alignItems="center" background="rgba(0, 0, 0, 0.6)" justifyContent="center" zIndex={1000}>
@@ -84,6 +72,7 @@ export const ScreenGame = () => {
             </Flex>
           </Flex>
         }
+
       </Flex>
     </>
   )

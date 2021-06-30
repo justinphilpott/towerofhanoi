@@ -1,7 +1,6 @@
 import React, { MouseEvent } from "react";
 import { Disk } from "./Disk"
 
-
 export interface PegProps {
   pegDiscs: number[];
   numPegs: number;
@@ -11,19 +10,21 @@ export interface PegProps {
 }
 
 /**
+ * Peg, renders a tower of 0 or more Disk components
+ *
  * @param {*} props
- * 
- * @todo find how to pass methods... usereducer, useMethods? try that...
+ *
  */
 export const Peg = ({ pegDiscs, numPegs, selected, pegNum, selectHandler }: PegProps) => {
 
-  const pegClickHandler = (index: number) => {
+  const pegClickHandler = (index: number, event: any) => {
+    event.stopPropagation();
     return selectHandler(index);
   }
 
   return (<>
     <ul
-      onClick={() => pegClickHandler(pegNum)}
+      onClick={(event) => pegClickHandler(pegNum, event)}
       className="peg">
       {pegDiscs.map((diskNum: number) => <Disk diskNumber={diskNum} key={diskNum} selected={selected} />)}
     </ul>

@@ -1,19 +1,18 @@
 import { createMachine, assign } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { initialGameBoardState } from './hanoiFSMActions';
-import { validDiskSelection, validMoveSelection, gameCompleteCheck } from './hanoiFSMGuards';
+import { isSelected, emptyPegSelected, immoveableDiskSelected, validMoveSelection, gameCompleteCheck } from './hanoiFSMGuards';
 import { HanoiContext, HanoiEvent } from './types/hanoiFSMTypes';
-
+import { assertEvent } from 'xstate-helpers';
 
 const HanoiFSMModel = createModel({
   numDisks: 0,
   numPegs: 0,
   gameBoard: Array(Array()),
-  activePeg: 0,
+  selectedPeg: 0,
   moves: Array(Array()),
   errorMessage: '',
-})
-
+});
 
 /**
  * hanoiFSM
@@ -30,38 +29,33 @@ const HanoiFSMModel = createModel({
         entry: ['initializeGameState'],
         always: { target: 'diskSelection' }
       },
+
       // handle choosing which disk we will move
       diskSelection: {
         on: {
           SELECT: [
-            {
-              target: 'moveSelection',
-              cond: validDiskSelection
-            },
-            {
-              target: '.invalidDiskAttempt'
-            }
+            { cond: emptyPegSelected, target: '.emptyPegSelected' },
+            { cond: immoveableDiskSelected, target: '.immoveableDiskSelected' },
+            { target: 'moveSelection' }
           ],
           RESET: 'init'
         },
         initial: 'awaitSelection',
         states: {
           awaitSelection: {},
-          invalidDiskAttempt: {},
+          emptyPegSelected: {},
+          immoveableDiskSelected: {},
         }
       },
 
       // handle choosing where to place that disk
       moveSelection: {
+        entry: ['setSelectedPeg'],
         on: {
           SELECT: [
-            {
-              target: 'moveSelected',
-              cond: validMoveSelection
-            },
-            {
-              target: '.invalidMoveAttempt'
-            }
+            { cond: isSelected, target: '.alreadySelected' },
+            { cond: validMoveSelection, target: 'moveSelected' },
+            { target: '.invalidMoveAttempt' }
           ],
           RESET: 'init'
         },
@@ -69,6 +63,10 @@ const HanoiFSMModel = createModel({
         states: {
           awaitSelection: {},
           invalidMoveAttempt: {},
+          alreadySelected: {
+            entry: ['deSelect'],
+            always: { target: 'awaitSelection' } // this need to go back to the origin waiting for selection
+          }
         }
       },
 
@@ -104,17 +102,40 @@ const HanoiFSMModel = createModel({
   },
   {
     actions: {
+
       /**
        * set up the default game position, all disks on the left hand peg
        */
       initializeGameState: assign((context: HanoiContext, event) => {
         return {
+          selectedPeg: null,
+          // moves: number[][],
+          message: "Move all disks to the last peg on the right",
           gameBoard: initialGameBoardState(context.numPegs, context.numDisks)
         }
       }),
 
       /**
-       *
+       * setSelectedPeg
+       */
+      setSelectedPeg: assign((context: HanoiContext, event: HanoiEvent) => {
+        assertEvent(event, 'SELECT');
+        return {
+          selectedPeg: event.pegIndex
+        }
+      }),
+
+      /**
+       * deSelect
+       */
+      deSelect: assign((context: HanoiContext, event) => {
+        return {
+          selectedPeg: null
+        }
+      }),
+
+      /**
+       * 
        */
       updateGameState: assign((context: HanoiContext, event) => {
 
@@ -132,12 +153,14 @@ const HanoiFSMModel = createModel({
       }),
     },
     guards: {
-      validDiskSelection,
+      isSelected,
+      emptyPegSelected,
+      immoveableDiskSelected,
+
       validMoveSelection,
       gameCompleteCheck
     },
-    services: {
-
-    }
   }
 );
+
+
