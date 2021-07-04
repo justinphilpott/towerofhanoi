@@ -10,8 +10,7 @@ const HanoiFSMModel = createModel({
   numPegs: 0,
   gameBoard: Array(Array()),
   selectedPeg: 0,
-  moves: Array(Array()),
-  errorMessage: '',
+  moves: Array(Array())
 });
 
 /**
@@ -36,7 +35,7 @@ const HanoiFSMModel = createModel({
           SELECT: [
             { cond: emptyPegSelected, target: '.emptyPegSelected' },
             { cond: immoveableDiskSelected, target: '.immoveableDiskSelected' },
-            { target: 'moveSelection' }
+            { target: '.diskSelected' }
           ],
           RESET: 'init'
         },
@@ -45,17 +44,21 @@ const HanoiFSMModel = createModel({
           awaitSelection: {},
           emptyPegSelected: {},
           immoveableDiskSelected: {},
-        }
+          diskSelected: {
+            entry: ['setSelectedPeg'],
+            type: 'final'
+          }
+        },
+        onDone: 'moveSelection'
       },
 
       // handle choosing where to place that disk
       moveSelection: {
-        entry: ['setSelectedPeg'],
         on: {
           SELECT: [
             { cond: isSelected, target: '.alreadySelected' },
-            { cond: validMoveSelection, target: 'moveSelected' },
-            { target: '.invalidMoveAttempt' }
+            { cond: validMoveSelection, target: '.moveSelected' },
+            { target: '.moveSelected' }
           ],
           RESET: 'init'
         },
@@ -66,8 +69,13 @@ const HanoiFSMModel = createModel({
           alreadySelected: {
             entry: ['deSelect'],
             always: { target: 'awaitSelection' } // this need to go back to the origin waiting for selection
+          },
+          moveSelected: {
+//            entry: ['setSelectedPeg'],
+            type: 'final'
           }
-        }
+        },
+        onDone: 'moveSelected'
       },
 
       // complete the move
@@ -107,11 +115,12 @@ const HanoiFSMModel = createModel({
        * set up the default game position, all disks on the left hand peg
        */
       initializeGameState: assign((context: HanoiContext, event) => {
+        console.log('initializeGameState');
+        const gameBoard = initialGameBoardState(context.numPegs, context.numDisks);
         return {
           selectedPeg: null,
           // moves: number[][],
-          message: "Move all disks to the last peg on the right",
-          gameBoard: initialGameBoardState(context.numPegs, context.numDisks)
+          gameBoard: gameBoard
         }
       }),
 

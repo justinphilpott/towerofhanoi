@@ -22,6 +22,8 @@ export const isSelected = (context: HanoiContext, event: HanoiEvent): boolean =>
 export const emptyPegSelected = (context: HanoiContext, event: HanoiEvent): boolean => {
   assertEvent(event, 'SELECT'); // appease typescript
 
+
+
   // check tower height
   const selectedTowerHeight = context.gameBoard[event.pegIndex].length;
 
@@ -30,6 +32,7 @@ export const emptyPegSelected = (context: HanoiContext, event: HanoiEvent): bool
     console.log('select tower is zero height, selection is illegal');
     return true;
   }
+  console.log('tower is non-zero height');
   return false;
 }
 

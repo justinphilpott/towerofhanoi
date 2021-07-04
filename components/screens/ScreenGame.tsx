@@ -43,6 +43,8 @@ export const ScreenGame = () => {
     })
   }
 
+  
+
   return (
     <>
       <Flex direction="column" width="100vw" height="100vh" alignItems="center" background="rgba(0, 0, 0, 0.6)" justifyContent="space-between" position="relative">

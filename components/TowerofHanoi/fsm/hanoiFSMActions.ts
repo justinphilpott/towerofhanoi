@@ -17,5 +17,8 @@ export const initialGameBoardState = (pegs:number, disks:number): number[][] => 
   towers[0] = [...firstTower]; // place the disks on the first peg
   towers[0].shift(); // make 1 based
   towers.fill([], 1);
+
+  //console.log('unshift', towers[0].shift());
+  //towers[2].push(towers[0].pop());
   return towers;
 }
