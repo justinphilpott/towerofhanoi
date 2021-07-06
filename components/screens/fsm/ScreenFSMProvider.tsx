@@ -5,7 +5,7 @@ import { useErrorHandler } from 'react-error-boundary';
 import { screenFSM } from './screenFSM';
 
 // what do these props do?
-const helper = createReactContextHelpers('Screen', (props: { name: string }) => {
+const helper = createReactContextHelpers('Screen', () => {
   const handleError = useErrorHandler();
 
   // what to actually do in here?

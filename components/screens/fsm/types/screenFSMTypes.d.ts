@@ -15,6 +15,7 @@ export interface ScreenStateSchema {
 export interface ScreenContext {
   numDisks: number;
   numPegs: number;
+  gameBoard: number[][]
 }
 
 export type ScreenEvent =

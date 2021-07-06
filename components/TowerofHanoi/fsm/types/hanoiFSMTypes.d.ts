@@ -25,8 +25,7 @@ export interface HanoiContext {
   numPegs: number;
   gameBoard: number[][];
   selectedPeg: number | null;
-  moves: number[][],
-  message: string,
+  moves: number[][]
 }
 
 export type HanoiEvent =

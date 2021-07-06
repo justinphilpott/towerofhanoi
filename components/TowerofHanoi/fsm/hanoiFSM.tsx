@@ -22,12 +22,8 @@ const HanoiFSMModel = createModel({
  export const hanoiFSM = createMachine<HanoiContext, HanoiEvent>(
   {
     id: 'hanoiFSM',
-    initial: 'init',
+    initial: 'diskSelection',
     states: {
-      init: {
-        entry: ['initializeGameState'],
-        always: { target: 'diskSelection' }
-      },
 
       // handle choosing which disk we will move
       diskSelection: {
@@ -37,7 +33,7 @@ const HanoiFSMModel = createModel({
             { cond: immoveableDiskSelected, target: '.immoveableDiskSelected' },
             { target: '.diskSelected' }
           ],
-          RESET: 'init'
+          RESET: 'reset'
         },
         initial: 'awaitSelection',
         states: {
@@ -60,7 +56,7 @@ const HanoiFSMModel = createModel({
             { cond: validMoveSelection, target: '.moveSelected' },
             { target: '.moveSelected' }
           ],
-          RESET: 'init'
+          RESET: 'reset'
         },
         initial: 'awaitSelection',
         states: {
@@ -101,9 +97,14 @@ const HanoiFSMModel = createModel({
           { target: 'movingDisk' }
         ],
       },
+
+      reset: {
+        entry: ['resetGameState'],
+      },
+
       gameComplete: {
         on: {
-          RESET: 'init',
+          RESET: 'reset',
         }
       }
     }
@@ -115,7 +116,7 @@ const HanoiFSMModel = createModel({
        * set up the default game position, all disks on the left hand peg
        */
       initializeGameState: assign((context: HanoiContext, event) => {
-        console.log('initializeGameState');
+        console.log('reset');
         const gameBoard = initialGameBoardState(context.numPegs, context.numDisks);
         return {
           selectedPeg: null,
