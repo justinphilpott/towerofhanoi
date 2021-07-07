@@ -1,7 +1,7 @@
 import { createMachine, assign } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { initialGameBoardState } from './hanoiFSMActions';
-import { isSelected, emptyPegSelected, immoveableDiskSelected, validMoveSelection, gameCompleteCheck } from './hanoiFSMGuards';
+import { isSelected, emptyPegSelected, immoveableDiskSelected, inValidMoveSelection, gameCompleteCheck } from './hanoiFSMGuards';
 import { HanoiContext, HanoiEvent, Move } from './types/hanoiFSMTypes';
 import { assertEvent } from 'xstate-helpers';
 
@@ -52,7 +52,7 @@ const HanoiFSMModel = createModel({
         on: {
           SELECT: [
             { cond: isSelected, target: '.alreadySelected' },
-            { cond: validMoveSelection, target: '.moveSelected' },
+            { cond: inValidMoveSelection, target: '.invalidMoveAttempt' },
             {
               target: '.moveSelected',
               actions: ['saveMove']
@@ -96,11 +96,10 @@ const HanoiFSMModel = createModel({
           { target: 'diskSelection' }
         ],
       },
-
       reset: {
         entry: ['resetGameState'],
+        always: ['diskSelection']
       },
-
       gameComplete: {
         on: {
           RESET: 'reset',
@@ -159,7 +158,7 @@ const HanoiFSMModel = createModel({
         moves.push(newMove);
         // not that we reset the selected peg here also
         return {
-          selectedPeg: null, 
+          selectedPeg: null,
           moves: moves
         }
       }),
@@ -200,7 +199,7 @@ const HanoiFSMModel = createModel({
       isSelected,
       emptyPegSelected,
       immoveableDiskSelected,
-      validMoveSelection,
+      inValidMoveSelection,
       gameCompleteCheck
     },
   }

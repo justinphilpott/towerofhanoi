@@ -15,20 +15,15 @@ export const isSelected = (context: HanoiContext, event: HanoiEvent): boolean =>
 }
 
 /**
- * validMoveSelection
- *
- * we have a valid disk selection, now we check if the selected destination is OK,
- * It must be:
- * - not the selected Peg - known already
- * - destination peg is empty or has larger disk
+ * inValidMoveSelection
  *
  * @param context
  * @param event
- * @returns
+ * @returns true if we are trying to make an invalid move
  */
- export const validMoveSelection = (context: HanoiContext, event: HanoiEvent): boolean => {
+ export const inValidMoveSelection = (context: HanoiContext, event: HanoiEvent): boolean => {
   assertEvent(event, 'SELECT'); // appease typescript
-  let valid = false;
+  let inValid = false;
 
   const topDisks = Array();
 
@@ -42,16 +37,16 @@ export const isSelected = (context: HanoiContext, event: HanoiEvent): boolean =>
   const chosenDisk = topDisks[context.selectedPeg as number];
   const destTopDisk = topDisks[event.pegIndex];
 
-  // ensure that we are moving this disk onto a larger one - zero height is treated as a "larger disk" for ease
-  valid = chosenDisk > destTopDisk;
+  // check if we are moving this disk onto a larger one - zero height is treated as a "larger disk" for ease
+  inValid = chosenDisk > destTopDisk;
 
-  if(valid) {
-    console.log('validMoveSelection true');
-  } else {
+  if(inValid) {
     console.log('moveable disk but invalid destination');
+  } else {
+    console.log('validMoveSelection true');
   }
 
-  return valid;
+  return inValid;
 }
 
 /**
