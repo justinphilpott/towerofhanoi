@@ -90,7 +90,8 @@ export const screenFSM = createMachine<ScreenContext>(
           data: {
             numDisks: (context: HanoiContext) => context.numDisks,
             numPegs: (context: HanoiContext) => context.numPegs,
-            gameBoard: (context: HanoiContext) => context.gameBoard
+            gameBoard: (context: HanoiContext) => context.gameBoard,
+            moves: (context: HanoiContext) => context.moves
           },
 
           // onDone will be set when the hanoiFSM reaches its final state
@@ -142,7 +143,8 @@ export const screenFSM = createMachine<ScreenContext>(
         const gameBoard = initialGameBoardState(context.numPegs, context.numDisks);
         return {
           selectedPeg: null,
-          gameBoard: gameBoard
+          gameBoard: gameBoard,
+          moves: Array()
         }
       }),
 

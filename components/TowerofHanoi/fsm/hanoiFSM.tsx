@@ -2,7 +2,7 @@ import { createMachine, assign } from 'xstate';
 import { createModel } from 'xstate/lib/model';
 import { initialGameBoardState } from './hanoiFSMActions';
 import { isSelected, emptyPegSelected, immoveableDiskSelected, validMoveSelection, gameCompleteCheck } from './hanoiFSMGuards';
-import { HanoiContext, HanoiEvent } from './types/hanoiFSMTypes';
+import { HanoiContext, HanoiEvent, Move } from './types/hanoiFSMTypes';
 import { assertEvent } from 'xstate-helpers';
 
 const HanoiFSMModel = createModel({
@@ -10,7 +10,7 @@ const HanoiFSMModel = createModel({
   numPegs: 0,
   gameBoard: Array(Array()),
   selectedPeg: 0,
-  moves: Array(Array())
+  moves: Array({})
 });
 
 /**
@@ -42,10 +42,9 @@ const HanoiFSMModel = createModel({
           immoveableDiskSelected: {},
           diskSelected: {
             entry: ['setSelectedPeg'],
-            type: 'final'
+            always: '#hanoiFSM.moveSelection'
           }
         },
-        onDone: 'moveSelection'
       },
 
       // handle choosing where to place that disk
@@ -54,7 +53,10 @@ const HanoiFSMModel = createModel({
           SELECT: [
             { cond: isSelected, target: '.alreadySelected' },
             { cond: validMoveSelection, target: '.moveSelected' },
-            { target: '.moveSelected' }
+            {
+              target: '.moveSelected',
+              actions: ['saveMove']
+            }
           ],
           RESET: 'reset'
         },
@@ -64,20 +66,17 @@ const HanoiFSMModel = createModel({
           invalidMoveAttempt: {},
           alreadySelected: {
             entry: ['deSelect'],
-            always: { target: 'awaitSelection' } // this need to go back to the origin waiting for selection
+            always: { target: '#hanoiFSM.diskSelection.awaitSelection' } // this need to go back to the origin waiting for selection
           },
           moveSelected: {
-//            entry: ['setSelectedPeg'],
-            type: 'final'
+            always: { target: '#hanoiFSM.moveSelected' }
           }
         },
-        onDone: 'moveSelected'
       },
 
       // complete the move
       moveSelected: {
         always: [
-          { target: 'gameComplete', cond: 'gameCompleteCheck' },
           { target: 'movingDisk' }
         ],
 
@@ -94,7 +93,7 @@ const HanoiFSMModel = createModel({
 
         always: [
           { target: 'gameComplete', cond: 'gameCompleteCheck' },
-          { target: 'movingDisk' }
+          { target: 'diskSelection' }
         ],
       },
 
@@ -115,12 +114,12 @@ const HanoiFSMModel = createModel({
       /**
        * set up the default game position, all disks on the left hand peg
        */
-      initializeGameState: assign((context: HanoiContext, event) => {
+       resetGameState: assign((context: HanoiContext, event) => {
         console.log('reset');
         const gameBoard = initialGameBoardState(context.numPegs, context.numDisks);
         return {
           selectedPeg: null,
-          // moves: number[][],
+          moves: Array(),
           gameBoard: gameBoard
         }
       }),
@@ -145,17 +144,52 @@ const HanoiFSMModel = createModel({
       }),
 
       /**
-       * 
+       * we need to save the move so that we can (in a later state) update the game state
+       */
+      saveMove: assign((context: HanoiContext, event) => {
+        console.log('saveMove', event);
+        assertEvent(event, 'SELECT');
+        const newMove: Move = {
+          src: context.selectedPeg as number,
+          dest: event.pegIndex
+        }
+        console.log('newMove', newMove);
+        const moves = context.moves;
+        console.log(moves);
+        moves.push(newMove);
+        // not that we reset the selected peg here also
+        return {
+          selectedPeg: null, 
+          moves: moves
+        }
+      }),
+
+      /**
+       * updateGameState
        */
       updateGameState: assign((context: HanoiContext, event) => {
 
-        // obtain these from the event
-        const srcPeg = 0;
-        const destPeg = 2;
+        console.log('updateGameState', event);
+
+        // get the last move in the array as it is the one that has not yet been used to update the game state
+        const move = context.moves[context.moves.length-1];
+
+        console.log('move ', move);
+
+        // obtain these from the moves array
+        const srcPeg = move.src;
+        const destPeg = move.dest;
 
         // work on a copy, then assign. At this point we've already verified move legality
-        let newGameBoard: any[][] = context.gameBoard;
-        newGameBoard[destPeg].push(newGameBoard[srcPeg].pop());
+        let newGameBoard: number[][] = context.gameBoard;
+
+        // considering if I should have ordered the disks the other way around, and use push pop and other manipulations would have been more simple
+        let diskToMove = newGameBoard[srcPeg][0];
+        newGameBoard[srcPeg].shift()
+        console.log(newGameBoard);
+        newGameBoard[destPeg].unshift(diskToMove);
+        console.log(newGameBoard);
+        diskToMove = 0;
 
         return {
           gameBoard: newGameBoard
@@ -166,7 +200,6 @@ const HanoiFSMModel = createModel({
       isSelected,
       emptyPegSelected,
       immoveableDiskSelected,
-
       validMoveSelection,
       gameCompleteCheck
     },

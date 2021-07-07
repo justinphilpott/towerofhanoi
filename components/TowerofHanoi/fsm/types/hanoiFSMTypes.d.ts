@@ -19,13 +19,18 @@
   }
 }
 
+export type Move = {
+  src: number,
+  dest: number
+}
+
 // Tower of Hanoi FSM standard context
 export interface HanoiContext {
   numDisks: number;
   numPegs: number;
   gameBoard: number[][];
   selectedPeg: number | null;
-  moves: number[][]
+  moves: Move[]
 }
 
 export type HanoiEvent =

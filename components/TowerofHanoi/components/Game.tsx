@@ -22,7 +22,7 @@ export const Game = ({ state, selectHandler }: GameProps) => {
   const numDisks: number = pegLengths.reduce((a, b) => { return a + b });
   const numPegs: number = game.length;
 
-  const selected = state.activePeg;
+  const selected = state.selectedPeg;
 
   return (
     <>
