@@ -19,6 +19,36 @@ const screenFSMModel = createModel({
   gameBoard: Array()
 })
 
+/**
+ * gameInProgress
+ *
+ * read the status of the spawned hanoiFSM
+ * 
+ * if it is status gameComplete or context.moves === 0, 
+ * game has not started so this will return false
+ */
+const gameInProgress = () => {
+  /**
+   * this could be done in React or within Xstate
+   *
+   * if in react, we would read the hanoiFSM state and if
+   * complete or zero moves, we don't show dialog (or even reset button!)
+   *
+   * In Xstate we have a condition which reads the state of the synced
+   * invoked machine (how to sync an invoked machine) and returns based
+   * on that state... we can read both state value and context...
+   * so that should work fine and be neater...
+   *
+   * ...
+   */
+
+  actions: (context, event, { state }) => {
+    state.children['some-id']?.getSnapshot();
+  }
+
+  return true;
+}
+
 export const screenFSM = createMachine<ScreenContext>(
   {
     id: 'screenFSM',
@@ -111,8 +141,14 @@ export const screenFSM = createMachine<ScreenContext>(
             on: {
               QUITCHECK: {
                 target: 'quitDialog'
-              }
-            }
+              },
+              RESTARTCHECK: [
+                {
+                  cond: gameInProgress,
+                  target: 'restartDialog'
+                },
+              ]
+            },
           },
           quitDialog: {
             on: {
@@ -120,15 +156,21 @@ export const screenFSM = createMachine<ScreenContext>(
                 target: 'default'
               },
               QUIT: {
-                target: 'finish'
+                target: '#screenFSM.start'
               },
             }
           },
-          finish: {
-            type: 'final'
-          }
+          restartDialog: {
+            on: {
+              CANCEL: {
+                target: 'default'
+              },
+              RESTART: {
+                target: 'default'
+              },
+            }
+          },
         },
-        onDone: 'start'
       }
     }
   },
@@ -158,6 +200,9 @@ export const screenFSM = createMachine<ScreenContext>(
           gameBoard: initialGameBoardState(event.numPegs, event.numDisks)
         };
       })
+    },
+    guards: {
+      gameInProgress
     }
   }
 );

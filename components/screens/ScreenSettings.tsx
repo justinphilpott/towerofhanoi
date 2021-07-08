@@ -21,7 +21,7 @@ export const ScreenSettings = () => {
   // need to read the disks and pegs data from the FSM
   const [numPegs, setNumPegs] = useState(screenState.context.numPegs);
   const [numDisks, setNumDisks] = useState(screenState.context.numDisks);
-  const maxDisks = 8;
+  const maxDisks = 7;
 
   const minMovesLookupTable: number[][] = [
     [1,3,7,15,31,63,127,255,511,1023],

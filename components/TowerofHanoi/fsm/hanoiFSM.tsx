@@ -33,7 +33,8 @@ const HanoiFSMModel = createModel({
             { cond: immoveableDiskSelected, target: '.immoveableDiskSelected' },
             { target: '.diskSelected' }
           ],
-          RESET: 'reset'
+          RESET: 'reset',
+          UNDO: 'undo'
         },
         initial: 'awaitSelection',
         states: {
@@ -58,7 +59,8 @@ const HanoiFSMModel = createModel({
               actions: ['saveMove']
             }
           ],
-          RESET: 'reset'
+          RESET: 'reset',
+          UNDO: 'undo'
         },
         initial: 'awaitSelection',
         states: {
@@ -98,6 +100,10 @@ const HanoiFSMModel = createModel({
       },
       reset: {
         entry: ['resetGameState'],
+        always: ['diskSelection']
+      },
+      undo: {
+        entry: ['undoMove'],
         always: ['diskSelection']
       },
       gameComplete: {
@@ -143,6 +149,33 @@ const HanoiFSMModel = createModel({
       }),
 
       /**
+       * undo the last move
+       */
+      undoMove: assign((context: HanoiContext, event) => {
+
+        // clone array and get the last move
+        let newMovesArray: Move[] = context.moves;
+        const lastMove = newMovesArray.pop() as Move;
+        // we known this can't be called with zero length moves so we assert type
+
+        const srcPeg = lastMove.dest;
+        const destPeg = lastMove.src;
+
+        // work on a copy, then assign. At this point we've already verified move legality
+        let newGameBoard: number[][] = context.gameBoard;
+
+        let diskToMove = newGameBoard[srcPeg][0];
+        newGameBoard[srcPeg].shift()
+        newGameBoard[destPeg].unshift(diskToMove);
+
+        return {
+          gameBoard: newGameBoard,
+          moves: newMovesArray,
+          selectedPeg: null
+        };
+      }),
+
+      /**
        * we need to save the move so that we can (in a later state) update the game state
        */
       saveMove: assign((context: HanoiContext, event) => {
@@ -185,10 +218,7 @@ const HanoiFSMModel = createModel({
         // considering if I should have ordered the disks the other way around, and use push pop and other manipulations would have been more simple
         let diskToMove = newGameBoard[srcPeg][0];
         newGameBoard[srcPeg].shift()
-        console.log(newGameBoard);
         newGameBoard[destPeg].unshift(diskToMove);
-        console.log(newGameBoard);
-        diskToMove = 0;
 
         return {
           gameBoard: newGameBoard
