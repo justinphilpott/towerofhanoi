@@ -42,9 +42,9 @@ const gameInProgress = () => {
    * ...
    */
 
-  actions: (context, event, { state }) => {
-    state.children['some-id']?.getSnapshot();
-  }
+  // actions: (context, event, { state }) => {
+  //   state.children['some-id']?.getSnapshot();
+  // }
 
   return true;
 }

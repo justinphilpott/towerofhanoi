@@ -4,9 +4,17 @@ export interface DiskProps {
   diskNumber: number;
   key: number;
   selected: boolean;
+  numPegs: number
 }
 
-export const Disk = ({ diskNumber, selected }: DiskProps) => {
+export const Disk = ({ diskNumber, selected, numPegs }: DiskProps) => {
+
+
+  const diskMarginAdjustment =
+    numPegs === 5 ? 9 :
+    numPegs === 4 ? 11 : 13;
+
+  const diskMargin = diskMarginAdjustment-diskNumber;
 
 
   return (
@@ -14,7 +22,7 @@ export const Disk = ({ diskNumber, selected }: DiskProps) => {
       <li
         className="disk"
         key={diskNumber.toString()}>
-        <div><span>{diskNumber}</span></div>        
+        <div><span>{diskNumber}</span></div>
       </li>
       <style jsx>{`
         $color: black;
@@ -30,12 +38,11 @@ export const Disk = ({ diskNumber, selected }: DiskProps) => {
           justify-content: center;
           align-items: center;
           display: flex;
-
           div {
-            padding: 0.1rem;
+            padding: 0.1rem 0.3rem 0.1rem 0.3rem;
             margin: 0;
-            margin-left: ${(10-diskNumber)*0.4}rem;
-            margin-right: ${(10-diskNumber)*0.4}rem;
+            margin-left: ${(9-diskNumber)*0.4}rem;
+            margin-right: ${(9-diskNumber)*0.4}rem;
             flex: 1 0;
             display: flex;
             justify-content: center;

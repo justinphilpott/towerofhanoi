@@ -4,6 +4,7 @@ import { Disk } from "./Disk"
 export interface PegProps {
   pegDiscs: number[];
   numPegs: number;
+  numDisks: number;
   selected: boolean;
   pegNum: number;
   selectHandler: (pegIndex: number) => void;
@@ -15,7 +16,7 @@ export interface PegProps {
  * @param {*} props
  *
  */
-export const Peg = ({ pegDiscs, numPegs, selected, pegNum, selectHandler }: PegProps) => {
+export const Peg = ({ pegDiscs, numPegs,  numDisks, selected, pegNum, selectHandler }: PegProps) => {
 
   const pegClickHandler = (index: number, event: any) => {
     event.stopPropagation();
@@ -26,8 +27,13 @@ export const Peg = ({ pegDiscs, numPegs, selected, pegNum, selectHandler }: PegP
     <ul
       onClick={(event) => pegClickHandler(pegNum, event)}
       className="peg">
-      {pegDiscs.map((diskNum: number) => <Disk diskNumber={diskNum} key={diskNum} selected={selected} />)}
+      {pegDiscs.map((diskNum: number) => <Disk diskNumber={diskNum} key={diskNum} selected={selected} numPegs={numPegs} />)}
     </ul>
+    <style jsx>{`
+      ul.peg {
+        height: ${(numDisks*28)+28}px;
+      }
+    `}</style>
     <style jsx>{`
       ul.peg {
         z-index: 2;

@@ -29,7 +29,7 @@ export const Game = ({ state, selectHandler }: GameProps) => {
       <div className="game">
         {
           game.map((pegDiscs: Array<number>, index: number) =>
-            <Peg pegDiscs={pegDiscs} numPegs={numPegs} key={index} selected={selected === index} pegNum={index} selectHandler={selectHandler} />
+            <Peg pegDiscs={pegDiscs} numPegs={numPegs} numDisks={numDisks} key={index} selected={selected === index} pegNum={index} selectHandler={selectHandler} />
           )
         }
       </div>

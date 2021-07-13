@@ -24,7 +24,7 @@ export const ScreenGame = () => {
   // this could return undefined if the FSM wasn't there, but it will be so we !
   const [hanoiState, hanoiSend] = useActor(useScreenInterpreter().children.get('hanoiFSM')!);
 
-  // 
+  // turns out its easier to determine this status here than from inside the FSM
   let midGame = hanoiState.context.moves.length > 0 && !hanoiState.matches("gameComplete");
 
   const disks = hanoiState.context.numDisks;
@@ -65,12 +65,12 @@ export const ScreenGame = () => {
 
         <SlideFade in={true} offsetY="-20px">
           <Flex direction="row" width="100vw" justifyContent="space-between" p="2">
-            <Button colorScheme="purple" m="0 0.5em 0 0.5em" onClick={() => screenSend("QUITCHECK")}>Quit</Button>
+            <Button colorScheme="purple" m="0 0.5em 0 0.5em" onClick={() => screenSend("QUITCHECK")}>Menu</Button>
             <Heading as="h2" size="lg" m={3} color="#fff">{hanoiState.context.message}</Heading>
             { midGame &&
               <ScaleFade in={true} initialScale={0.9}>
                 <Button colorScheme="purple" m="0 0.5em 0 0.5em" onClick={() => screenSend('RESTARTCHECK')}>Restart</Button>
-                <Button colorScheme="salmon" m="0 0.5em 0 0.5em" onClick={() => hanoiSend('UNDO')}>Undo move</Button>
+                <Button colorScheme="salmon" m="0 0.5em 0 0.5em" onClick={() => hanoiSend('UNDO')}>Undo</Button>
               </ScaleFade>
             }
           </Flex>
@@ -87,8 +87,8 @@ export const ScreenGame = () => {
             <Flex direction="column" width="300px" background="rgba(255, 255, 255, 0.9)" p={6} rounded={8}>
               <Flex direction="column" flexWrap="wrap" width="100%" justifyContent="center">
                 <Heading as="h2" size="lg" mb={6} mr={3}>Really quit?</Heading>
-                <Button colorScheme="teal" mb={6} onClick={() => screenSend({ type: "STAY"})}>Play on</Button>
-                <Button colorScheme="purple" onClick={() => screenSend({ type: "QUIT"})}>Quit</Button>
+                <Button colorScheme="purple" mb={6} onClick={() => screenSend({ type: "QUIT"})}>Quit</Button>
+                <Button colorScheme="teal" onClick={() => screenSend({ type: "STAY"})}>Play on</Button>
               </Flex>
             </Flex>
           </Flex>
@@ -98,9 +98,9 @@ export const ScreenGame = () => {
           <Flex position="absolute" direction="column" width="100vw" height="100vh" alignItems="center" background="rgba(0, 0, 0, 0.6)" justifyContent="center" zIndex={1000}>
             <Flex direction="column" width="300px" background="rgba(255, 255, 255, 0.9)" p={6} rounded={8}>
               <Flex direction="column" flexWrap="wrap" width="100%" justifyContent="center">
-                <Heading as="h2" size="lg" mb={6} mr={3}>Loose game progress?</Heading>
-                <Button colorScheme="teal" mb={6} onClick={() => screenSend({ type: "CANCEL"})}>Play on</Button>
-                <Button colorScheme="purple" onClick={() => {hanoiSend({ type: "RESET"}); screenSend({ type: "RESTART"}); }}>Restart</Button>
+                <Heading as="h2" size="lg" mb={6} mr={3}>Loose progress?</Heading>
+                <Button colorScheme="purple" mb={6} onClick={() => {hanoiSend({ type: "RESET"}); screenSend({ type: "RESTART"}); }}>Restart</Button>
+                <Button colorScheme="teal" onClick={() => screenSend({ type: "CANCEL"})}>Play on</Button>
               </Flex>
             </Flex>
           </Flex>
