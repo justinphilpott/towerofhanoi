@@ -39,7 +39,8 @@ export default function Home() {
             <title>Tower of Hanoi</title>
             <link rel="manifest" href="/manifest.json" />
             <meta name='description' content='Tower of Hanoi puzzle game' />
-            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes, shrink-to-fit=no, viewport-fit=cover" />
+" />
 
             <link rel='icon' type='image/png' sizes='32x32' href='/favicon_32x32.png' />
             <link rel='icon' type='image/png' sizes='16x16' href='/favicon_16x16.png' />
