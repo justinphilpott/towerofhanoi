@@ -37,7 +37,7 @@ export const Game = ({ state, selectHandler }: GameProps) => {
         .game {
           display: flex;
           flex-direction: row;
-          max-width: 960px;
+          max-width: 1200px;
           width: 100%;
         }
       `}</style>

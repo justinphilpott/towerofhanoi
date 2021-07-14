@@ -77,7 +77,7 @@ export const ScreenGame = () => {
         </SlideFade>
 
         <ScaleFade in={true} initialScale={0.5}>
-          <Flex direction="column" width="100vw" alignItems="center" p="3">
+          <Flex direction="column" width="100vw" alignItems="center" p="3" align-self="center">
             <Game state={hanoiState.context} selectHandler={selectHandler} />
           </Flex>
         </ScaleFade>
