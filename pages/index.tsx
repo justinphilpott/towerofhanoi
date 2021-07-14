@@ -33,6 +33,7 @@ export default function Home() {
             layout="fill"
             objectFit="cover"
             quality={100}
+            alt="Tower of Hanoi puzzle game background image"
             />
           <Head>
             <title>Tower of Hanoi</title>
@@ -91,12 +92,10 @@ export default function Home() {
           </Head>
 
           { bgLoaded ?
-            <>
-              <ScreenWrapper />
-            </>
+            <ScreenWrapper />
             :
-            <Flex height="100vh" width="100vw" alignItems="center" justifyContent="center" backgroundColor="teal" z-index={10}>
-              <Spinner color="gold" size="xl" />
+            <Flex height="100vh" width="100vw" alignItems="center" justifyContent="center" backgroundColor="teal" z-index={10} >
+              <Spinner color="gold" size="xl" speed="0.5s" thickness="4px" />
             </Flex>
           }
         </Flex>

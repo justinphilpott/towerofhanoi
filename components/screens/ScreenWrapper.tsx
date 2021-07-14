@@ -35,6 +35,7 @@ export const ScreenWrapper = () => {
           p={12}
           alignItems="center"
           justifyContent="center"
+          position="relative"
         >
           <ScreenSettings />
         </Flex>
@@ -47,6 +48,7 @@ export const ScreenWrapper = () => {
             p={12}
             alignItems="center"
             justifyContent="center"
+            position="relative"
           >
             <ScreenTutorial />
           </Flex>
