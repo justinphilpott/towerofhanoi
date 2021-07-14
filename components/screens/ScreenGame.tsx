@@ -57,6 +57,12 @@ export const ScreenGame = () => {
     })
   }
 
+  "Game complete, well done!"
+  "This peg is empty, select a peg with a moveable disk."
+  "The top disk on this peg is currently immoveable."
+  "You must place disks on top of larger ones."
+  "Move disks to rebuild the tower on the right-hand peg."
+
   return (
     <>
       <Flex direction="column" width="100vw" height="100vh" alignItems="center" background="rgba(0, 0, 0, 0.6)" justifyContent="space-between" position="relative">
