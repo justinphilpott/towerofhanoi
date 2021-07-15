@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <>
       <ScreenProvider>
-        <Flex height="100vh" width="100vw" alignItems="center" justifyContent="center" position="fixed" overflow="hidden">
+        <Flex height="100%" width="100vw" alignItems="center" justifyContent="center" position="fixed" overflow="hidden">
           <Image
             src={bgImg}
             onLoad={() => { setBgLoaded(true); console.log('image loaded'); }}
@@ -80,6 +80,7 @@ export default function Home() {
             <meta name='twitter:description' content='Tower of Hanoi puzzle game' />
             <meta name='twitter:image' content='https://yourdomain.com/static/icons/android-chrome-192x192.png' />
             <meta name='twitter:creator' content=' />
+            */}
 
             <meta property='og:type' content='app' />
             <meta property='og:title' content='Tower of Hanoi' />
@@ -87,7 +88,6 @@ export default function Home() {
             <meta property='og:site_name' content='Tower of Hanoi' />
             <meta property='og:url' content='https://thetowerofhanoi.com' />
             <meta property='og:image' content='https://thetowerofhanoi.com/....png' />
-            */}
 
           </Head>
 
