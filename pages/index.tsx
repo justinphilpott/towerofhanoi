@@ -39,19 +39,21 @@ export default function Home() {
             <title>Tower of Hanoi</title>
             <link rel="manifest" href="/manifest.json" />
             <meta name='description' content='Tower of Hanoi puzzle game' />
-            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes, shrink-to-fit=no, viewport-fit=cover" />
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover" />
 
             <link rel='icon' type='image/png' sizes='32x32' href='/favicon_32x32.png' />
             <link rel='icon' type='image/png' sizes='16x16' href='/favicon_16x16.png' />
             <link rel='icon' href='/favicon.ico' />
 
             <meta name='application-name' content='Tower of Hanoi' />
+
+            <meta name='mobile-web-app-capable' content='yes' />
             <meta name='apple-mobile-web-app-capable' content='yes' />
             {/* push content down 20px for IOS? */}
             <meta name='apple-mobile-web-app-status-bar-style' content='black-translucent' />
             <meta name='apple-mobile-web-app-title' content='Tower of Hanoi' />
 
-            <meta name='mobile-web-app-capable' content='yes' />
+
             <meta name='msapplication-config' content='/browserconfig.xml' />
             <meta name='msapplication-TileColor' content='#319795' />
             <meta name='msapplication-tap-highlight' content='no' />

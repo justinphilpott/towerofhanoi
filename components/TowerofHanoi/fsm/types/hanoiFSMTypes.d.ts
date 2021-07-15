@@ -30,7 +30,9 @@ export interface HanoiContext {
   numPegs: number;
   gameBoard: number[][];
   selectedPeg: number | null;
-  moves: Move[]
+  moves: Move[],
+  showMoves: boolean,
+  showTime: boolean
 }
 
 export type HanoiEvent =

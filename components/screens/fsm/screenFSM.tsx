@@ -16,7 +16,9 @@ import { initialGameBoardState } from '../../TowerofHanoi/fsm/hanoiFSMActions';
 const screenFSMModel = createModel({
   numPegs: 3,
   numDisks: 5,
-  gameBoard: Array()
+  gameBoard: Array(),
+  showMoves: false,
+  showTime: false,
 })
 
 /**
@@ -121,7 +123,9 @@ export const screenFSM = createMachine<ScreenContext>(
             numDisks: (context: HanoiContext) => context.numDisks,
             numPegs: (context: HanoiContext) => context.numPegs,
             gameBoard: (context: HanoiContext) => context.gameBoard,
-            moves: (context: HanoiContext) => context.moves
+            moves: (context: HanoiContext) => context.moves,
+            showMoves: (context: HanoiContext) => context.showMoves,
+            showTime: (context: HanoiContext) => context.showTime
           },
 
           // onDone will be set when the hanoiFSM reaches its final state

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Heading, Input } from '@chakra-ui/react'
+import { Button, Heading } from '@chakra-ui/react'
 import {
   Slider,
   SliderTrack,
@@ -8,8 +8,9 @@ import {
   Text,
   Box,
   Flex,
-  ButtonGroup,
-  SlideFade
+  Switch,
+  FormControl,
+  FormLabel
 } from "@chakra-ui/react"
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { useScreenService } from './fsm/ScreenFSMProvider';
@@ -21,7 +22,9 @@ export const ScreenSettings = () => {
   // need to read the disks and pegs data from the FSM
   const [numPegs, setNumPegs] = useState(screenState.context.numPegs);
   const [numDisks, setNumDisks] = useState(screenState.context.numDisks);
-  const maxDisks = 7;
+  const [showTime, setShowTime] = useState(screenState.context.showTime);
+  const [showMoves, setShowMoves] = useState(screenState.context.showMoves);
+  const maxDisks = 8;
 
   const minMovesLookupTable: number[][] = [
     [1,3,7,15,31,63,127,255,511,1023],
@@ -35,37 +38,61 @@ export const ScreenSettings = () => {
   let minMoves = minMovesLookupTable[numPegs-3][numDisks-1];
 
   return (
-    <Flex direction="column" width="100vw" background="rgba(255, 255, 255, 0.9)" p="12" rounded="6">
+    <Flex direction="column" width="100vw" background="rgba(255, 255, 255, 0.9)" p="6" rounded="6">
 
       <Flex direction="row" flexWrap="wrap" width="100%" justifyContent="space-between">
         <Heading as="h2" size="lg" mb={6} mr={3}>Settings</Heading>
-        <Text mr={3}>
-          Min. number of moves: <strong>{minMoves}</strong>
+        <Text mr={3} mt={1} flexGrow={1} textAlign="center">
+          Minimum moves: <strong>{minMoves}</strong>
         </Text>
       </Flex>
 
-      <Flex direction="row" flexWrap="wrap" width="100%" mt={3}>
+      <Flex direction="row" flexWrap="wrap" width="100%" mt={2}>
         <Flex direction="column" flexGrow={1} minWidth="200">
-          <Text>Pegs</Text>
           <Box ml={6} mr={6}>
-          <Slider value={numPegs} onChange={(v) => setNumPegs(v)} defaultValue={numPegs} mb={6} min={3} max={5}>
-            <SliderTrack>
-              <SliderFilledTrack bg="teal.400" />
-            </SliderTrack>
-            <SliderThumb fontSize="sm" boxSize="32px" children={numPegs} />
-          </Slider>
+            <Text flexGrow={1} textAlign="center">Pegs</Text>
+            <Slider value={numPegs} onChange={(v) => setNumPegs(v)} defaultValue={numPegs} mb={3} min={3} max={5}>
+              <SliderTrack>
+                <SliderFilledTrack bg="teal.400" />
+              </SliderTrack>
+              <SliderThumb fontSize="sm" boxSize="32px" children={numPegs} />
+            </Slider>
           </Box>
         </Flex>
 
         <Flex direction="column" flexGrow={1} minWidth="200">
-          <Text>Disks</Text>
           <Box ml={6} mr={6}>
-          <Slider value={numDisks} onChange={(v) => setNumDisks(v)} defaultValue={numDisks} mb={6} min={1} max={maxDisks}>
-            <SliderTrack>
-              <SliderFilledTrack bg="teal.400" />
-            </SliderTrack>
-            <SliderThumb boxShadow="teal.400" fontSize="sm" boxSize="32px" children={numDisks} />
-          </Slider>
+            <Text flexGrow={1} textAlign="center">Disks</Text>
+            <Slider value={numDisks} onChange={(v) => setNumDisks(v)} defaultValue={numDisks} mb={3} min={1} max={maxDisks}>
+              <SliderTrack>
+                <SliderFilledTrack bg="teal.400" />
+              </SliderTrack>
+              <SliderThumb boxShadow="teal.400" fontSize="sm" boxSize="32px" children={numDisks} />
+            </Slider>
+          </Box>
+        </Flex>
+      </Flex>
+
+      <Flex direction="row" flexWrap="wrap" width="100%" mb={6}>
+        <Flex direction="column" flexGrow={1} minWidth="200">
+          <Box ml={6} mr={6}>
+            <FormControl display="flex" flexGrow={1} alignItems="center" justifyContent="center">
+              <FormLabel htmlFor="show-moves" mb="0">
+                Moves count
+              </FormLabel>
+              <Switch colorScheme="teal" id="show-moves" />
+            </FormControl>
+          </Box>
+        </Flex>
+
+        <Flex direction="column" flexGrow={1} minWidth="200">
+          <Box ml={6} mr={6}>
+            <FormControl display="flex" flexGrow={1} alignItems="center" justifyContent="center">
+              <FormLabel htmlFor="show-timer" mb="0">
+              Timer
+              </FormLabel>
+              <Switch colorScheme="teal" id="show-timer" />
+            </FormControl>
           </Box>
         </Flex>
       </Flex>

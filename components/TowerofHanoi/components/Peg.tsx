@@ -31,7 +31,7 @@ export const Peg = ({ pegDiscs, numPegs,  numDisks, selected, pegNum, selectHand
     </ul>
     <style jsx>{`
       ul.peg {
-        height: ${(numDisks*28)+28}px;
+        height: ${(numDisks*1.5)+1.5}rem;
       }
     `}</style>
     <style jsx>{`
@@ -46,9 +46,9 @@ export const Peg = ({ pegDiscs, numPegs,  numDisks, selected, pegNum, selectHand
         position: relative;
         flex-grow: 1;
         flex-basis: 0;
-        border-bottom: 20px solid #000;
+        border-bottom: 10px solid #000;
         border-image:
-          linear-gradient(to top, #455463 0%, rgb(184, 183, 183) 100%) 100% 0;
+          linear-gradient(to top, #455463 0%, rgb(184, 183, 183) 100%) 100% 50;
       }
       ul.peg:after {
         content: "";
@@ -62,7 +62,7 @@ export const Peg = ({ pegDiscs, numPegs,  numDisks, selected, pegNum, selectHand
         transform: translate(-50%);
         border-image:
           linear-gradient(
-            to right,
+            to left,
             rgb(181, 181, 181) 0%,
             rgb(201, 201, 201) 25%,
             rgb(94, 94, 94) 100%,

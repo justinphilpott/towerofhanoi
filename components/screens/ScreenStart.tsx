@@ -21,7 +21,7 @@ export const ScreenStart = () => {
 
   return (
     <>
-      <Flex direction="column" justifyContent="space-between" height="100%" p="12" rounded="6" position="relative">
+      <Flex direction="column" justifyContent="space-between" height="100vh" p="12" rounded="6" position="relative">
         <SlideFade in={true} offsetY="-20px">
           <Heading as="h1" size="4xl" color="#FDC173" mb={6} textShadow="0 0 0.4em #0A3839">The Tower of Hanoi</Heading>
         </SlideFade>

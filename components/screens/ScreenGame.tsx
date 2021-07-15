@@ -4,6 +4,8 @@ import { Game } from '../TowerofHanoi/components/Game';
 import { useScreenService, useScreenInterpreter } from './fsm/ScreenFSMProvider';
 import { useActor } from '@xstate/react';
 import { XStateInspectLoaderProps } from 'xstate-helpers';
+import { ArrowBackIcon } from '@chakra-ui/icons'
+import { IconButton } from "@chakra-ui/react"
 
 type CallbackFunction = () => void;
 
@@ -12,6 +14,8 @@ type CallbackFunction = () => void;
 /**
  * ScreenGame
  *
+ * Game component is the actual game board
+ * 
  * @param numDisks
  * @param numPegs
  * @param onNewGame
@@ -24,15 +28,15 @@ export const ScreenGame = () => {
   // this could return undefined if the FSM wasn't there, but it will be so we !
   const [hanoiState, hanoiSend] = useActor(useScreenInterpreter().children.get('hanoiFSM')!);
 
+  let gameComplete = hanoiState.matches("gameComplete");
   // turns out its easier to determine this status here than from inside the FSM
-  let midGame = hanoiState.context.moves.length > 0 && !hanoiState.matches("gameComplete");
+  let midGame = hanoiState.context.moves.length > 0 && !gameComplete;
 
   const disks = hanoiState.context.numDisks;
   const pegs = hanoiState.context.numPegs;
 
   const selectHandler = (pegIndex: number) => {
     // call the hanoi send method passing the selected index
-    console.log('selectHandler', pegIndex);
     hanoiSend({
       type: "SELECT",
       pegIndex: pegIndex
@@ -51,7 +55,6 @@ export const ScreenGame = () => {
    * so that should work fine and be neater...
    */
   const onResetGame = () => {
-    console.log("Implement onResetGame");
     hanoiSend({
       type: "RESET"
     })
@@ -69,8 +72,13 @@ export const ScreenGame = () => {
 
         <SlideFade in={true} offsetY="-20px">
           <Flex direction="row" width="100vw" justifyContent="space-between" p="2">
-            <Button colorScheme="purple" m="0 0.5em 0 0.5em" onClick={() => screenSend("QUITCHECK")}>Menu</Button>
-            <Heading as="h2" size="lg" m={3} color="#fff">{hanoiState.context.message}</Heading>
+            {/*<Button colorScheme="purple" m="0 0.5em 0 0.5em" onClick={() => screenSend("QUITCHECK")}>Menu</Button>*/}
+            <IconButton
+              colorScheme="purple"
+              aria-label="Back"
+              icon={<ArrowBackIcon />}
+              onClick={() => screenSend("QUITCHECK")}
+            />
             { midGame &&
               <ScaleFade in={true} initialScale={0.9}>
                 <Button colorScheme="purple" m="0 0.5em 0 0.5em" onClick={() => screenSend('RESTARTCHECK')}>Restart</Button>
@@ -83,6 +91,12 @@ export const ScreenGame = () => {
         <ScaleFade in={true} initialScale={0.5}>
           <Flex direction="column" width="100vw" alignItems="center" p="3" align-self="center">
             <Game state={hanoiState.context} selectHandler={selectHandler} />
+            {!gameComplete && screenState.context.showMoves &&
+              <Text color="#fff">Moves: 123 (min. moves 23)</Text>
+            }
+            {!gameComplete && screenState.context.showTime &&
+              <Text color="#fff">34 min 43 secs</Text>
+            }
           </Flex>
         </ScaleFade>
 
@@ -107,6 +121,20 @@ export const ScreenGame = () => {
                 <Button colorScheme="teal" onClick={() => screenSend({ type: "CANCEL"})}>Play on</Button>
               </Flex>
             </Flex>
+          </Flex>
+        }
+
+        {gameComplete &&
+          <Flex position="absolute" direction="column" width="100vw" height="100vh" alignItems="center" background="rgba(0, 0, 0, 0.6)" justifyContent="center" zIndex={1000}>
+            <ScaleFade in={true} initialScale={0.01}>
+              <Flex direction="column" width="300px" background="rgba(255, 255, 255, 0.9)" p={6} rounded={8}>
+                <Flex direction="column" flexWrap="wrap" width="100%" justifyContent="center">
+                  <Heading as="h1" size="xl" mb={6} mr={3} flexGrow={1} textAlign="center">Well Done!</Heading>
+                  <Button colorScheme="teal" mb={6} onClick={() => {hanoiSend({ type: "RESET"}); screenSend({ type: "RESTART"}); }}>Play again</Button>
+                  <Button colorScheme="salmon" onClick={() => screenSend({ type: "SETTINGS"})}>Change settings</Button>
+                </Flex>
+              </Flex>
+            </ScaleFade>
           </Flex>
         }
 
