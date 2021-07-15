@@ -65,7 +65,7 @@ export const ScreenGame = () => {
 
   return (
     <>
-      <Flex direction="column" width="100vw" height="100vh" alignItems="center" background="rgba(0, 0, 0, 0.6)" justifyContent="space-between" position="relative">
+      <Flex direction="column" width="100vw" height="100%" alignItems="center" background="rgba(0, 0, 0, 0.6)" justifyContent="space-between" position="relative">
 
         <SlideFade in={true} offsetY="-20px">
           <Flex direction="row" width="100vw" justifyContent="space-between" p="2">
