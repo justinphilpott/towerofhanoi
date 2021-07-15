@@ -1,15 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Button,
   Heading,
-  ButtonGroup,
-  Box,
   Flex,
-  Spacer,
   SlideFade
 } from "@chakra-ui/react"
 import  { useScreenSend } from './fsm/ScreenFSMProvider';
-import useSound from 'use-sound';
 
 export const ScreenStart = () => {
 
