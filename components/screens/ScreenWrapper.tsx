@@ -3,7 +3,6 @@ import { Flex, Fade, SlideFade } from "@chakra-ui/react";
 import { ScreenStart } from "./ScreenStart";
 import { ScreenSettings } from "./ScreenSettings";
 import { ScreenGame } from "./ScreenGame";
-import { ScreenTutorial } from "./ScreenHighScores";
 import { useScreenService } from "./fsm/ScreenFSMProvider";
 
 export const ScreenWrapper = () => {
