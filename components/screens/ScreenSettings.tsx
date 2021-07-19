@@ -47,7 +47,7 @@ export const ScreenSettings = () => {
       <Flex direction="row" flexWrap="wrap" width="100%" mt={2}>
         <Flex direction="column" flexGrow={1} minWidth="200">
           <Box ml={6} mr={6}>
-            <Text flexGrow={1} textAlign="center">Pegs</Text>
+            <Text flexGrow={1} textAlign="left">Pegs</Text>
             <Slider value={numPegs} onChange={(v) => setNumPegs(v)} defaultValue={numPegs} mb={3} min={3} max={5}>
               <SliderTrack>
                 <SliderFilledTrack bg="teal.400" />
@@ -59,7 +59,7 @@ export const ScreenSettings = () => {
 
         <Flex direction="column" flexGrow={1} minWidth="200">
           <Box ml={6} mr={6}>
-            <Text flexGrow={1} textAlign="center">Disks</Text>
+            <Text flexGrow={1} textAlign="left">Disks</Text>
             <Slider value={numDisks} onChange={(v) => setNumDisks(v)} defaultValue={numDisks} mb={3} min={1} max={maxDisks}>
               <SliderTrack>
                 <SliderFilledTrack bg="teal.400" />
@@ -73,7 +73,7 @@ export const ScreenSettings = () => {
       <Flex direction="row" flexWrap="wrap" width="100%" mb={6}>
         <Flex direction="column" flexGrow={1} minWidth="200">
           <Box ml={6} mr={6}>
-            <FormControl display="flex" flexGrow={1} alignItems="center">
+            <FormControl display="flex" justifyContent="space-between" flexGrow={1} alignItems="center">
               <FormLabel htmlFor="show-moves" mb="0">
                 Moves count
               </FormLabel>
@@ -87,9 +87,9 @@ export const ScreenSettings = () => {
 
         <Flex direction="column" flexGrow={1} minWidth="200">
           <Box ml={6} mr={6}>
-            <FormControl display="flex" flexGrow={1} alignItems="center">
+            <FormControl display="flex" justifyContent="space-between" flexGrow={1} alignItems="center">
               <FormLabel htmlFor="show-timer" mb="0">
-              Timer
+              Game timer
               </FormLabel>
               <Switch colorScheme="teal" size="lg" id="show-timer"
                 isChecked={showTime}
