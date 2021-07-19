@@ -6,7 +6,6 @@ import { ScreenWrapper } from '../components/screens/ScreenWrapper'
 import { ScreenProvider } from '../components/screens/fsm/ScreenFSMProvider'; // @see https://github.com/vantanev/xstate-helpers#createreactcontexthelpers
 import bgImg from '../public/crane_bg.webp'
 import Script from 'next/script'
-import { setViewportProperty } from '../scripts/postcss-viewport-height-correction'
 
 export default function Home() {
   const [bgLoaded, setBgLoaded] = useState(false);
