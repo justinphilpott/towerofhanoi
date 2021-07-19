@@ -5,7 +5,8 @@ import { Flex, Fade, Spinner } from '@chakra-ui/react'
 import { ScreenWrapper } from '../components/screens/ScreenWrapper'
 import { ScreenProvider } from '../components/screens/fsm/ScreenFSMProvider'; // @see https://github.com/vantanev/xstate-helpers#createreactcontexthelpers
 import bgImg from '../public/crane_bg.webp'
-
+import Script from 'next/script'
+import { setViewportProperty } from '../scripts/postcss-viewport-height-correction'
 
 export default function Home() {
   const [bgLoaded, setBgLoaded] = useState(false);
@@ -102,8 +103,27 @@ export default function Home() {
           }
         </Flex>
       </ScreenProvider>
-      <style jsx>{`
-      `}</style>
+      <Script strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+          function setViewportProperty(doc) {
+            var prevClientHeight;
+            var customVar = '--' + 'vh';
+            function handleResize() {
+              var clientHeight = doc.clientHeight;
+              if (clientHeight === prevClientHeight) return;
+              requestAnimationFrame(function updateViewportHeight(){
+                doc.style.setProperty(customVar, (clientHeight * 0.01) + 'px');
+                prevClientHeight = clientHeight;
+              });
+            }
+            handleResize();
+            return handleResize;
+          }
+          window.addEventListener('resize', setViewportProperty(document.documentElement));
+          `
+        }}
+      />
     </>
   )
 }
