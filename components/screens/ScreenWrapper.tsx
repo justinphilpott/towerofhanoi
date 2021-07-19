@@ -17,7 +17,7 @@ export const ScreenWrapper = () => {
       {screenState.matches("game") &&
         <Fade in={true}>
           <Flex
-            height="100vh"
+            height="calc(var(--vh, 1vh) * 100)"
             width="100vw"
             alignItems="center"
             justifyContent="center"
@@ -28,7 +28,7 @@ export const ScreenWrapper = () => {
       }
       {screenState.value === "settings" &&
         <Flex
-          height="100vh"
+          height="calc(var(--vh, 1vh) * 100)"
           width="100vw"
           p={12}
           alignItems="center"
@@ -37,34 +37,6 @@ export const ScreenWrapper = () => {
         >
           <ScreenSettings />
         </Flex>
-      }
-      {screenState.matches("highScores") &&
-        <Fade in={true}>
-          <Flex
-            height="100vh"
-            width="100vw"
-            p={12}
-            alignItems="center"
-            justifyContent="center"
-            position="relative"
-          >
-            <ScreenTutorial />
-          </Flex>
-        </Fade>
-      }
-      {screenState.matches("credits") &&
-        <Fade in={true}>
-          <Flex
-            height="100vh"
-            width="100vw"
-            p={12}
-            alignItems="center"
-            justifyContent="center"
-            position="relative"
-          >
-            <ScreenTutorial />
-          </Flex>
-        </Fade>
       }
     </>
   );

@@ -81,23 +81,6 @@ export const screenFSM = createMachine<ScreenContext>(
           }
         }
       },
-      highScores: {
-        on: {
-          ERASE: {
-            actions: ['eraseHighScores']
-          },
-          CLOSE: {
-            target: 'start'
-          }
-        }
-      },
-      credits: {
-        on: {
-          CLOSE: {
-            target: 'start'
-          }
-        }
-      },
       game: {
         entry: ['initializeGameState'],
 
