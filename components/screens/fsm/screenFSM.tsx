@@ -64,12 +64,6 @@ export const screenFSM = createMachine<ScreenContext>(
           },
           SETTINGS: {
             target: 'settings',
-          },
-          HIGHSCORES: {
-            target: 'highScores',
-          },
-          CREDITS: {
-            target: 'credits',
           }
         }
       },
