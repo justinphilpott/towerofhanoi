@@ -65,8 +65,11 @@ export const screenFSM = createMachine<ScreenContext>(
           SETTINGS: {
             target: 'settings',
           },
-          TUTORIAL: {
-            target: 'tutorial',
+          HIGHSCORES: {
+            target: 'highScores',
+          },
+          CREDITS: {
+            target: 'credits',
           }
         }
       },
@@ -78,37 +81,22 @@ export const screenFSM = createMachine<ScreenContext>(
           }
         }
       },
-      tutorial: {
-        initial: 'pageOne',
-        states: {
-          pageOne: {
-            on: {
-              NEXT: { target: 'pageTwo' },
-              CLOSE: { target: 'finish' }
-            }
+      highScores: {
+        on: {
+          ERASE: {
+            actions: ['eraseHighScores']
           },
-          pageTwo: {
-            on: {
-              NEXT: { target: 'pageThree' },
-              CLOSE: { target: 'finish' }
-            }
-          },
-          pageThree: {
-            on: {
-              NEXT: { target: 'pageFour' },
-              CLOSE: { target: 'finish' }
-            }
-          },
-          pageFour: {
-            on: {
-              CLOSE: { target: 'finish' }
-            }
-          },
-          finish: {
-            type: 'final'
+          CLOSE: {
+            target: 'start'
           }
-        },
-        onDone: 'start'
+        }
+      },
+      credits: {
+        on: {
+          CLOSE: {
+            target: 'start'
+          }
+        }
       },
       game: {
         entry: ['initializeGameState'],
@@ -198,9 +186,12 @@ export const screenFSM = createMachine<ScreenContext>(
        * the the pegs and disks and the resulting game board following settings change
        */
       saveSettings: assign((context: ScreenContext, event) => {
+        console.log(context, event);
         return {
           numPegs: event.numPegs,
           numDisks: event.numDisks,
+          showMoves: event.showMoves,
+          showTime: event.showTime,
           gameBoard: initialGameBoardState(event.numPegs, event.numDisks)
         };
       })

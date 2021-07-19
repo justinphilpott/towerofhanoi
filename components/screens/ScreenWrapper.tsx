@@ -3,7 +3,7 @@ import { Flex, Fade, SlideFade } from "@chakra-ui/react";
 import { ScreenStart } from "./ScreenStart";
 import { ScreenSettings } from "./ScreenSettings";
 import { ScreenGame } from "./ScreenGame";
-import { ScreenTutorial } from "./ScreenTutorial";
+import { ScreenTutorial } from "./ScreenHighScores";
 import { useScreenService } from "./fsm/ScreenFSMProvider";
 
 export const ScreenWrapper = () => {
@@ -12,9 +12,7 @@ export const ScreenWrapper = () => {
   return (
     <>
       {screenState.value === "start" &&
-        <Fade in={true}>
-          <ScreenStart />
-        </Fade>
+        <ScreenStart />
       }
       {screenState.matches("game") &&
         <Fade in={true}>
@@ -40,7 +38,21 @@ export const ScreenWrapper = () => {
           <ScreenSettings />
         </Flex>
       }
-      {screenState.matches("tutorial") &&
+      {screenState.matches("highScores") &&
+        <Fade in={true}>
+          <Flex
+            height="100vh"
+            width="100vw"
+            p={12}
+            alignItems="center"
+            justifyContent="center"
+            position="relative"
+          >
+            <ScreenTutorial />
+          </Flex>
+        </Fade>
+      }
+      {screenState.matches("credits") &&
         <Fade in={true}>
           <Flex
             height="100vh"

@@ -1,24 +1,32 @@
 import React from 'react'
-import { Button, ButtonGroup, Flex, Text, Heading, ScaleFade, SlideFade } from "@chakra-ui/react"
+import { Button, Flex, Heading, ScaleFade, SlideFade } from "@chakra-ui/react"
 import { Game } from '../TowerofHanoi/components/Game';
 import { useScreenService, useScreenInterpreter } from './fsm/ScreenFSMProvider';
 import { useActor } from '@xstate/react';
-import { XStateInspectLoaderProps } from 'xstate-helpers';
-import { ArrowBackIcon } from '@chakra-ui/icons'
+import { ArrowBackIcon, RepeatIcon, CloseIcon, ChevronLeftIcon } from '@chakra-ui/icons'
 import { IconButton } from "@chakra-ui/react"
+import { minMovesLookupTable } from './../TowerofHanoi/utils/hanoi';
 
-type CallbackFunction = () => void;
+export interface GameInfoProps {
+  moves: number;
+  minMoves: number;
+}
 
+
+export const GameInfo = ({moves, minMoves}: GameInfoProps) => {
+
+  const timeString = '1:03'; // showTimer && timeCount;
+  const moveString = '20 (24)'; // showMoves && moves+' ('+minMoves+')';
+
+  return (
+    <Heading as="h2" size="lg" mt={1} mb={1} alignSelf="flex-end" color="white">{timeString} {moveString}</Heading>
+  )
+}
 
 
 /**
  * ScreenGame
- *
- * Game component is the actual game board
  * 
- * @param numDisks
- * @param numPegs
- * @param onNewGame
  * @returns JSX
  */
 export const ScreenGame = () => {
@@ -35,6 +43,15 @@ export const ScreenGame = () => {
   const disks = hanoiState.context.numDisks;
   const pegs = hanoiState.context.numPegs;
 
+  const minMoves = minMovesLookupTable[pegs-3][disks-1];
+
+  /**
+   * The components that represent the actual game, pegs and disks
+   * are not dependent upon xstate, and could use any method of
+   * state management. SelectHandler connects Xstate in this implementation.
+   *
+   * @param pegIndex
+   */
   const selectHandler = (pegIndex: number) => {
     // call the hanoi send method passing the selected index
     hanoiSend({
@@ -43,60 +60,53 @@ export const ScreenGame = () => {
     })
   }
 
-  /**
-   * this could be done in React or within Xstate
-   *
-   * if in react, we would read the hanoiFSM state and if
-   * complete or zero moves, we don't show dialog (or even reset button!)
-   *
-   * In Xstate we have a condition which reads the state of the synced
-   * invoked machine (how to sync an invoked machine) and returns based
-   * on that state... we can read both state value and context...
-   * so that should work fine and be neater...
-   */
-  const onResetGame = () => {
-    hanoiSend({
-      type: "RESET"
-    })
-  }
-
-  "Game complete, well done!"
-  "This peg is empty, select a peg with a moveable disk."
-  "The top disk on this peg is currently immoveable."
-  "You must place disks on top of larger ones."
-  "Move disks to rebuild the tower on the right-hand peg."
-
   return (
     <>
       <Flex direction="column" width="100vw" height="100%" alignItems="center" background="rgba(0, 0, 0, 0.6)" justifyContent="space-between" position="relative">
 
         <SlideFade in={true} offsetY="-20px">
-          <Flex direction="row" width="100vw" justifyContent="space-between" p="2">
+          <Flex direction="row" width="100vw" p="2" mb="0" justifyContent="space-between">
             {/*<Button colorScheme="purple" m="0 0.5em 0 0.5em" onClick={() => screenSend("QUITCHECK")}>Menu</Button>*/}
             <IconButton
               colorScheme="purple"
               aria-label="Back"
-              icon={<ArrowBackIcon />}
+              icon={<CloseIcon />}
               onClick={() => screenSend("QUITCHECK")}
+              alignSelf="flex-start"
+              border="1px solid #000"
+              mr="46px"
+              mb="0"
             />
-            { midGame &&
-              <ScaleFade in={true} initialScale={0.9}>
-                <Button colorScheme="purple" m="0 0.5em 0 0.5em" onClick={() => screenSend('RESTARTCHECK')}>Restart</Button>
-                <Button colorScheme="salmon" m="0 0.5em 0 0.5em" onClick={() => hanoiSend('UNDO')}>Undo</Button>
-              </ScaleFade>
-            }
+            <GameInfo moves={hanoiState.context.moves.length} minMoves={minMoves} />
+
+            <Flex>
+              <IconButton
+                colorScheme="blue"
+                aria-label="Back"
+                icon={<ChevronLeftIcon />}
+                onClick={() => hanoiSend('UNDO')}
+                alignSelf="flex-start"
+                mb="0"
+                mr="8px"
+                isDisabled={!midGame}
+              />
+              <IconButton
+                colorScheme="teal"
+                aria-label="Back"
+                icon={<RepeatIcon />}
+                onClick={() => screenSend('RESTARTCHECK')}
+                alignSelf="flex-start"
+                mb="0"
+                isDisabled={!midGame}
+              />
+            </Flex>
+
           </Flex>
         </SlideFade>
 
         <ScaleFade in={true} initialScale={0.5}>
           <Flex direction="column" width="100vw" alignItems="center" p="3" align-self="center">
             <Game state={hanoiState.context} selectHandler={selectHandler} />
-            {!gameComplete && screenState.context.showMoves &&
-              <Text color="#fff">Moves: 123 (min. moves 23)</Text>
-            }
-            {!gameComplete && screenState.context.showTime &&
-              <Text color="#fff">34 min 43 secs</Text>
-            }
           </Flex>
         </ScaleFade>
 
@@ -117,7 +127,7 @@ export const ScreenGame = () => {
             <Flex direction="column" width="300px" background="rgba(255, 255, 255, 0.9)" p={6} rounded={8}>
               <Flex direction="column" flexWrap="wrap" width="100%" justifyContent="center">
                 <Heading as="h2" size="lg" mb={6} mr={3}>Loose progress?</Heading>
-                <Button colorScheme="purple" mb={6} onClick={() => {hanoiSend({ type: "RESET"}); screenSend({ type: "RESTART"}); }}>Restart</Button>
+                <Button colorScheme="blue" mb={6} onClick={() => {hanoiSend({ type: "RESET"}); screenSend({ type: "RESTART"}); }}>Restart</Button>
                 <Button colorScheme="teal" onClick={() => screenSend({ type: "CANCEL"})}>Play on</Button>
               </Flex>
             </Flex>
@@ -127,11 +137,11 @@ export const ScreenGame = () => {
         {gameComplete &&
           <Flex position="absolute" direction="column" width="100vw" height="100vh" alignItems="center" background="rgba(0, 0, 0, 0.6)" justifyContent="center" zIndex={1000}>
             <ScaleFade in={true} initialScale={0.01}>
-              <Flex direction="column" width="300px" background="rgba(255, 255, 255, 0.9)" p={6} rounded={8}>
-                <Flex direction="column" flexWrap="wrap" width="100%" justifyContent="center">
-                  <Heading as="h1" size="xl" mb={6} mr={3} flexGrow={1} textAlign="center">Well Done!</Heading>
-                  <Button colorScheme="teal" mb={6} onClick={() => {hanoiSend({ type: "RESET"}); screenSend({ type: "RESTART"}); }}>Play again</Button>
-                  <Button colorScheme="salmon" onClick={() => screenSend({ type: "SETTINGS"})}>Change settings</Button>
+              <Flex direction="column" width="400px" background="rgba(255, 255, 255, 0.9)" p={6} rounded={8}>
+                <Heading as="h1" size="xl" mb={6} mr={3} flexGrow={1} textAlign="center">Well Done!</Heading>
+                <Flex direction="row" flexWrap="wrap" width="100%" justifyContent="center">
+                  <Button colorScheme="teal" flexGrow={1} mb={6} onClick={() => {hanoiSend({ type: "RESET"}); screenSend({ type: "RESTART"}); }}>Play again</Button>
+                  <Button colorScheme="salmon" flexGrow={1} onClick={() => screenSend({ type: "SETTINGS"})}>Settings</Button>
                 </Flex>
               </Flex>
             </ScaleFade>

@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
+import { Button, Heading } from '@chakra-ui/react'
 import {
-  Button,
-  Heading,
   Slider,
   SliderTrack,
   SliderFilledTrack,
@@ -13,8 +12,8 @@ import {
   FormControl,
   FormLabel
 } from "@chakra-ui/react"
+import { ArrowBackIcon } from '@chakra-ui/icons';
 import { useScreenService } from './fsm/ScreenFSMProvider';
-import { minMovesLookupTable } from './../TowerofHanoi/utils/hanoi';
 
 export const ScreenSettings = () => {
 
@@ -25,14 +24,18 @@ export const ScreenSettings = () => {
   const [numDisks, setNumDisks] = useState(screenState.context.numDisks);
   const [showTime, setShowTime] = useState(screenState.context.showTime);
   const [showMoves, setShowMoves] = useState(screenState.context.showMoves);
-
   const maxDisks = 8;
 
-  const minMoves = minMovesLookupTable[numPegs-3][numDisks-1];
+  const minMovesLookupTable: number[][] = [
+    [1,3,7,15,31,63,127,255,511,1023],
+    [1,3,5,9,13,17,25,33,45,57],
+    [1,3,5,7,11,15,19,23,27,31]
+  ]
 
-  const tempCatch = (data: any) => {
-    console.log(data);
-  }
+  // minmoves will change potentially rapidly on element drag
+  // therefore don't calc, perform a simple lookup - the
+  // data space is small for our game scope
+  let minMoves = minMovesLookupTable[numPegs-3][numDisks-1];
 
   return (
     <Flex direction="column" width="100vw" maxWidth="1200px" background="rgba(255, 255, 255, 0.9)" p="6" rounded="6">
@@ -77,10 +80,7 @@ export const ScreenSettings = () => {
               <FormLabel htmlFor="show-moves" mb="0">
                 Moves count
               </FormLabel>
-              <Switch colorScheme="teal" size="lg" id="show-moves"
-                isChecked={showMoves}
-                onChange={(e) => setShowMoves(e.target.checked)}
-              />
+              <Switch colorScheme="teal" size="lg" id="show-moves" />
             </FormControl>
           </Box>
         </Flex>
@@ -91,20 +91,14 @@ export const ScreenSettings = () => {
               <FormLabel htmlFor="show-timer" mb="0">
               Timer
               </FormLabel>
-              <Switch colorScheme="teal" size="lg" id="show-timer"
-                isChecked={showTime}
-                onChange={(e) => setShowTime(e.target.checked)}
-              />
+              <Switch colorScheme="teal" size="lg" id="show-timer" />
             </FormControl>
           </Box>
         </Flex>
       </Flex>
 
       <Flex direction="row">
-        <Button colorScheme="purple" onClick={() => {
-          screenSend({ type: "SAVE", numPegs: numPegs, numDisks: numDisks, showMoves: showMoves, showTime: showTime })
-          tempCatch({showMoves, showTime});
-        }}>Done</Button>
+        <Button colorScheme="purple" onClick={() => screenSend({ type: "SAVE", numPegs: numPegs, numDisks: numDisks })}>Done</Button>
       </Flex>
 
     </Flex>

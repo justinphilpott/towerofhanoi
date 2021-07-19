@@ -9,11 +9,10 @@ export interface GameProps {
   selectHandler: (pegIndex: number) => void;
 }
 
-
 /**
- *
- * @param param0
- * @returns
+ * 
+ * @param param0 
+ * @returns 
  */
 export const Game = ({ state, selectHandler }: GameProps) => {
 

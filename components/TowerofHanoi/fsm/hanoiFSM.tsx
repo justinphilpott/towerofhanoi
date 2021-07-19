@@ -4,6 +4,7 @@ import { initialGameBoardState } from './hanoiFSMActions';
 import { isSelected, emptyPegSelected, immoveableDiskSelected, inValidMoveSelection, gameCompleteCheck } from './hanoiFSMGuards';
 import { HanoiContext, HanoiEvent, Move } from './types/hanoiFSMTypes';
 import { assertEvent } from 'xstate-helpers';
+import { timerFSM } from './timerFSM';
 
 const HanoiFSMModel = createModel({
   numDisks: 0,
@@ -17,13 +18,32 @@ const HanoiFSMModel = createModel({
  * hanoiFSM
  *
  * select needs to determine if this is the first selection
- * or the move selection, if the selection is legal or not etc....
+ * or the move selection, if the selection is legal or not etc.... 
  */
  export const hanoiFSM = createMachine<HanoiContext, HanoiEvent>(
   {
     id: 'hanoiFSM',
-    initial: 'diskSelection',
+    initial: 'start',
     states: {
+
+      // setup the timer machine and proceed to diskSelection.awaitingSelection
+      start: {
+        invoke: {
+          id: 'timerFSM',
+          src: timerFSM,
+
+          // here we can construct the initial state based on the values set in screenStart
+          data: {
+            elapsed: 0,
+            duration: 10,
+            interval: 1
+          },
+        },
+
+        always: {
+          target: 'diskSelection'
+        }
+      },
 
       // handle choosing which disk we will move
       diskSelection: {
@@ -107,6 +127,8 @@ const HanoiFSMModel = createModel({
         always: ['diskSelection']
       },
       gameComplete: {
+        // stop timer
+
         on: {
           RESET: 'reset',
         }
