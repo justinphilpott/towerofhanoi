@@ -24,7 +24,7 @@ export const ScreenCredits = () => {
         <Text fontSize="xs" mb={1}><strong>Inspiration:</strong> My father David who made wooden version of this puzzle for me as a kid.</Text>
         <Text fontSize="xs" mb={1}><strong>License:</strong> This work is licensed under a <Link rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</Link></Text>
         <Flex direction="row">
-          <Button colorScheme="purple" onClick={() => {
+          <Button colorScheme="teal" onClick={() => {
             screenSend({ type: "EXIT" })
           }}>Ok</Button>
         </Flex>

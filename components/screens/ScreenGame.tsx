@@ -3,9 +3,9 @@ import { Button, Flex, Heading, ScaleFade, SlideFade, Text } from "@chakra-ui/re
 import { Game } from '../TowerofHanoi/components/Game';
 import { useScreenService, useScreenInterpreter } from './fsm/ScreenFSMProvider';
 import { useActor } from '@xstate/react';
-import { ArrowBackIcon, RepeatIcon, CloseIcon, ChevronLeftIcon } from '@chakra-ui/icons'
+import { RepeatIcon, CloseIcon, ChevronLeftIcon } from '@chakra-ui/icons'
 import { IconButton } from "@chakra-ui/react"
-import { minMovesLookupTable } from './../TowerofHanoi/utils/hanoi';
+import { minMovesLookupTable } from '../TowerofHanoi/utils/hanoi';
 
 export interface GameInfoProps {
   moves: number;
@@ -14,11 +14,10 @@ export interface GameInfoProps {
   showTimer: boolean;
 }
 
-
 export const GameInfo = ({moves, minMoves, showTimer, showMoves}: GameInfoProps) => {
 
-  const moveString = showMoves ? moves+" ("+minMoves+")":''; // showTimer && timeCount
-  const timeString = '12:23'; // showMoves && moves+' ('+minMoves+')';
+  const moveString = showMoves ? moves+" ("+minMoves+")":'';
+  const timeString = showTimer ? '12:23' : '';
 
   return (
     <Heading as="h2" size="lg" mt={1} mb={1} mr={2} ml={2} alignSelf="flex-end" color="white">{timeString}  {moveString}</Heading>
@@ -76,7 +75,7 @@ export const ScreenGame = () => {
               mr="12"
               mb="0"
             />
-            <GameInfo moves={hanoiState.context.moves.length} minMoves={minMoves} showMoves={hanoiState.context.showMoves} />
+            <GameInfo moves={hanoiState.context.moves.length} minMoves={minMoves} showMoves={hanoiState.context.showMoves} showTimer={hanoiState.context.showMoves} />
 
             <Flex>
               <IconButton

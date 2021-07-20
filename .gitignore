@@ -37,7 +37,7 @@ yarn-error.log*
 _old
 
 #PWA
-**/public/workbox-*.js
-**/public/sw.js
-**/public/sw.js.map
-**/public/fallback-*.js
+/public/workbox-*.js
+/public/sw.js
+/public/sw.js.map
+/public/fallback-*.js

@@ -3,7 +3,7 @@
   "short_name": "Hanoi",
   "theme_color": "#fdc173",
   "background_color": "#319795",
-  "display": "standalone",
+  "display": "fullscreen",
   "orientation": "landscape",
   "scope": "/",
   "start_url": "/",

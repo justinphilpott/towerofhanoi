@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, Fade, SlideFade } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { ScreenStart } from "./ScreenStart";
 import { ScreenSettings } from "./ScreenSettings";
 import { ScreenGame } from "./ScreenGame";
@@ -15,16 +15,14 @@ export const ScreenWrapper = () => {
         <ScreenStart />
       }
       {screenState.matches("game") &&
-        <Fade in={true}>
-          <Flex
-            height="calc(var(--vh, 1vh) * 100)"
-            width="100vw"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <ScreenGame />
-          </Flex>
-        </Fade>
+        <Flex
+          height="calc(var(--vh, 1vh) * 100)"
+          width="100vw"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <ScreenGame />
+        </Flex>
       }
       {screenState.value === "settings" &&
         <Flex
