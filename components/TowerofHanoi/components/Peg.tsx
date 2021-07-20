@@ -1,5 +1,7 @@
 import React, { MouseEvent } from "react";
 import { Disk } from "./Disk"
+import useSound from "use-sound";
+
 
 export interface PegProps {
   pegDiscs: number[];
@@ -20,6 +22,7 @@ export const Peg = ({ pegDiscs, numPegs,  numDisks, selected, pegNum, selectHand
 
   const pegClickHandler = (index: number, event: any) => {
     event.stopPropagation();
+    window.navigator.vibrate(500);
     return selectHandler(index);
   }
 

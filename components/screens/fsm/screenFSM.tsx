@@ -64,6 +64,9 @@ export const screenFSM = createMachine<ScreenContext>(
           },
           SETTINGS: {
             target: 'settings',
+          },
+          CREDITS: {
+            target: 'credits',
           }
         }
       },
@@ -72,6 +75,13 @@ export const screenFSM = createMachine<ScreenContext>(
           SAVE: {
             target: 'start',
             actions: ['saveSettings']
+          }
+        }
+      },
+      credits: {
+        on: {
+          EXIT: {
+            target: 'start',
           }
         }
       },

@@ -12,7 +12,6 @@ export const ScreenStart = () => {
 
   const onPlay = () => send("PLAY");
   const onSettings = () => send("SETTINGS");
-  const onHighScores = () => send("HIGHSCORES");
   const onCredits = () => send("CREDITS");
 
   return (
@@ -22,7 +21,7 @@ export const ScreenStart = () => {
         <Flex direction="row" flexWrap="wrap" background="rgba(255, 255, 255, 0.9)" p="6" pb={0} rounded="6">
         <Button size="md" textShadow="0px 0px 10px #fff" flexGrow={1} flexBasis={0} minWidth="100px" colorScheme="teal" color="#000" m="0 0.5em 1.5em 0.5em" onClick={ () => onPlay() }>Play</Button>
         <Button size="md" textShadow="0px 0px 10px #fff" flexGrow={1} flexBasis={0} minWidth="100px" colorScheme="salmon" color="#000" m="0 0.5em 1.5em 0.5em" onClick={ () => onSettings() }>Settings</Button>
-        {/*<Button size="md" textShadow="0px 0px 10px #fff" flexGrow={1} flexBasis={0} minWidth="100px" colorScheme="gold" color="#000" m="0 0.5em 1.5em 0.5em" onClick={ () => onHighScores() }>High scores</Button>*/}
+        <Button size="md" textShadow="0px 0px 10px #fff" flexGrow={1} flexBasis={0} minWidth="100px" colorScheme="gold" color="#000" m="0 0.5em 1.5em 0.5em" onClick={ () => onCredits() }>Credits</Button>
         </Flex>
       </Flex>
     </>

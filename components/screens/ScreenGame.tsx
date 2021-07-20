@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Flex, Heading, ScaleFade, SlideFade } from "@chakra-ui/react"
+import { Button, Flex, Heading, ScaleFade, SlideFade, Text } from "@chakra-ui/react"
 import { Game } from '../TowerofHanoi/components/Game';
 import { useScreenService, useScreenInterpreter } from './fsm/ScreenFSMProvider';
 import { useActor } from '@xstate/react';
@@ -10,19 +10,20 @@ import { minMovesLookupTable } from './../TowerofHanoi/utils/hanoi';
 export interface GameInfoProps {
   moves: number;
   minMoves: number;
+  showMoves: boolean;
+  showTimer: boolean;
 }
 
 
-export const GameInfo = ({moves, minMoves}: GameInfoProps) => {
+export const GameInfo = ({moves, minMoves, showTimer, showMoves}: GameInfoProps) => {
 
-  const timeString = '1:03'; // showTimer && timeCount;
-  const moveString = '20 (24)'; // showMoves && moves+' ('+minMoves+')';
+  const moveString = showMoves ? moves+" ("+minMoves+")":''; // showTimer && timeCount
+  const timeString = '12:23'; // showMoves && moves+' ('+minMoves+')';
 
   return (
-    <Heading as="h2" size="lg" mt={1} mb={1} alignSelf="flex-end" color="white">{timeString} {moveString}</Heading>
+    <Heading as="h2" size="lg" mt={1} mb={1} mr={2} ml={2} alignSelf="flex-end" color="white">{timeString}  {moveString}</Heading>
   )
 }
-
 
 /**
  * ScreenGame
@@ -62,22 +63,20 @@ export const ScreenGame = () => {
 
   return (
     <>
-      <Flex direction="column" width="100vw" height="100%" alignItems="center" background="rgba(0, 0, 0, 0.6)" justifyContent="space-between" position="relative">
+      <Flex direction="column" width="100vw" height="100%" alignItems="center" background="rgba(0, 0, 0, 0.4)" justifyContent="space-between" position="relative">
 
         <SlideFade in={true} offsetY="-20px">
           <Flex direction="row" width="100vw" p="2" mb="0" justifyContent="space-between">
-            {/*<Button colorScheme="purple" m="0 0.5em 0 0.5em" onClick={() => screenSend("QUITCHECK")}>Menu</Button>*/}
             <IconButton
               colorScheme="purple"
               aria-label="Back"
               icon={<CloseIcon />}
               onClick={() => screenSend("QUITCHECK")}
               alignSelf="flex-start"
-              border="1px solid #000"
-              mr="46px"
+              mr="12"
               mb="0"
             />
-            <GameInfo moves={hanoiState.context.moves.length} minMoves={minMoves} />
+            <GameInfo moves={hanoiState.context.moves.length} minMoves={minMoves} showMoves={hanoiState.context.showMoves} />
 
             <Flex>
               <IconButton
@@ -139,6 +138,12 @@ export const ScreenGame = () => {
             <ScaleFade in={true} initialScale={0.01}>
               <Flex direction="column" width="400px" background="rgba(255, 255, 255, 0.9)" p={6} rounded={8}>
                 <Heading as="h1" size="xl" mb={6} mr={3} flexGrow={1} textAlign="center">Well Done!</Heading>
+                <Text>?</Text>
+
+                <Heading as="h1" size="xl" mb={6} mr={3} flexGrow={1} textAlign="center">Not bad...</Heading>
+                <Text>Think how you can complete this with fewer moves.</Text>
+
+
                 <Flex direction="row" flexWrap="wrap" width="100%" justifyContent="center">
                   <Button colorScheme="teal" flexGrow={1} mb={6} onClick={() => {hanoiSend({ type: "RESET"}); screenSend({ type: "RESTART"}); }}>Play again</Button>
                   <Button colorScheme="salmon" flexGrow={1} onClick={() => screenSend({ type: "SETTINGS"})}>Settings</Button>

@@ -39,7 +39,7 @@ export const ScreenSettings = () => {
 
       <Flex direction="row" flexWrap="wrap" width="100%" justifyContent="space-between">
         <Heading as="h2" size="lg" mb={6} mr={3}>Settings</Heading>
-        <Text mr={3} mt={1} flexGrow={1} textAlign="center">
+        <Text mr={3} mt={1} flexGrow={1} textAlign="right">
           Minimum moves: <strong>{minMoves}</strong>
         </Text>
       </Flex>
@@ -75,7 +75,7 @@ export const ScreenSettings = () => {
           <Box ml={6} mr={6}>
             <FormControl display="flex" justifyContent="space-between" flexGrow={1} alignItems="center">
               <FormLabel htmlFor="show-moves" mb="0">
-                Moves count
+                Count moves
               </FormLabel>
               <Switch colorScheme="teal" size="lg" id="show-moves"
                 isChecked={showMoves}
@@ -89,7 +89,7 @@ export const ScreenSettings = () => {
           <Box ml={6} mr={6}>
             <FormControl display="flex" justifyContent="space-between" flexGrow={1} alignItems="center">
               <FormLabel htmlFor="show-timer" mb="0">
-              Game timer
+              Timed games
               </FormLabel>
               <Switch colorScheme="teal" size="lg" id="show-timer"
                 isChecked={showTime}
@@ -103,7 +103,6 @@ export const ScreenSettings = () => {
       <Flex direction="row">
         <Button colorScheme="purple" onClick={() => {
           screenSend({ type: "SAVE", numPegs: numPegs, numDisks: numDisks, showMoves: showMoves, showTime: showTime })
-          tempCatch({showMoves, showTime});
         }}>Done</Button>
       </Flex>
 
