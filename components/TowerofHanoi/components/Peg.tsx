@@ -22,7 +22,7 @@ export const Peg = ({ pegDiscs, numPegs,  numDisks, selected, pegNum, selectHand
 
   const pegClickHandler = (index: number, event: any) => {
     event.stopPropagation();
-    window.navigator.vibrate(500);
+    window.navigator.vibrate(10);
     return selectHandler(index);
   }
 
