@@ -27,6 +27,7 @@ const HanoiFSMModel = createModel({
     states: {
 
       // setup the timer machine and proceed to diskSelection.awaitingSelection
+      // TIMER TODO!
       start: {
         invoke: {
           id: 'timerFSM',
@@ -122,6 +123,11 @@ const HanoiFSMModel = createModel({
         entry: ['resetGameState'],
         always: ['diskSelection']
       },
+      resetPlusOneDisk: {
+        entry: ['resetGameStatePlusOne'],
+        always: ['diskSelection']
+      },
+
       undo: {
         entry: ['undoMove'],
         always: ['diskSelection']
@@ -131,6 +137,7 @@ const HanoiFSMModel = createModel({
 
         on: {
           RESET: 'reset',
+          RESETPLUSONE: 'resetPlusOneDisk',
         }
       }
     }
@@ -142,12 +149,27 @@ const HanoiFSMModel = createModel({
        * set up the default game position, all disks on the left hand peg
        */
        resetGameState: assign((context: HanoiContext, event) => {
-        console.log('reset');
         const gameBoard = initialGameBoardState(context.numPegs, context.numDisks);
         return {
           selectedPeg: null,
           moves: Array(),
           gameBoard: gameBoard
+        }
+      }),
+
+      /**
+       * set up the default game position, all disks on the left hand peg
+       * 
+       * plus one disk, if possible
+       */
+       resetGameStatePlusOne: assign((context: HanoiContext, event) => {
+        const newDisks = context.numDisks < 8 ? context.numDisks + 1 : context.numDisks;
+        const gameBoard = initialGameBoardState(context.numPegs, newDisks);
+        return {
+          selectedPeg: null,
+          moves: Array(),
+          gameBoard: gameBoard,
+          numDisks: newDisks
         }
       }),
 

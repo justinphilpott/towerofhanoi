@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { useState } from 'react'
-import { Flex, Fade, Spinner } from '@chakra-ui/react'
+import { Flex, Spinner } from '@chakra-ui/react'
 import { ScreenWrapper } from '../components/screens/ScreenWrapper'
 import { ScreenProvider } from '../components/screens/fsm/ScreenFSMProvider'; // @see https://github.com/vantanev/xstate-helpers#createreactcontexthelpers
 import bgImg from '../public/crane_bg.webp'
@@ -10,6 +10,7 @@ import Script from 'next/script'
 export default function Home() {
   const [bgLoaded, setBgLoaded] = useState(false);
 
+  {/*
   function iOS() {
     return [
       'iPad Simulator',
@@ -22,6 +23,7 @@ export default function Home() {
     // iPad on iOS 13 detection
     || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
   }
+*/}
 
   return (
     <>
@@ -120,11 +122,6 @@ export default function Home() {
             return handleResize;
           }
           window.addEventListener('resize', setViewportProperty(document.documentElement));
-          window.addEventListener("orientationchange", function() {
-            if (window.orientation === "90" || window.orientation === "-90") {
-              alert('orientation change');
-            }
-          }, false);
           `
         }}
       />
