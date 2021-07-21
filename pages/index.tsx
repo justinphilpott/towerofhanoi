@@ -120,6 +120,11 @@ export default function Home() {
             return handleResize;
           }
           window.addEventListener('resize', setViewportProperty(document.documentElement));
+          window.addEventListener("orientationchange", function() {
+            if (window.orientation === "90" || window.orientation === "-90") {
+              alert('orientation change');
+            }
+          }, false);
           `
         }}
       />

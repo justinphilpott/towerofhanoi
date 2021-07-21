@@ -28,7 +28,7 @@ export const ScreenWrapper = () => {
         <Flex
           height="calc(var(--vh, 1vh) * 100)"
           width="100vw"
-          p={12}
+          p={6}
           alignItems="center"
           justifyContent="center"
           position="relative"

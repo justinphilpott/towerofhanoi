@@ -22,7 +22,6 @@ export const Peg = ({ pegDiscs, numPegs,  numDisks, selected, pegNum, selectHand
 
   const pegClickHandler = (index: number, event: any) => {
     event.stopPropagation();
-    window.navigator.vibrate(10);
     return selectHandler(index);
   }
 
@@ -49,9 +48,9 @@ export const Peg = ({ pegDiscs, numPegs,  numDisks, selected, pegNum, selectHand
         position: relative;
         flex-grow: 1;
         flex-basis: 0;
-        border-bottom: 10px solid #000;
+        border-bottom: 12px solid #455463;
         border-image:
-          linear-gradient(to top, #455463 0%, rgb(184, 183, 183) 100%) 100% 50;
+          linear-gradient(to top, #000 0%, #455463 50%, #455463 80%, #aaa 90%, #fff 100%) 150 40;
       }
       ul.peg:after {
         content: "";

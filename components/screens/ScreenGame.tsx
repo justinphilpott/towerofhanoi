@@ -4,23 +4,23 @@ import { Game } from '../TowerofHanoi/components/Game';
 import { useScreenService, useScreenInterpreter } from './fsm/ScreenFSMProvider';
 import { useActor } from '@xstate/react';
 import { RepeatIcon, CloseIcon, ChevronLeftIcon } from '@chakra-ui/icons'
-import { IconButton } from "@chakra-ui/react"
+import { IconButton } from "@chakra-ui/react";
+import { Icon } from "@chakra-ui/react"
+import { ImMusic } from "react-icons/im"
 import { minMovesLookupTable } from '../TowerofHanoi/utils/hanoi';
 
 export interface GameInfoProps {
   moves: number;
   minMoves: number;
+  showTime: boolean;
   showMoves: boolean;
-  showTimer: boolean;
 }
 
-export const GameInfo = ({moves, minMoves, showTimer, showMoves}: GameInfoProps) => {
-
+export const GameInfo = ({moves, minMoves, showTime, showMoves}: GameInfoProps) => {
+  const timeString = showTime ? '12:23' : '';
   const moveString = showMoves ? moves+" ("+minMoves+")":'';
-  const timeString = showTimer ? '12:23' : '';
-
   return (
-    <Heading as="h2" size="lg" mt={1} mb={1} mr={2} ml={2} alignSelf="flex-end" color="white">{timeString}  {moveString}</Heading>
+    <Heading as="h2" size="md" mt={1} mb={1} mr={2} ml={2} alignSelf="flex-end" color="white">{timeString} {moveString}</Heading>
   )
 }
 
@@ -54,6 +54,11 @@ export const ScreenGame = () => {
    */
   const selectHandler = (pegIndex: number) => {
     // call the hanoi send method passing the selected index
+
+    if (true) {
+      window.navigator.vibrate(1);
+    }
+
     hanoiSend({
       type: "SELECT",
       pegIndex: pegIndex
@@ -62,40 +67,61 @@ export const ScreenGame = () => {
 
   return (
     <>
-      <Flex direction="column" width="100vw" height="100%" alignItems="center" background="rgba(0, 0, 0, 0.4)" justifyContent="space-between" position="relative">
+      <Flex direction="column" width="100vw" height="100%" alignItems="center" background="linear-gradient(to bottom, transparent, 60%, #222)" justifyContent="space-between" position="relative">
 
         <SlideFade in={true} offsetY="-20px">
-          <Flex direction="row" width="100vw" p="2" mb="0" justifyContent="space-between">
-            <IconButton
-              colorScheme="purple"
-              aria-label="Back"
-              icon={<CloseIcon />}
-              onClick={() => screenSend("QUITCHECK")}
-              alignSelf="flex-start"
-              mr="12"
-              mb="0"
-            />
-            <GameInfo moves={hanoiState.context.moves.length} minMoves={minMoves} showMoves={hanoiState.context.showMoves} showTimer={hanoiState.context.showMoves} />
-
+          <Flex direction="row" width="100vw" p="2" mb="0" justifyContent="space-between" background="rgba(0, 0, 0, 0.1)">
             <Flex>
               <IconButton
-                colorScheme="blue"
+                colorScheme="white"
+                aria-label="Back"
+                icon={<CloseIcon />}
+                onClick={() => screenSend("QUITCHECK")}
+                alignSelf="flex-start"
+                mr="2"
+                mb="0"
+                background="rgba(0, 0, 0, 0.2)"
+              />
+              <IconButton 
+                colorScheme="white"
+                color="white"
+                aria-label="Back"
+                icon={<Icon as={ImMusic} />}
+                onClick={() => screenSend("QUITCHECK")}
+                alignSelf="flex-start"
+                mr="2"
+                mb="0"
+                background="rgba(0, 0, 0, 0.2)"
+              />
+            </Flex> 
+            <GameInfo
+              moves={hanoiState.context.moves.length}
+              minMoves={minMoves}
+              showMoves={hanoiState.context.showMoves}
+              showTime={hanoiState.context.showTime}
+            />
+            <Flex>
+              <IconButton
+                colorScheme="white"
                 aria-label="Back"
                 icon={<ChevronLeftIcon />}
                 onClick={() => hanoiSend('UNDO')}
                 alignSelf="flex-start"
                 mb="0"
-                mr="8px"
+                ml="2"
+                mr="2"
                 isDisabled={!midGame}
+                background="rgba(0, 0, 0, 0.2)"
               />
               <IconButton
-                colorScheme="teal"
+                colorScheme="white"
                 aria-label="Back"
                 icon={<RepeatIcon />}
                 onClick={() => screenSend('RESTARTCHECK')}
                 alignSelf="flex-start"
                 mb="0"
                 isDisabled={!midGame}
+                background="rgba(0, 0, 0, 0.2)"
               />
             </Flex>
 
