@@ -10,7 +10,6 @@ import Script from 'next/script'
 export default function Home() {
   const [bgLoaded, setBgLoaded] = useState(false);
 
-
   return (
     <>
       <ScreenProvider>
@@ -37,10 +36,8 @@ export default function Home() {
 
             <meta name='mobile-web-app-capable' content='yes' />
             <meta name='apple-mobile-web-app-capable' content='yes' />
-            {/* push content down 20px for IOS? */}
             <meta name='apple-mobile-web-app-status-bar-style' content='black-translucent' />
             <meta name='apple-mobile-web-app-title' content='Tower of Hanoi' />
-
 
             <meta name='msapplication-config' content='/browserconfig.xml' />
             <meta name='msapplication-TileColor' content='#319795' />
