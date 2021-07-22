@@ -4,6 +4,7 @@ import { ImMusic } from "react-icons/im"
 
 export const useAudio = (url: string) => {
   const [audio] = useState(new Audio(url));
+  audio.loop = true;
   const [playing, setPlaying] = useState(false);
   const [playable, setPlayable] = useState(false);
 
@@ -30,7 +31,7 @@ export const useAudio = (url: string) => {
       setPlayable(true);
       setPlaying(true);
     });
-    audio.addEventListener('ended', () => setPlaying(true));
+//    audio.addEventListener('ended', () => setPlaying(true));
     return () => {
       setPlaying(false);
       audio.removeEventListener('ended', () => setPlaying(false));
@@ -42,6 +43,8 @@ export const useAudio = (url: string) => {
 
 /**
  * @returns callbacks and the audio control icon
+ * 
+ * @todo through various tracks
  */
 export const useGameAudioControl = () => {
 
