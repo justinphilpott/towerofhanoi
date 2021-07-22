@@ -223,15 +223,12 @@ const HanoiFSMModel = createModel({
        * we need to save the move so that we can (in a later state) update the game state
        */
       saveMove: assign((context: HanoiContext, event) => {
-        console.log('saveMove', event);
         assertEvent(event, 'SELECT');
         const newMove: Move = {
           src: context.selectedPeg as number,
           dest: event.pegIndex
         }
-        console.log('newMove', newMove);
         const moves = context.moves;
-        console.log(moves);
         moves.push(newMove);
         // not that we reset the selected peg here also
         return {
@@ -245,12 +242,8 @@ const HanoiFSMModel = createModel({
        */
       updateGameState: assign((context: HanoiContext, event) => {
 
-        console.log('updateGameState', event);
-
         // get the last move in the array as it is the one that has not yet been used to update the game state
         const move = context.moves[context.moves.length-1];
-
-        console.log('move ', move);
 
         // obtain these from the moves array
         const srcPeg = move.src;

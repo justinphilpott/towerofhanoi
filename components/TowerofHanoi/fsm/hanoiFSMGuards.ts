@@ -10,7 +10,6 @@ import { assertEvent } from 'xstate-helpers';
  */
 export const isSelected = (context: HanoiContext, event: HanoiEvent): boolean => {
   assertEvent(event, 'SELECT');
-  console.log('check if peg is selected', context.selectedPeg === event.pegIndex);
   return context.selectedPeg === event.pegIndex;
 }
 
@@ -40,12 +39,6 @@ export const isSelected = (context: HanoiContext, event: HanoiEvent): boolean =>
   // check if we are moving this disk onto a larger one - zero height is treated as a "larger disk" for ease
   inValid = chosenDisk > destTopDisk;
 
-  if(inValid) {
-    console.log('moveable disk but invalid destination');
-  } else {
-    console.log('validMoveSelection true');
-  }
-
   return inValid;
 }
 
@@ -64,10 +57,8 @@ export const emptyPegSelected = (context: HanoiContext, event: HanoiEvent): bool
 
   // we must select a disk, not an empty peg
   if(selectedTowerHeight === 0) {
-    console.log('select tower is zero height, selection is illegal');
     return true;
   }
-  console.log('tower is non-zero height');
   return false;
 }
 
@@ -97,15 +88,11 @@ export const immoveableDiskSelected = (context: HanoiContext, event: HanoiEvent)
     topDisks.push(topDisk);
   });
 
-  console.log('topDisks ', topDisks);
-
   // disk to move
   const chosenDisk = topDisks[event.pegIndex];
 
   // ensure that there is a larger disk to move this one onto, zero height is treated as a "larger disk"
   const valid = chosenDisk !== Math.max(...topDisks);
-
-  console.log('disk is moveable', chosenDisk, valid);
   return !valid;
 }
 
@@ -121,10 +108,8 @@ export const immoveableDiskSelected = (context: HanoiContext, event: HanoiEvent)
  */
 export const gameCompleteCheck = (context: HanoiContext, event: HanoiEvent): boolean => {
   if(context.gameBoard[context.numPegs-1].length === context.numDisks) {
-    console.log('game is complete');
     return true;
   } else {
-    console.log('game is not complete');
     return false;
   }
 }

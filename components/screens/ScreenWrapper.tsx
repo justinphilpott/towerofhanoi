@@ -1,10 +1,41 @@
 import React from "react";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Spinner } from "@chakra-ui/react";
+import dynamic from 'next/dynamic';
+
 import { ScreenStart } from "./ScreenStart";
-import { ScreenSettings } from "./ScreenSettings";
-import { ScreenGame } from "./ScreenGame";
 import { ScreenCredits } from "./ScreenCredits";
 import { useScreenService } from "./fsm/ScreenFSMProvider";
+
+interface ScreenSettingsProps {}
+const ScreenSettings_Dynamic = dynamic<ScreenSettingsProps>(
+  () => import('./ScreenSettings').then((mod) => mod.ScreenSettings),
+  { loading: () =>
+    <Flex height="calc(var(--vh, 1vh) * 100)" width="100vw" alignItems="center" justifyContent="center" backgroundColor="transparent" z-index={10} >
+      <Spinner color="gold" size="xl" speed="0.5s" thickness="4px" />
+    </Flex>
+  }
+)
+
+interface ScreenGameProps {}
+const ScreenGame_Dynamic = dynamic<ScreenGameProps>(
+  () => import('./ScreenGame').then((mod) => mod.ScreenGame),
+  { loading: () =>
+    <Flex height="calc(var(--vh, 1vh) * 100)" width="100vw" alignItems="center" justifyContent="center" backgroundColor="transparent" z-index={10} >
+      <Spinner color="gold" size="xl" speed="0.5s" thickness="4px" />
+    </Flex>
+  }
+)
+
+interface ScreenCreditsProps {}
+const ScreenCredits_Dynamic = dynamic<ScreenCreditsProps>(
+  () => import('./ScreenCredits').then((mod) => mod.ScreenCredits),
+  { loading: () =>
+    <Flex height="calc(var(--vh, 1vh) * 100)" width="100vw" alignItems="center" justifyContent="center" backgroundColor="transparent" z-index={10} >
+      <Spinner color="gold" size="xl" speed="0.5s" thickness="4px" />
+    </Flex>
+  }
+)
+
 
 export const ScreenWrapper = () => {
   const [screenState] = useScreenService();
@@ -21,7 +52,7 @@ export const ScreenWrapper = () => {
           alignItems="center"
           justifyContent="center"
         >
-          <ScreenGame />
+          <ScreenGame_Dynamic />
         </Flex>
       }
       {screenState.value === "settings" &&
@@ -33,7 +64,7 @@ export const ScreenWrapper = () => {
           justifyContent="center"
           position="relative"
         >
-          <ScreenSettings />
+          <ScreenSettings_Dynamic />
         </Flex>
       }
       {screenState.value === "credits" &&
@@ -46,7 +77,7 @@ export const ScreenWrapper = () => {
           position="relative"
           flexDirection="column"
         >
-          <ScreenCredits />
+          <ScreenCredits_Dynamic />
         </Flex>
       }
     </>

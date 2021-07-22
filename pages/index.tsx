@@ -10,20 +10,6 @@ import Script from 'next/script'
 export default function Home() {
   const [bgLoaded, setBgLoaded] = useState(false);
 
-  {/*
-  function iOS() {
-    return [
-      'iPad Simulator',
-      'iPhone Simulator',
-      'iPod Simulator',
-      'iPad',
-      'iPhone',
-      'iPod'
-    ].includes(navigator.platform)
-    // iPad on iOS 13 detection
-    || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
-  }
-*/}
 
   return (
     <>
@@ -31,7 +17,7 @@ export default function Home() {
         <Flex height="100%" width="100vw" alignItems="center" justifyContent="center" position="fixed" overflow="hidden">
           <Image
             src={bgImg}
-            onLoad={() => { setBgLoaded(true); console.log('image loaded'); }}
+            onLoad={() => { setBgLoaded(true); }}
             layout="fill"
             objectFit="cover"
             quality={100}

@@ -11,10 +11,8 @@ export const useAudio = (url: string) => {
   // if we pass a value we can dictate state, otherwise toggle
   const toggle = <T extends boolean | undefined>(value?: T) => {
     if (typeof(value) === 'boolean') {
-      console.log('dictate toggle', value);
       setPlaying(value);
     } else {
-      console.log('toggle', value);
       setPlaying(!playing);
     };
   }

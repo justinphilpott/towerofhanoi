@@ -39,13 +39,13 @@ export const timerFSM = createMachine<TimerContext, TimerEvent>({
           };
         }
       },
+      always: {
+        target: "paused",
+        cond: context => {
+          return context.elapsed >= context.duration;
+        }
+      },
       on: {
-        "": {
-          target: "paused",
-          cond: context => {
-            return context.elapsed >= context.duration;
-          }
-        },
         TICK: {
           actions: assign({
             elapsed: context => +(context.elapsed + context.interval).toFixed(2)
@@ -54,11 +54,9 @@ export const timerFSM = createMachine<TimerContext, TimerEvent>({
       }
     },
     paused: {
-      on: {
-        "": {
-          target: "running",
-          cond: context => context.elapsed < context.duration
-        }
+      always: {
+        target: "running",
+        cond: context => context.elapsed < context.duration
       }
     }
   },
