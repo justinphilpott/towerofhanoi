@@ -1,17 +1,16 @@
 import React from "react";
-import { Flex, Spinner } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import dynamic from 'next/dynamic';
-
 import { ScreenStart } from "./ScreenStart";
-import { ScreenCredits } from "./ScreenCredits";
 import { useScreenService } from "./fsm/ScreenFSMProvider";
+import { SpinnerLight } from './utils/spinnerLight';
 
 interface ScreenSettingsProps {}
 const ScreenSettings_Dynamic = dynamic<ScreenSettingsProps>(
   () => import('./ScreenSettings').then((mod) => mod.ScreenSettings),
   { loading: () =>
     <Flex height="calc(var(--vh, 1vh) * 100)" width="100vw" alignItems="center" justifyContent="center" backgroundColor="transparent" z-index={10} >
-      <Spinner color="gold" size="xl" speed="0.5s" thickness="4px" />
+      <SpinnerLight />
     </Flex>
   }
 )
@@ -21,7 +20,7 @@ const ScreenGame_Dynamic = dynamic<ScreenGameProps>(
   () => import('./ScreenGame').then((mod) => mod.ScreenGame),
   { loading: () =>
     <Flex height="calc(var(--vh, 1vh) * 100)" width="100vw" alignItems="center" justifyContent="center" backgroundColor="transparent" z-index={10} >
-      <Spinner color="gold" size="xl" speed="0.5s" thickness="4px" />
+      <SpinnerLight />
     </Flex>
   }
 )
@@ -31,7 +30,7 @@ const ScreenCredits_Dynamic = dynamic<ScreenCreditsProps>(
   () => import('./ScreenCredits').then((mod) => mod.ScreenCredits),
   { loading: () =>
     <Flex height="calc(var(--vh, 1vh) * 100)" width="100vw" alignItems="center" justifyContent="center" backgroundColor="transparent" z-index={10} >
-      <Spinner color="gold" size="xl" speed="0.5s" thickness="4px" />
+      <SpinnerLight />
     </Flex>
   }
 )

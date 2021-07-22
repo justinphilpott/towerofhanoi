@@ -17,7 +17,7 @@ const screenFSMModel = createModel({
   numPegs: 3,
   numDisks: 5,
   gameBoard: Array(),
-  showMoves: false,
+  showMoves: true,
   showTime: false,
 })
 
@@ -160,7 +160,6 @@ export const screenFSM = createMachine<ScreenContext>(
        * set up the default game position, all disks on the left hand peg
        */
        initializeGameState: assign((context: ScreenContext, event) => {
-        console.log('screen initializeGameState');
         const gameBoard = initialGameBoardState(context.numPegs, context.numDisks);
         return {
           selectedPeg: null,
@@ -173,7 +172,6 @@ export const screenFSM = createMachine<ScreenContext>(
        * the the pegs and disks and the resulting game board following settings change
        */
       saveSettings: assign((context: ScreenContext, event) => {
-        console.log(context, event);
         return {
           numPegs: event.numPegs,
           numDisks: event.numDisks,

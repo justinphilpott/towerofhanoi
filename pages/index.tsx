@@ -1,11 +1,12 @@
-import Head from 'next/head'
+import bgImg from '../public/crane_bg.webp'
 import Image from 'next/image'
+import Head from 'next/head'
 import { useState } from 'react'
-import { Flex, Spinner } from '@chakra-ui/react'
+import { Flex } from '@chakra-ui/react'
 import { ScreenWrapper } from '../components/screens/ScreenWrapper'
 import { ScreenProvider } from '../components/screens/fsm/ScreenFSMProvider'; // @see https://github.com/vantanev/xstate-helpers#createreactcontexthelpers
-import bgImg from '../public/crane_bg.webp'
 import Script from 'next/script'
+import { SpinnerLight } from '../components/screens/utils/spinnerLight';
 
 export default function Home() {
   const [bgLoaded, setBgLoaded] = useState(false);
@@ -82,14 +83,13 @@ export default function Home() {
             <ScreenWrapper />
             :
             <Flex height="100vh" width="100vw" alignItems="center" justifyContent="center" backgroundColor="teal" z-index={10} >
-              <Spinner color="gold" size="xl" speed="0.5s" thickness="4px" />
+              <SpinnerLight />
             </Flex>
           }
         </Flex>
       </ScreenProvider>
-      <Script strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
+      <Script strategy="afterInteractive">
+        {`
           function setViewportProperty(doc) {
             var prevClientHeight;
             var customVar = '--' + 'vh';
@@ -105,9 +105,8 @@ export default function Home() {
             return handleResize;
           }
           window.addEventListener('resize', setViewportProperty(document.documentElement));
-          `
-        }}
-      />
+        `}
+      </Script>
     </>
   )
 }

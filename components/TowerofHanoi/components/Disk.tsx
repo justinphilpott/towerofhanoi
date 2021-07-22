@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react';
+import React from 'react';
 
 export interface DiskProps {
   diskNumber: number;
@@ -7,7 +7,7 @@ export interface DiskProps {
   numPegs: number
 }
 
-export const Disk = ({ diskNumber, selected, numPegs }: DiskProps) => {
+export const Disk = ({ diskNumber, selected }: DiskProps) => {
 
   return (
     <>
