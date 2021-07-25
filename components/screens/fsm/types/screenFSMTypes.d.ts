@@ -17,11 +17,12 @@ export interface ScreenContext {
   numPegs: number;
   gameBoard: number[][],
   showMoves: boolean,
-  showTime: boolean
+  showTime: boolean,
+  showTutorial: boolean
 }
 
 export type ScreenEvent =
-  | { type: 'PLAY', numPegs: number, numDisks: number }
+  | { type: 'PLAY', tutorial: boolean }
   | { type: 'SETTINGS', numPegs: number, numDisks: number }
   | { type: 'TUTORIAL' }
   | { type: 'SAVE', numPegs: number, numDisks: number }

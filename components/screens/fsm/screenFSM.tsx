@@ -19,6 +19,7 @@ const screenFSMModel = createModel({
   gameBoard: Array(),
   showMoves: true,
   showTime: false,
+  showTutorial: false // get set either t/f false depending on the start screen selection anyway
 })
 
 /**
@@ -28,6 +29,8 @@ const screenFSMModel = createModel({
  * 
  * if it is status gameComplete or context.moves === 0, 
  * game has not started so this will return false
+ * 
+ * @todo no longer needed!
  */
 const gameInProgress = () => {
   /**
@@ -61,6 +64,7 @@ export const screenFSM = createMachine<ScreenContext>(
         on: {
           PLAY: {
             target: 'game',
+            actions: ['storeTutorialContext']
           },
           SETTINGS: {
             target: 'settings',
@@ -85,6 +89,7 @@ export const screenFSM = createMachine<ScreenContext>(
           }
         }
       },
+
       game: {
         entry: ['initializeGameState'],
 
@@ -100,7 +105,8 @@ export const screenFSM = createMachine<ScreenContext>(
             gameBoard: (context: HanoiContext) => context.gameBoard,
             moves: (context: HanoiContext) => context.moves,
             showMoves: (context: HanoiContext) => context.showMoves,
-            showTime: (context: HanoiContext) => context.showTime
+            showTime: (context: HanoiContext) => context.showTime,
+            tutorial: (context: HanoiContext) => context.showTutorial
           },
 
           // onDone will be set when the hanoiFSM reaches its final state
@@ -150,7 +156,7 @@ export const screenFSM = createMachine<ScreenContext>(
             }
           },
         },
-      }
+      },
     }
   },
   {
@@ -178,6 +184,15 @@ export const screenFSM = createMachine<ScreenContext>(
           showMoves: event.showMoves,
           showTime: event.showTime,
           gameBoard: initialGameBoardState(event.numPegs, event.numDisks)
+        };
+      }),
+
+      /**
+       * 
+       */
+      saveTutorialSetting: assign((context: ScreenContext, event) => {
+        return {
+          showTutorial: event.tutorial,
         };
       })
     },

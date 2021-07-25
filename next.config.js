@@ -1,15 +1,19 @@
 const withPWA = require('next-pwa')
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
 
-module.exports = withPWA({
+module.exports = withBundleAnalyzer(withPWA({
   webpack5: true,
   pwa: {
-    dest: 'public'
+    dest: 'public',
+    disable: process.env.NODE_ENV === 'development',
   },
   i18n: {
     locales: ["en"],
     defaultLocale: "en",
   },
-  webpack: (config, { dev, isServer }) => {
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     // Replace React with Preact
     Object.assign(config.resolve.alias, {
       react: 'preact/compat',
@@ -19,4 +23,4 @@ module.exports = withPWA({
 
     return config;
   },
-});
+}));

@@ -12,6 +12,5 @@ const Template: Story<DiskProps> = (args) => <Disk {...args} />;
 export const std = Template.bind({});
 std.args = {
   diskNumber: 1,
-  diskSize: 30
 };
 

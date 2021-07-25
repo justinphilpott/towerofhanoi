@@ -12,6 +12,5 @@ const Template: Story<TowerProps> = (args) => <Tower {...args} />;
 export const Default1 = Template.bind({});
 Default1.args = {
   towerDiscs: [1, 2, 3, 4, 5, 6, 7],
-  towerWidth: 500,
-  diskSize: 30
+  towerWidth: 500
 };

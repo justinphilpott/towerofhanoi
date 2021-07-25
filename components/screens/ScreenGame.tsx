@@ -137,7 +137,7 @@ export const ScreenGame = () => {
             <Flex direction="column" width="300px" background="rgba(255, 255, 255, 0.9)" p={6} rounded={8}>
               <Flex direction="column" flexWrap="wrap" width="100%" justifyContent="center">
                 <Heading as="h2" size="lg" mb={6} mr={3}>Really quit?</Heading>
-                <Button colorScheme="purple" mb={6} onClick={() => {
+                <Button colorScheme="purple" mb={3} onClick={() => {
                   handleQuit();
                 }}>Quit</Button>
                 <Button colorScheme="teal" onClick={() => screenSend({ type: "STAY"})}>Play on</Button>
@@ -151,7 +151,7 @@ export const ScreenGame = () => {
             <Flex direction="column" width="300px" background="rgba(255, 255, 255, 0.9)" p={6} rounded={8}>
               <Flex direction="column" flexWrap="wrap" width="100%" justifyContent="center">
                 <Heading as="h2" size="lg" mb={6} mr={3}>Loose progress?</Heading>
-                <Button colorScheme="blue" mb={6} onClick={() => {hanoiSend({ type: "RESET"}); screenSend({ type: "RESTART"}); }}>Restart</Button>
+                <Button colorScheme="blue" mb={3} onClick={() => {hanoiSend({ type: "RESET"}); screenSend({ type: "RESTART"}); }}>Restart</Button>
                 <Button colorScheme="teal" onClick={() => screenSend({ type: "CANCEL"})}>Play on</Button>
               </Flex>
             </Flex>
@@ -192,9 +192,9 @@ export const ScreenGame = () => {
                     </>
                   }
 
-                  <Button colorScheme="teal" flexGrow={1}  m="0 0.5em 0.5em 0.5em" onClick={() => {hanoiSend({ type: "RESET"}); screenSend({ type: "RESTART"}); }}>Play again</Button>
-                  <Button colorScheme="gold" flexGrow={1}  m="0 0.5em 0.5em 0.5em" color="#000" onClick={() => { hanoiSend({ type: "RESETPLUSONE"}); screenSend({ type: "RESTART"}); }}>Play +1 disk</Button>
-                  <Button colorScheme="salmon" flexGrow={1} m="0 0.5em 0.5em 0.5em" onClick={() => screenSend({ type: "SETTINGS"})}>Settings</Button>
+                  <Button colorScheme="teal" flexGrow={1} mb={3} onClick={() => {hanoiSend({ type: "RESET"}); screenSend({ type: "RESTART"}); }}>Play again</Button>
+                  <Button colorScheme="gold" flexGrow={1} mb={3} color="#000" onClick={() => { hanoiSend({ type: "RESETPLUSONE"}); screenSend({ type: "RESTART"}); }}>Play +1 disk</Button>
+                  <Button colorScheme="salmon" flexGrow={1} onClick={() => screenSend({ type: "SETTINGS"})}>Settings</Button>
                 </Flex>
               </Flex>
             </ScaleFade>

@@ -6,19 +6,9 @@ import { screenFSM } from './screenFSM';
 
 // what do these props do?
 const helper = createReactContextHelpers('Screen', () => {
-  const handleError = useErrorHandler();
-
-  // what to actually do in here?
-  // ...
 
   // do we need to supply context here, can we even?
   const interpreter = useInterpret(screenFSM, { devTools: true });
-
-  /*
-  React.useEffect(() => {
-    interpreter.send({ type: 'SET_USER', user: auth.user });
-  }, [interpreter, auth.user]);
-  */
 
   return interpreter;
 });

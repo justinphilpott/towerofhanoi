@@ -33,6 +33,7 @@ export interface HanoiContext {
   moves: Move[],
   showMoves: boolean,
   showTime: boolean
+  showTutorial: boolean
 }
 
 export type HanoiEvent =
