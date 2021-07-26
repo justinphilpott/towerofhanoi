@@ -18,9 +18,9 @@ export const ScreenStart = () => {
         <Flex direction="column" background="rgba(255, 255, 255, 0.9)" p={3} pb={0} rounded={6}>
           <Text size="md" color="#000" m={3} mb={6} textAlign="center">Train your brain with this famous puzzle!</Text>
           <Flex direction="row" flexWrap="wrap">
-            <Button size="md" textShadow="0px 0px 10px #fff" flexGrow={1} flexBasis={0} minWidth="100px" colorScheme="teal" color="#000" m="0 0.5em 1.5em 0.5em" onClick={ () => send({ type: 'PLAY', tutorial: false }) }>Play</Button>
+            <Button size="md" textShadow="0px 0px 10px #fff" flexGrow={1} flexBasis={0} minWidth="100px" colorScheme="teal" color="#000" m="0 0.5em 1.5em 0.5em" onClick={ () => send({ type: 'PLAY' }) }>Play</Button>
+            <Button size="md" textShadow="0px 0px 10px #fff" flexGrow={1} flexBasis={0} minWidth="100px" colorScheme="gold" color="#000" m="0 0.5em 1.5em 0.5em" onClick={ () => send({ type: 'TUTORIAL' }) }>How to play</Button>
             <Button size="md" textShadow="0px 0px 10px #fff" flexGrow={1} flexBasis={0} minWidth="100px" colorScheme="salmon" color="#000" m="0 0.5em 1.5em 0.5em" onClick={ () => send("SETTINGS") }>Settings</Button>
-            <Button size="md" textShadow="0px 0px 10px #fff" flexGrow={1} flexBasis={0} minWidth="100px" colorScheme="gold" color="#000" m="0 0.5em 1.5em 0.5em" onClick={ () => send({ type: 'PLAY', tutorial: true }) }>Tutorial</Button>
           </Flex>
         </Flex>
       </Flex>

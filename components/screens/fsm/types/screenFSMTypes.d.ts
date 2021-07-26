@@ -22,7 +22,7 @@ export interface ScreenContext {
 }
 
 export type ScreenEvent =
-  | { type: 'PLAY', tutorial: boolean }
+  | { type: 'PLAY' }
   | { type: 'SETTINGS', numPegs: number, numDisks: number }
   | { type: 'TUTORIAL' }
   | { type: 'SAVE', numPegs: number, numDisks: number }

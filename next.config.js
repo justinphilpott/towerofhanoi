@@ -20,7 +20,6 @@ module.exports = withBundleAnalyzer(withPWA({
       'react-dom/test-utils': 'preact/test-utils',
       'react-dom': 'preact/compat',
     });
-
     return config;
   },
 }));

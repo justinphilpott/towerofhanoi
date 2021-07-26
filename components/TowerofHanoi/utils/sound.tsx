@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { IconButton, Icon } from "@chakra-ui/react"
 import { ImMusic } from "react-icons/im"
-import { SpinnerLight } from '../../screens/utils/spinnerLight';
+import { SpinnerLightSmall } from '../../screens/utils/spinnerLight';
 
 export const useAudio = (url: string) => {
   const [audio] = useState(new Audio(url));
@@ -45,7 +45,7 @@ export const useAudio = (url: string) => {
  * 
  * @todo through various tracks
  */
-export const useGameAudioControl = () => {
+export const useGameAudioControl = (autoplay: boolean) => {
 
   // select a track at random
   const tracks = ['music/awake.mp3', 'music/purrple-cat-equinox.mp3'];
@@ -70,7 +70,7 @@ export const useGameAudioControl = () => {
       colorScheme="white"
       color={ playing ? "white" : "grey" }
       aria-label="Audio on/off"
-      icon={ playable ? <Icon as={ImMusic} /> : <SpinnerLight /> }
+      icon={ playable ? <Icon as={ImMusic} /> : <SpinnerLightSmall /> }
       onClick={() => handleAudioIconClick()}
       alignSelf="flex-start"
       mr="2"

@@ -26,10 +26,10 @@ const screenFSMModel = createModel({
  * gameInProgress
  *
  * read the status of the spawned hanoiFSM
- * 
- * if it is status gameComplete or context.moves === 0, 
+ *
+ * if it is status gameComplete or context.moves === 0,
  * game has not started so this will return false
- * 
+ *
  * @todo no longer needed!
  */
 const gameInProgress = () => {
@@ -64,13 +64,17 @@ export const screenFSM = createMachine<ScreenContext>(
         on: {
           PLAY: {
             target: 'game',
-            actions: ['storeTutorialContext']
+            actions: ['resetInitialContext'] // this only sets tutorial mode off, to preserve settings selection...
           },
           SETTINGS: {
             target: 'settings',
           },
           CREDITS: {
             target: 'credits',
+          },
+          TUTORIAL: {
+            target: 'game',
+            actions: ['storeTutorialContext']
           }
         }
       },
@@ -106,7 +110,7 @@ export const screenFSM = createMachine<ScreenContext>(
             moves: (context: HanoiContext) => context.moves,
             showMoves: (context: HanoiContext) => context.showMoves,
             showTime: (context: HanoiContext) => context.showTime,
-            tutorial: (context: HanoiContext) => context.showTutorial
+            showTutorial: (context: HanoiContext) => context.showTutorial
           },
 
           // onDone will be set when the hanoiFSM reaches its final state
@@ -119,6 +123,14 @@ export const screenFSM = createMachine<ScreenContext>(
           SETTINGS: {
             target: 'settings'
           },
+          PLAY: { // this would be triggered from the tutorial meta-state and so we need to reset for a normal game
+            target: 'game',
+            actions: ['setInitialContext'] // this sets the 5 tower to start with a tutorial mode off
+          },
+          QUIT: {
+            target: 'start',
+            actions: ['setInitialContext']
+          }
         },
         initial: 'default',
         states: {
@@ -188,11 +200,36 @@ export const screenFSM = createMachine<ScreenContext>(
       }),
 
       /**
-       * 
+       * This must also turn off timer and moves count
        */
-      saveTutorialSetting: assign((context: ScreenContext, event) => {
+       storeTutorialContext: assign((context: ScreenContext, event) => {
         return {
-          showTutorial: event.tutorial,
+          numPegs: 3,
+          numDisks: 3,
+          showMoves: false,
+          showTime: false,
+          showTutorial: true,
+        };
+      }),
+
+      /**
+       * Use to 
+       */
+      setInitialContext: assign((context: ScreenContext, event) => {
+        return {
+          numPegs: 3,
+          numDisks: 5,
+          showMoves: true,
+          showTutorial: false,
+        };
+      }),
+
+      /**
+       * Use to go back to normal mode after tutorial @todo, extended state is getting messy
+       */
+      resetInitialContext: assign((context: ScreenContext, event) => {
+        return {
+          showTutorial: false,
         };
       })
     },
