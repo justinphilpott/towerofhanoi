@@ -146,7 +146,7 @@ export const ScreenGame = () => {
 
                   {(gameNotStarted && hanoiState.matches("diskSelection.awaitSelection")) &&
                     <>
-                      <Text mt={1} mb={1} color="black">Move the tower to the right-hand peg, using the middle peg as a spare... <strong>Let's begin! Click / tap the tower to select the top disk...</strong></Text>
+                      <Text mt={1} mb={1} color="black"><strong>Aim: move the tower of disks to the right hands side peg</strong><br />Click/tap the tower to start...</Text>
                     </>
                   }
 
