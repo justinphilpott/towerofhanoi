@@ -129,7 +129,7 @@ export const screenFSM = createMachine<ScreenContext>(
           },
           QUIT: {
             target: 'start',
-            actions: ['setInitialContext']
+            actions: ['setInitialContext'] // also here
           }
         },
         initial: 'default',

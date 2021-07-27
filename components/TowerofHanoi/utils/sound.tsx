@@ -49,10 +49,10 @@ export const useGameAudioControl = (autoplay: boolean) => {
 
   // select a track at random
   const tracks = ['music/awake.mp3', 'music/purrple-cat-equinox.mp3'];
-  const trackNumber = Math.floor(Math.random() * (tracks.length - 0) + 0);
+//  const trackNumber = Math.floor(Math.random() * (tracks.length - 0) + 0);
 
   // setup background music -
-  const [playing, toggleAudio, playable] = useAudio(tracks[trackNumber]); // gotama-buddha-nature.mp3
+  const [playing, toggleAudio, playable] = useAudio(tracks[1]); // gotama-buddha-nature.mp3
 
   const handleAudioIconClick = () => {
     if (playable) {
