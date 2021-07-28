@@ -34,6 +34,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-error-boundary": "^3.1.3",
+    "react-hook-screen-orientation": "^1.0.1",
     "react-icons": "^4.2.0",
     "use-sound": "^3.0.1",
     "xstate": "^4.19.1",
