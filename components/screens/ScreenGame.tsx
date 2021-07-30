@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
-import { Button, Flex, Heading, ScaleFade, SlideFade, Text } from "@chakra-ui/react"
-import { Game } from '../TowerofHanoi/components/Game';
+import { Button, Flex, Heading, ScaleFade, Text } from "@chakra-ui/react"
+import { Game } from '../towerofhanoi/components/Game';
 import { useScreenService, useScreenInterpreter } from './fsm/ScreenFSMProvider';
 import { useActor } from '@xstate/react';
-import { RepeatIcon, CloseIcon, ChevronLeftIcon } from '@chakra-ui/icons'
+import { RepeatIcon, CloseIcon } from '@chakra-ui/icons'
+import { ImUndo2 } from "react-icons/im"
 import { IconButton } from "@chakra-ui/react";
-import { minMovesLookupTable } from '../TowerofHanoi/utils/hanoi';
-import { useGameAudioControl } from '../TowerofHanoi/utils/sound';
+import { minMovesLookupTable } from '../towerofhanoi/utils/hanoi';
+import { useGameAudioControl } from '../towerofhanoi/utils/sound';
+import { PortraitNotify } from '../util/PortraitNotify';
 
 interface GameInfoProps {
   moves: number;
@@ -113,7 +115,7 @@ export const ScreenGame = () => {
             <IconButton
               colorScheme="white"
               aria-label="Undo move"
-              icon={<ChevronLeftIcon />}
+              icon={<ImUndo2 />}
               onClick={() => hanoiSend('UNDO')}
               alignSelf="flex-start"
               mb="0"
@@ -135,7 +137,8 @@ export const ScreenGame = () => {
           </Flex>
         </Flex>
 
-        {/* one could use a small state machine for the tutorial stages, but notice that they are based mostly on extended
+        {/* one could use a small state machine for the tutorial stages,
+            but notice that they are based mostly on extended
             state, rather than the finite states...
         */}
         {tutorialMode &&

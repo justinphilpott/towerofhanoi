@@ -19,7 +19,7 @@ declare global {
  * @see https://css-tricks.com/debouncing-throttling-explained-examples/
  * @see https://www.typescriptlang.org/docs/handbook/2/functions.html#declaring-this-in-a-function
  */
-export const useScreenAspect = () => {
+export const useScreenAspect = (delay = 1000) => {
 
   const calcAspect = ():number => {
     return window.screen.availWidth / window.screen.availHeight;
@@ -31,6 +31,7 @@ export const useScreenAspect = () => {
   // debounce function
   const db = (fn: () => void, milliseconds: number) => {
     let timer: number | null;
+
     return function() {
       clearTimeout(timer as number);
         timer = window.setTimeout(function(this: () => {}){
@@ -42,10 +43,12 @@ export const useScreenAspect = () => {
 
   // capture the resize and get update the aspect
   useLayoutEffect(() => {
+
     const db_handleResize = db(function handleResize() {
       console.log('handle resize');
       setAspect(calcAspect());
-    }, 500);
+    }, delay);
+
     window.addEventListener('resize', db_handleResize);
     return () => {
       window.removeEventListener('resize', db_handleResize);

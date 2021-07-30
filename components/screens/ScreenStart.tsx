@@ -6,7 +6,7 @@ import {
   Text
 } from "@chakra-ui/react"
 import { useScreenSend } from './fsm/ScreenFSMProvider';
-import { useScreenAspect } from '../TowerofHanoi/utils/useScreenAspect';
+import { useScreenAspect } from '../towerofhanoi/utils/useScreenAspect';
 
 export const ScreenStart = () => {
 

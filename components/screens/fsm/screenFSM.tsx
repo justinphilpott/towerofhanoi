@@ -1,9 +1,9 @@
 import { createMachine, assign } from 'xstate'
 import { createModel } from 'xstate/lib/model';
-import { hanoiFSM } from '../../TowerofHanoi/fsm/hanoiFSM'
+import { hanoiFSM } from '../../towerofhanoi/fsm/hanoiFSM'
 import { ScreenContext } from './types/screenFSMTypes';
-import { HanoiContext } from '../../TowerofHanoi/fsm/types/hanoiFSMTypes'
-import { initialGameBoardState } from '../../TowerofHanoi/fsm/hanoiFSMActions';
+import { HanoiContext } from '../../towerofhanoi/fsm/types/hanoiFSMTypes'
+import { initialGameBoardState } from '../../towerofhanoi/fsm/hanoiFSMActions';
 
 
 /**
