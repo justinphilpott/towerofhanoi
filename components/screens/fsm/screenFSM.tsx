@@ -23,30 +23,15 @@ const screenFSMModel = createModel({
 })
 
 /**
- * gameInProgress
- *
- * read the status of the spawned hanoiFSM
- *
- * if it is status gameComplete or context.moves === 0,
- * game has not started so this will return false
- *
+ * gameInProgress - infered elewhere
+ * 
  * @todo no longer needed!
  */
 const gameInProgress = () => {
-  /**
-   * this could be done in React or within Xstate
-   *
-   * if in react, we would read the hanoiFSM state and if
-   * complete or zero moves, we don't show dialog (or even reset button!)
-   *
-   * In Xstate we have a condition which reads the state of the synced
-   * invoked machine (how to sync an invoked machine) and returns based
-   * on that state... we can read both state value and context...
-   * so that should work fine and be neater...
-   *
-   * ...
-   */
 
+  // Now done in react - @see
+  // This is now somehow a metastate...
+  //
   // actions: (context, event, { state }) => {
   //   state.children['some-id']?.getSnapshot();
   // }
@@ -213,7 +198,7 @@ export const screenFSM = createMachine<ScreenContext>(
       }),
 
       /**
-       * Use to 
+       * Use to ...
        */
       setInitialContext: assign((context: ScreenContext, event) => {
         return {
