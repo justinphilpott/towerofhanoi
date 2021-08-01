@@ -2,7 +2,7 @@ import bgImg from '../public/crane_bg.webp'
 import Image from 'next/image'
 import Head from 'next/head'
 import { useState } from 'react'
-import { Flex } from '@chakra-ui/react'
+import { Flex, Box } from '@chakra-ui/react'
 import { ScreenWrapper } from '../components/screens/ScreenWrapper'
 import { ScreenProvider } from '../components/screens/fsm/ScreenFSMProvider'; // @see https://github.com/vantanev/xstate-helpers#createreactcontexthelpers
 import Script from 'next/script'
@@ -71,9 +71,9 @@ export default function Home() {
             */}
 
             <meta property='og:type' content='app' />
-            <meta property='og:title' content='Tower of Hanoi' />
-            <meta property='og:description' content='Tower of Hanoi puzzle game' />
-            <meta property='og:site_name' content='Tower of Hanoi' />
+            <meta property='og:title' content='The Tower of Hanoi' />
+            <meta property='og:description' content='The Tower of Hanoi puzzle game' />
+            <meta property='og:site_name' content='The Tower of Hanoi' />
             <meta property='og:url' content='https://thetowerofhanoi.com' />
             <meta property='og:image' content='https://thetowerofhanoi.com/....png' />
 

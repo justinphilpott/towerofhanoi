@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Flex, Heading, ScaleFade, Text } from "@chakra-ui/react"
 import { Game } from '../towerofhanoi/components/Game';
 import { useScreenService, useScreenInterpreter } from './fsm/ScreenFSMProvider';
 import { useActor } from '@xstate/react';
-import { RepeatIcon, CloseIcon } from '@chakra-ui/icons'
-import { ImUndo2 } from "react-icons/im"
+import { ImUndo2, ImLoop2, ImCross } from "react-icons/im"
+import { MdScreenRotation, MdClear } from "react-icons/md"
 import { IconButton } from "@chakra-ui/react";
 import { minMovesLookupTable } from '../towerofhanoi/utils/hanoi';
 import { useGameAudioControl } from '../towerofhanoi/utils/sound';
-import { PortraitNotify } from '../util/PortraitNotify';
+import { useScreenAspect } from '../towerofhanoi/utils/useScreenAspect';
 
 interface GameInfoProps {
   moves: number;
@@ -30,25 +30,36 @@ const GameInfo = ({moves, minMoves, showTime, showMoves}: GameInfoProps) => {
  */
 export const ScreenGame = () => {
 
+  // device rotate notify/dismiss
+  const aspect = useScreenAspect(250);
+  const [rotateDismissed, setRotateDismissed] = useState(false);
+
+  // State machine handling
   const [screenState, screenSend] = useScreenService();
   const [hanoiState, hanoiSend] = useActor(useScreenInterpreter().children.get('hanoiFSM')!);
-  const [tutorialState, setTutorialState] = useState('one');
+
+  /**
+   * read some state values from the state machine
+   * we also deduce some "meta state" from fsm state
+   * either this is done here in a component, or one could
+   * have another layer of state machine logic, either above (hierarchical)
+   * or a separate machine that represents a different cross section
+   * through the state space.
+   */
   const disks = hanoiState.context.numDisks;
   const pegs = hanoiState.context.numPegs;
-
-  // we need this for the moves count mode
-  const minMoves = minMovesLookupTable[pegs-3][disks-1];
   const tutorialMode = hanoiState.context.showTutorial;
   const gameComplete = hanoiState.matches("gameComplete");
+  const numMoves = hanoiState.context.moves.length;
+  const midGame = numMoves > 0 && !gameComplete;
+  const gameNotStarted = !midGame && !gameComplete;
   const illegalMoveNotice =
     hanoiState.matches("diskSelection.immoveableDiskSelected") ||
     hanoiState.matches("diskSelection.emptyPegSelected") ||
     hanoiState.matches("moveSelection.invalidMoveAttempt");
 
-  // turns out its easier to determine this status here than from inside the FSM
-  const numMoves = hanoiState.context.moves.length;
-  const midGame = numMoves > 0 && !gameComplete;
-  const gameNotStarted = !midGame && !gameComplete;
+  // for use when count moves is turned on
+  const minMoves = minMovesLookupTable[pegs-3][disks-1];
 
   // use custom audio hook @todo, make into a little track player, with generic hook behind
   const [stopAudio, gameAudioIcon] = useGameAudioControl(!tutorialMode); // we need to expose a stop control for this for when we exit the game while music is playing
@@ -58,31 +69,25 @@ export const ScreenGame = () => {
    * are not dependent upon xstate, and could use any method of
    * state management. SelectHandler connects Xstate in this implementation.
    *
-   * It is the only event we need from the pegs and disks components
-   * and from that we know which peg has been clicked/tapped
-   * 
+   * It is the only event we need from the actual game board components:
+   * pegs and disks and from that we know which peg has been clicked/tapped
+   *
    * @param pegIndex
    */
   const selectHandler = (pegIndex: number) => {
-
-    // call the hanoi send method passing the selected peg index
     hanoiSend({
       type: "SELECT",
       pegIndex: pegIndex
     })
   }
 
-  /**
-   * toggleAudio requires the component below to still be rendered in order to access
-   * the audio player, so make this async and wait for the audio off process to complete
-   * @todo I don't like this
-   */
+  // using useeffect here didn't work
   const handleQuit = async () => {
     await stopAudio();
     screenSend({ type: "QUIT"});
   }
 
-  // The following is a little more verbose than necessary @todo optimize
+  // The following should be normalised with a few obvious structural components
   return (
     <>
       <Flex direction="column" width="100vw" height="100%" alignItems="center" background="linear-gradient(to bottom, transparent, 60%, #222)" position="relative">
@@ -91,7 +96,7 @@ export const ScreenGame = () => {
             <IconButton
               colorScheme="white"
               aria-label="Quit"
-              icon={<CloseIcon />}
+              icon={<ImCross />}
               onClick={() => screenSend("QUITCHECK")}
               alignSelf="flex-start"
               mr="2"
@@ -127,7 +132,7 @@ export const ScreenGame = () => {
             <IconButton
               colorScheme="white"
               aria-label="Restart game"
-              icon={<RepeatIcon />}
+              icon={<ImLoop2 />}
               onClick={() => screenSend('RESTARTCHECK')}
               alignSelf="flex-start"
               mb="0"
@@ -135,6 +140,37 @@ export const ScreenGame = () => {
               background="rgba(0, 0, 0, 0.2)"
             />
           </Flex>
+        </Flex>
+
+        <Flex color="white" mt="0.5" background="rgba(0, 0, 0, 0.1)" width="100vw">
+          {(aspect < 1 && !rotateDismissed) &&
+            <>
+              <ScaleFade in={true} initialScale={0.1}>
+                <Flex flexDirection="row"  alignItems="center" justifyContent="space-between"  width="100vw">
+                  <IconButton
+                    colorScheme="white"
+                    aria-label="Rotate device"
+                    icon={<MdScreenRotation />}
+                    alignSelf="flex-start"
+                    ml="2"
+                    mb="0"
+                    background="transparent"
+                  />
+                  <Text>~ rotate device for best view ~</Text>
+                  <IconButton
+                    colorScheme="white"
+                    aria-label="Quit"
+                    icon={<MdClear />}
+                    onClick={() => setRotateDismissed(true) }
+                    alignSelf="flex-start"
+                    mr="2"
+                    mb="0"
+                    background="transparent"
+                  />
+                </Flex>
+              </ScaleFade>
+            </>
+          }
         </Flex>
 
         {/* one could use a small state machine for the tutorial stages,
@@ -217,7 +253,7 @@ export const ScreenGame = () => {
           </>
         }
 
-        <Flex direction="column" width="100vw" alignItems="center" p="3" flexGrow={1} justifyContent="flex-end">
+        <Flex direction="column" width="100vw" alignItems="center" p="3" mb="auto" flexGrow={1} justifyContent="flex-end">
           <Game state={hanoiState.context} selectHandler={selectHandler} />
         </Flex>
 

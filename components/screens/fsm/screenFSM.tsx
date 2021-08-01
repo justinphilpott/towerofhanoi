@@ -198,7 +198,7 @@ export const screenFSM = createMachine<ScreenContext>(
       }),
 
       /**
-       * Use to ...
+       * Use to 
        */
       setInitialContext: assign((context: ScreenContext, event) => {
         return {
