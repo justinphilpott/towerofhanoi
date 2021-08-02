@@ -106,7 +106,7 @@ export const ScreenGame = () => {
             {gameAudioIcon}
           </Flex>
           {tutorialMode &&
-            <Heading as="h2" size="xl" mt={0} mb={0} mr={2} ml={2} color="white" textShadow="0 0 0.4em #0A3839">How to play</Heading>
+            <Heading as="h2" fontSize={{base: "1.2rem", sm: "1.8rem"}} mt={{base: "2", sm: "0"}} mb={0} mr={2} ml={2} color="white" textShadow="0 0 0.4em #0A3839">How to play</Heading>
           }
           {!tutorialMode &&
             <GameInfo
@@ -142,7 +142,7 @@ export const ScreenGame = () => {
           </Flex>
         </Flex>
 
-        <Flex color="white" mt="0.5" background="rgba(0, 0, 0, 0.1)" width="100vw">
+        <Flex color="white" mt="0.5" mb="0.5" background="rgba(0, 0, 0, 0.3)" width="100vw">
           {(aspect < 1 && !rotateDismissed) &&
             <>
               <ScaleFade in={true} initialScale={0.1}>
@@ -156,7 +156,7 @@ export const ScreenGame = () => {
                     mb="0"
                     background="transparent"
                   />
-                  <Text>~ rotate device for best view ~</Text>
+                  <Text>rotate device for best view</Text>
                   <IconButton
                     colorScheme="white"
                     aria-label="Quit"

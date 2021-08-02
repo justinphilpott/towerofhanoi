@@ -1,4 +1,5 @@
 import bgImg from '../public/crane_bg.webp'
+import bgImg2 from '../public/chill-cat-bg.jpg'
 import Image from 'next/image'
 import Head from 'next/head'
 import { useState } from 'react'
