@@ -21,8 +21,22 @@ declare global {
  */
 export const useScreenAspect = (delay = 1000) => {
 
+  const iOS = () => {
+    return [
+      'iPad Simulator',
+      'iPhone Simulator',
+      'iPod Simulator',
+      'iPad',
+      'iPhone',
+      'iPod'
+    ].includes(navigator.platform)
+    // iPad on iOS 13 detection
+    || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+  }
+
   const calcAspect = ():number => {
-    return window.screen.availWidth / window.screen.availHeight;
+    // @todo bit hacky detection here
+    return iOS() ? window.innerWidth / window.innerHeight : window.screen.availWidth / window.screen.availHeight;
   }
 
   const [aspect, setAspect] = useState(calcAspect());
