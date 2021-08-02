@@ -52,7 +52,7 @@ export const useGameAudioControl = (autoplay: boolean) => {
   const trackNumber = Math.floor(Math.random() * (tracks.length));
 
   // setup background music -
-  const [playing, toggleAudio, playable] = useAudio(tracks[1]); // gotama-buddha-nature.mp3
+  const [playing, toggleAudio, playable] = useAudio(tracks[trackNumber]); // gotama-buddha-nature.mp3
 
   const handleAudioIconClick = () => {
     if (playable) {
