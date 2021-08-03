@@ -7,7 +7,7 @@ import { Flex, Box } from '@chakra-ui/react'
 import { ScreenWrapper } from '../components/screens/ScreenWrapper'
 import { ScreenProvider } from '../components/screens/fsm/ScreenFSMProvider'; // @see https://github.com/vantanev/xstate-helpers#createreactcontexthelpers
 import Script from 'next/script'
-import { SpinnerLight } from '../components/screens/utils/spinnerLight';
+import { SpinnerLight } from '../utils/spinnerLight';
 
 export default function Home() {
   const [bgLoaded, setBgLoaded] = useState(false);

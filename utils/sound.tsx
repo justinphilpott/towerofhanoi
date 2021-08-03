@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { IconButton, Icon } from "@chakra-ui/react"
 import { ImMusic } from "react-icons/im"
-import { SpinnerLightSmall } from '../../screens/utils/spinnerLight';
+import { SpinnerLightSmall } from './spinnerLight';
 
 export const useAudio = (url: string) => {
   const [audio] = useState(new Audio(url));

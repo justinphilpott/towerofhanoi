@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Flex, Heading, ScaleFade, Text } from "@chakra-ui/react"
-import { Game } from '../towerofhanoi/components/Game';
+import { Game } from '../towerofhanoi/Game';
 import { useScreenService, useScreenInterpreter } from './fsm/ScreenFSMProvider';
 import { useActor } from '@xstate/react';
 import { ImUndo2, ImLoop2, ImCross } from "react-icons/im"
 import { MdScreenRotation, MdClear } from "react-icons/md"
 import { IconButton } from "@chakra-ui/react";
-import { minMovesLookupTable } from '../towerofhanoi/utils/hanoi';
-import { useGameAudioControl } from '../towerofhanoi/utils/sound';
-import { useScreenAspect } from '../towerofhanoi/utils/useScreenAspect';
+import { minMovesLookupTable } from '../../utils/hanoi';
+import { useGameAudioControl } from '../../utils/sound';
+import { useScreenAspect } from '../../hooks/useScreenAspect';
 
 interface GameInfoProps {
   moves: number;

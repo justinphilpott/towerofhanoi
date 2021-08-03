@@ -3,7 +3,7 @@ import { Flex } from "@chakra-ui/react";
 import dynamic from 'next/dynamic';
 import { ScreenStart } from "./ScreenStart";
 import { useScreenService } from "./fsm/ScreenFSMProvider";
-import { SpinnerLight } from './utils/spinnerLight';
+import { SpinnerLight } from '../../utils/spinnerLight';
 
 interface ScreenSettingsProps {}
 const ScreenSettings_Dynamic = dynamic<ScreenSettingsProps>(
