@@ -1,6 +1,4 @@
-import React, { useState, MouseEvent } from 'react'
-import { Machine, assign } from 'xstate'
-
+import React from 'react'
 import { Peg } from './Peg'
 
 

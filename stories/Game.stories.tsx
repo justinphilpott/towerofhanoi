@@ -1,29 +1,37 @@
 import React from "react";
 import { Story, Meta } from '@storybook/react/types-6-0';
-import { Puzzle, PuzzleProps } from '../components/GameBoard';
+import { Game, GameProps } from '../components/towerofhanoi/Game';
 
 export default {
-  title: 'Puzzle',
-  component: Puzzle
+  title: 'Game',
+  component: Game
 } as Meta;
 
-const Template: Story<PuzzleProps> = (args) => <Puzzle {...args} />;
+const Template: Story<GameProps> = (args) => <Game {...args} />;
 
 export const TowersOfHanoi = Template.bind({});
 TowersOfHanoi.args = {
-  puzzleState: [[1, 2, 3, 4, 5, 6, 7], [], []]
+  state: {
+    gameBoard: [[1, 2, 3, 4, 5, 6, 7], [], []]
+  }
 };
 export const TowersOfHanoiMidGame = Template.bind({});
 TowersOfHanoiMidGame.args = {
-  puzzleState: [[1], [2], [3]],
+  state: {
+    gameBoard: [[1], [2], [3]],
+  }
 };
-
 
 export const RevesPuzzle = Template.bind({});
 RevesPuzzle.args = {
-  puzzleState: [[1, 2, 3, 4, 5, 6, 7], [], [], []],
+  state: {
+    gameBoard: [[1, 2, 3, 4, 5, 6, 7], [], [], []]
+  }
 };
+
 export const RevesMidGame = Template.bind({});
 RevesMidGame.args = {
-  puzzleState: [[5, 6, 7], [1], [2, 3], [4]],
+  state: {
+    gameBoard: [[5, 6, 7], [1], [2, 3], [4]]
+  }
 };
