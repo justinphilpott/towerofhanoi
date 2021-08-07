@@ -7,7 +7,7 @@ import {
   Link,
   Box
 } from "@chakra-ui/react"
-import { useScreenSend } from './fsm/ScreenFSMProvider';
+import { useScreenSend } from '../../state/screen/ScreenFSMProvider';
 
 export const ScreenStart = () => {
 

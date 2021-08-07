@@ -5,7 +5,7 @@ import Head from 'next/head'
 import { useState } from 'react'
 import { Flex, Box } from '@chakra-ui/react'
 import { ScreenWrapper } from '../components/screens/ScreenWrapper'
-import { ScreenProvider } from '../components/screens/fsm/ScreenFSMProvider'; // @see https://github.com/vantanev/xstate-helpers#createreactcontexthelpers
+import { ScreenProvider } from '../state/screen/ScreenFSMProvider'; // @see https://github.com/vantanev/xstate-helpers#createreactcontexthelpers
 import Script from 'next/script'
 import { SpinnerLight } from '../utils/spinnerLight';
 

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Button, Flex, Heading, ScaleFade, Text } from "@chakra-ui/react"
 import { Game } from '../towerofhanoi/Game';
-import { useScreenService, useScreenInterpreter } from './fsm/ScreenFSMProvider';
+import { useScreenService, useScreenInterpreter } from '../../state/screen/ScreenFSMProvider';
 import { useActor } from '@xstate/react';
 import { ImUndo2, ImLoop2, ImCross } from "react-icons/im"
 import { MdScreenRotation, MdClear } from "react-icons/md"
