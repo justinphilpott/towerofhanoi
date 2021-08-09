@@ -60,6 +60,14 @@ export default function Home() {
     <>
       <ScreenProvider>
         <Flex height="100%" width="100vw" alignItems="center" justifyContent="center" position="fixed" overflow="hidden">
+          <Image
+            src={bgImg}
+            onLoad={() => { setBgLoaded(true); }}
+            layout="fill"
+            objectFit="cover"
+            quality={100}
+            alt="Tower of Hanoi puzzle game background image"
+            />
           <Head>
             <title>Tower of Hanoi</title>
             <link rel="manifest" href="/manifest.json" />
@@ -115,14 +123,6 @@ export default function Home() {
             <meta property='og:image' content='https://thetowerofhanoi.com/....png' />
 
           </Head>
-          <Image
-            src={bgImg}
-            onLoad={() => { setBgLoaded(true); }}
-            layout="fill"
-            objectFit="cover"
-            quality={100}
-            alt="Tower of Hanoi puzzle game background image"
-            />
           { bgLoaded ?
             <ScreenWrapper />
             :
