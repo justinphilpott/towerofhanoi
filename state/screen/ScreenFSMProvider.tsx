@@ -8,7 +8,7 @@ import { screenFSM } from './screenFSM';
 const helper = createReactContextHelpers('Screen', () => {
 
   // do we need to supply context here, can we even?
-  const interpreter = useInterpret(screenFSM, { devTools: true });
+  const interpreter = useInterpret(screenFSM, { devTools: false });
 
   return interpreter;
 });

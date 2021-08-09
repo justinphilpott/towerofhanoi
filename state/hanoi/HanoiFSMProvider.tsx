@@ -11,7 +11,7 @@ const helper = createReactContextHelpers('Hanoi', (props: { name: string }) => {
   // ...
 
   // do we need to supply context here, can we even?
-  const interpreter = useInterpret(hanoiFSM, { devTools: true });
+  const interpreter = useInterpret(hanoiFSM, { devTools: false});
 
   /*
   React.useEffect(() => {
