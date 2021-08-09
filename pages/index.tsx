@@ -65,8 +65,9 @@ export default function Home() {
             onLoad={() => { setBgLoaded(true); }}
             layout="fill"
             objectFit="cover"
-            quality={100}
+            quality={50}
             alt="Tower of Hanoi puzzle game background image"
+
             />
           <Head>
             <title>Tower of Hanoi</title>
