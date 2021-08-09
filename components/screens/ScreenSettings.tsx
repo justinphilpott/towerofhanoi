@@ -13,8 +13,8 @@ import {
   FormControl,
   FormLabel
 } from "@chakra-ui/react"
-import { useScreenService } from './fsm/ScreenFSMProvider';
-import { minMovesLookupTable } from './../TowerofHanoi/utils/hanoi';
+import { useScreenService } from '../../state/screen/ScreenFSMProvider';
+import { minMovesLookupTable } from '../../utils/hanoi';
 
 export const ScreenSettings = () => {
 

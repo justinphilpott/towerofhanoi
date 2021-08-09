@@ -41,3 +41,11 @@ _old
 /public/sw.js
 /public/sw.js.map
 /public/fallback-*.js
+
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
