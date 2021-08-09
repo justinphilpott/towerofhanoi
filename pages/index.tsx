@@ -1,7 +1,7 @@
 import bgImg from '../public/crane_bg.webp'
 import Image from 'next/image'
 import Head from 'next/head'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Flex, Heading } from '@chakra-ui/react'
 import { ScreenWrapper } from '../components/screens/ScreenWrapper'
 import { ScreenProvider } from '../state/screen/ScreenFSMProvider'; // @see https://github.com/vantanev/xstate-helpers#createreactcontexthelpers
@@ -62,12 +62,12 @@ export default function Home() {
         <Flex height="100%" width="100vw" alignItems="center" justifyContent="center" position="fixed" overflow="hidden">
           <Image
             src={bgImg}
-            onLoad={() => { setBgLoaded(true); }}
+            onLoadingComplete={() => { setBgLoaded(true); }}
             layout="fill"
             objectFit="cover"
             quality={50}
             alt="Tower of Hanoi puzzle game background image"
-
+            priority={true}
             />
           <Head>
             <title>Tower of Hanoi</title>
@@ -75,6 +75,7 @@ export default function Home() {
             <meta name='description' content='Tower of Hanoi puzzle game' />
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover" />
 
+            <link rel="preload" href="/fonts/pattaya-latin-400-normal.woff2" as="font" type="font/woff2" />
             <link rel='icon' type='image/png' sizes='32x32' href='/favicon_32x32.png' />
             <link rel='icon' type='image/png' sizes='16x16' href='/favicon_16x16.png' />
             <link rel='icon' href='/favicon.ico' />
