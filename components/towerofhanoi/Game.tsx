@@ -8,8 +8,9 @@ export interface GameProps {
 }
 
 /**
+ * This takes in the game state and the selectHandler callback.
+ * No logic is contained in here or deeper. Just rendering.
  * 
- * @param param0 
  * @returns 
  */
 export const Game = ({ state, selectHandler }: GameProps) => {

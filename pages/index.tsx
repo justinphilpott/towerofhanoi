@@ -1,9 +1,8 @@
 import bgImg from '../public/crane_bg.webp'
-import bgImg2 from '../public/chill-cat-bg.jpg'
 import Image from 'next/image'
 import Head from 'next/head'
-import { useState } from 'react'
-import { Flex, Box } from '@chakra-ui/react'
+import { useState, useEffect } from 'react'
+import { Flex, Heading } from '@chakra-ui/react'
 import { ScreenWrapper } from '../components/screens/ScreenWrapper'
 import { ScreenProvider } from '../state/screen/ScreenFSMProvider'; // @see https://github.com/vantanev/xstate-helpers#createreactcontexthelpers
 import Script from 'next/script'
@@ -12,18 +11,55 @@ import { SpinnerLight } from '../utils/spinnerLight';
 export default function Home() {
   const [bgLoaded, setBgLoaded] = useState(false);
 
+  /**
+   * possible sound solution 
+   * 
+   * useEffect
+   * on touch start
+   * activate audio component with a play and pause
+   * so we need the audio component exposed here to trigger playing
+   * 
+   * -- then pass the icon, play and stop functions down
+   * basically a soundControl object in to the game object that
+   * 
+   * there we need to start and stop the sound at various times...
+   * so context is not necessary here...
+   * 
+   * IOS sound fix
+   * https://curtisrobinson.medium.com/how-to-auto-play-audio-in-safari-with-javascript-21d50b0a2765
+   */
+
+  /*
+  useEffect(() => {
+
+    window.addEventListener("touchstart", startup);
+
+  })
+
+
+  const audioObject = 
+
+
+  const gameAudio = (audioObject) => {
+    
+
+
+    const icon = '';
+    const stop = () => {
+
+    }
+    const play = () => {
+      
+    }
+
+    return [icon, stop, play];
+  }
+  */
+
   return (
     <>
       <ScreenProvider>
         <Flex height="100%" width="100vw" alignItems="center" justifyContent="center" position="fixed" overflow="hidden">
-          <Image
-            src={bgImg}
-            onLoad={() => { setBgLoaded(true); }}
-            layout="fill"
-            objectFit="cover"
-            quality={100}
-            alt="Tower of Hanoi puzzle game background image"
-            />
           <Head>
             <title>Tower of Hanoi</title>
             <link rel="manifest" href="/manifest.json" />
@@ -46,7 +82,7 @@ export default function Home() {
             <meta name='msapplication-tap-highlight' content='no' />
             <meta name='theme-color' content='#319795' />
 
-{/*}
+            {/*}
             <link rel="apple-touch-icon" href="/icon-192x192.png" />
             <link rel='apple-touch-icon' sizes='152x152' href='/static/icons/touch-icon-ipad.png' />
             <link rel='apple-touch-icon' sizes='180x180' href='/static/icons/touch-icon-iphone-retina.png' />
@@ -79,11 +115,19 @@ export default function Home() {
             <meta property='og:image' content='https://thetowerofhanoi.com/....png' />
 
           </Head>
-
+          <Image
+            src={bgImg}
+            onLoad={() => { setBgLoaded(true); }}
+            layout="fill"
+            objectFit="cover"
+            quality={100}
+            alt="Tower of Hanoi puzzle game background image"
+            />
           { bgLoaded ?
             <ScreenWrapper />
             :
-            <Flex height="100vh" width="100vw" alignItems="center" justifyContent="center" backgroundColor="teal" z-index={10} >
+            <Flex direction="column" height="100vh" width="100vw" alignItems="center" justifyContent="center" backgroundColor="teal" z-index={10} >
+              <Heading as="h1" size="xl" color="#000" mb={6} mt={3} textShadow="0 0 0.4em #fff">Loading</Heading>
               <SpinnerLight />
             </Flex>
           }
