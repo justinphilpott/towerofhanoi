@@ -62,7 +62,7 @@ export default function Home() {
         <Flex height="100%" width="100vw" alignItems="center" justifyContent="center" position="fixed" overflow="hidden">
           <Image
             src={bgImg}
-            onLoadingComplete={() => { setBgLoaded(true); }}
+            onLoadingComplete={() => { if(!bgLoaded) { setBgLoaded(true) } }}
             layout="fill"
             objectFit="cover"
             quality={50}
@@ -75,7 +75,7 @@ export default function Home() {
             <meta name='description' content='Tower of Hanoi puzzle game' />
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover" />
 
-            <link rel="preload" href="/fonts/pattaya-latin-400-normal.woff2" as="font" type="font/woff2" />
+            {/*<!--link rel="preload" href="/fonts/pattaya-latin-400-normal.woff2" as="font" type="font/woff2" /-->*/}
             <link rel='icon' type='image/png' sizes='32x32' href='/favicon_32x32.png' />
             <link rel='icon' type='image/png' sizes='16x16' href='/favicon_16x16.png' />
             <link rel='icon' href='/favicon.ico' />
