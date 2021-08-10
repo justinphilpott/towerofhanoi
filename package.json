@@ -29,6 +29,7 @@
     "next": "canary",
     "postcss-viewport-height-correction": "^1.1.1",
     "preact": "^10.5.14",
+    "pwa-asset-generator": "^4.3.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-error-boundary": "^3.1.3",

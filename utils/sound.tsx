@@ -48,7 +48,7 @@ export const useAudio = (url: string) => {
 export const useGameAudioControl = (autoplay: boolean) => {
 
   // select a track at random
-  const tracks = ['music/purrple-cat-equinox.mp3', 'music/purrple-cat-floating-castle.mp3', 'music/purrple-cat-mysterious-lights.mp3', 'music/purrple-cat-wild-strawberry.mp3', 'music/Uniq-Reverse.mp3'];
+  const tracks = ['music/purrple-cat-equinox-opt.mp3', 'music/purrple-cat-floating-castle-opt.mp3', 'music/purrple-cat-mysterious-lights-opt.mp3', 'music/purrple-cat-wild-strawberry-opt.mp3', 'music/Uniq-Reverse-opt.mp3'];
   const trackNumber = Math.floor(Math.random() * (tracks.length));
 
   // setup background music -
