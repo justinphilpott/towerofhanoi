@@ -2,7 +2,7 @@
 /**
  *
  */
-export interface ScreenStateSchema {
+export interface ScreentateSchema {
   states: {
     start: {},
     settings: {},

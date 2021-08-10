@@ -3,4 +3,3 @@
 
 tsc
 yarn next lint
-npx lint-staged
