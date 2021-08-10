@@ -163,7 +163,7 @@ export const screenFSM = createMachine<ScreenContext>(
       /**
        * set up the default game position, all disks on the left hand peg
        */
-       initializeGameState: assign((context: ScreenContext, event) => {
+       initializeGameState: assign((context: ScreenContext) => {
         const gameBoard = initialGameBoardState(context.numPegs, context.numDisks);
         return {
           selectedPeg: null,
@@ -188,7 +188,7 @@ export const screenFSM = createMachine<ScreenContext>(
       /**
        * This must also turn off timer and moves count
        */
-       storeTutorialContext: assign((context: ScreenContext, event) => {
+       storeTutorialContext: assign((context: ScreenContext, event) => { // eslint-disable-line
         return {
           numPegs: 3,
           numDisks: 3,
@@ -201,7 +201,7 @@ export const screenFSM = createMachine<ScreenContext>(
       /**
        * Use to 
        */
-      setInitialContext: assign((context: ScreenContext, event) => {
+      setInitialContext: assign((context: ScreenContext, event) => { // eslint-disable-line
         return {
           numPegs: 3,
           numDisks: 5,
@@ -213,7 +213,7 @@ export const screenFSM = createMachine<ScreenContext>(
       /**
        * Use to go back to normal mode after tutorial @todo, extended state is getting messy
        */
-      resetInitialContext: assign((context: ScreenContext, event) => {
+      resetInitialContext: assign((context: ScreenContext, event) => { // eslint-disable-line
         return {
           showTutorial: false,
         };
