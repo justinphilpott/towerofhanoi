@@ -68,6 +68,7 @@ export default function Home() {
             quality={50}
             alt="Tower of Hanoi puzzle game background image"
             priority={true}
+            placeholder="blur"
             />
           <Head>
             <title>Tower of Hanoi</title>
@@ -129,8 +130,7 @@ export default function Home() {
           { bgLoaded ?
             <ScreenWrapper />
             :
-            <Flex direction="column" height="100vh" width="100vw" alignItems="center" justifyContent="center" backgroundColor="teal" z-index={10} >
-              <Heading as="h1" size="xl" color="#000" mb={6} mt={3} textShadow="0 0 0.4em #fff">Loading</Heading>
+            <Flex display="fixed" direction="column" height="100vh" width="100vw" alignItems="center" justifyContent="center" backgroundColor="teal" z-index={10} >
               <SpinnerLight />
             </Flex>
           }
