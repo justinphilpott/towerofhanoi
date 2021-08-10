@@ -48,7 +48,9 @@ export const ScreenSettings = () => {
               <SliderTrack>
                 <SliderFilledTrack bg="teal.400" />
               </SliderTrack>
-              <SliderThumb fontSize="sm" boxSize="32px" children={numPegs} />
+              <SliderThumb boxShadow="teal.400" fontSize="sm" boxSize="32px">
+                {numPegs}
+              </SliderThumb>
             </Slider>
           </Box>
         </Flex>
@@ -60,7 +62,9 @@ export const ScreenSettings = () => {
               <SliderTrack>
                 <SliderFilledTrack bg="teal.400" />
               </SliderTrack>
-              <SliderThumb boxShadow="teal.400" fontSize="sm" boxSize="32px" children={numDisks} />
+              <SliderThumb boxShadow="teal.400" fontSize="sm" boxSize="32px">
+                {numDisks}
+              </SliderThumb>
             </Slider>
           </Box>
         </Flex>

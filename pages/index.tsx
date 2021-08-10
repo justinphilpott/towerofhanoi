@@ -59,16 +59,17 @@ export default function Home() {
   return (
     <>
       <ScreenProvider>
-        <Flex height="100%" width="100vw" alignItems="center" justifyContent="center" position="fixed" overflow="hidden">
+        <Flex height="100%" width="100vw" alignItems="center" justifyContent="center" position="fixed" overflow="hidden" backgroundColor="teal">
           <Image
             src={bgImg}
             onLoadingComplete={() => { if(!bgLoaded) { setBgLoaded(true) } }}
             layout="fill"
             objectFit="cover"
             quality={50}
-            alt="Tower of Hanoi puzzle game background image"
+            alt="Loading..."
             priority={true}
             placeholder="blur"
+            blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkaGj4DwADiQIB/qPrgQAAAABJRU5ErkJggg==`}
             />
           <Head>
             <title>Tower of Hanoi</title>

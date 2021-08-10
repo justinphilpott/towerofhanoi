@@ -192,7 +192,7 @@ export const ScreenGame = () => {
                   {!illegalMoveNotice &&
                     <>
                       {numMoves === 0 && hanoiState.context.selectedPeg != null &&
-                        <Text mt={1} mb={1} color="black"><strong>That's it</strong>, now tap on a peg to complete the first move...</Text>
+                        <Text mt={1} mb={1} color="black"><strong>That&apos;s it</strong>, now tap on a peg to complete the first move...</Text>
                       }
 
                       {numMoves === 1 && hanoiState.context.selectedPeg === null &&
@@ -204,7 +204,7 @@ export const ScreenGame = () => {
                       }
 
                       {numMoves === 2 && hanoiState.context.selectedPeg === null &&
-                        <Text mt={1} mb={1} color="black"><strong>Cool</strong>. <strong>Here's a tip</strong>: Think how to move the largest disk to right, and then which disk needs to move to achieve that, and so on...</Text>
+                        <Text mt={1} mb={1} color="black"><strong>Cool</strong>. <strong>Here&apos;s a tip</strong>: Think how to move the largest disk to right, and then which disk needs to move to achieve that, and so on...</Text>
                       }
 
                       {
@@ -226,7 +226,7 @@ export const ScreenGame = () => {
                   }
 
                   {hanoiState.matches("moveSelection.invalidMoveAttempt") &&
-                    <Text mt={1} mb={1} color="black">You can't place a bigger disk on top of a smaller, that would be too easy! <strong>Choose another peg...</strong></Text>
+                    <Text mt={1} mb={1} color="black">You can&apos;t place a bigger disk on top of a smaller, that would be too easy! <strong>Choose another peg...</strong></Text>
                   }
 
                 </Flex>
