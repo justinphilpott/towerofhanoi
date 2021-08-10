@@ -1,7 +1,7 @@
 import { useState, useLayoutEffect } from 'react'
 
 declare global {
-  interface Window {
+  interface Window { // eslint-disable-line
     availHeight?: number;
     availWidth?: number;
   }
@@ -35,12 +35,12 @@ export const useScreenAspect = (delay = 1000) => {
   }
 
   const calcAspect = ():number => {
+    
     // @todo bit hacky detection here
     return iOS() ? window.innerWidth / window.innerHeight : window.screen.availWidth / window.screen.availHeight;
   }
 
   const [aspect, setAspect] = useState(calcAspect());
-  const [timeoutState, setTimeoutState] = useState(false);
 
   // debounce function
   const db = (fn: () => void, milliseconds: number) => {
@@ -48,7 +48,7 @@ export const useScreenAspect = (delay = 1000) => {
 
     return function() {
       clearTimeout(timer as number);
-        timer = window.setTimeout(function(this: () => {}){
+        timer = window.setTimeout(function(this: () => {}){ // eslint-disable-line
         timer = null;
         fn.apply(this);
       }, milliseconds)

@@ -1,4 +1,7 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+tsc
+yarn next lint
+npx lint-staged
 npx lint-staged
