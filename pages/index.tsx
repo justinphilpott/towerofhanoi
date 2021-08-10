@@ -68,8 +68,8 @@ export default function Home() {
             quality={50}
             alt="Loading..."
             priority={true}
-            //placeholder="blur"
-            //blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkaGj4DwADiQIB/qPrgQAAAABJRU5ErkJggg==`}
+            placeholder="blur"
+            blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkaGj4DwADiQIB/qPrgQAAAABJRU5ErkJggg==`}
             />
           <Head>
             <title>Tower of Hanoi</title>
