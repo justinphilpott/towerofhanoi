@@ -59,7 +59,7 @@ export default function Home() {
   return (
     <>
       <ScreenProvider>
-        <Flex height="100%" width="100vw" alignItems="center" justifyContent="center" position="fixed" overflow="hidden" backgroundColor="teal">
+        <Flex height="100%" width="100vw" alignItems="center" justifyContent="center" position="fixed" overflow="hidden" backgroundColor="black">
           <Image
             src={bgImg}
             onLoadingComplete={() => { if(!bgLoaded) { setBgLoaded(true) } }}
@@ -68,8 +68,8 @@ export default function Home() {
             quality={50}
             alt="Loading..."
             priority={true}
-            placeholder="blur"
-            blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkaGj4DwADiQIB/qPrgQAAAABJRU5ErkJggg==`}
+            //placeholder="blur"
+            //blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkaGj4DwADiQIB/qPrgQAAAABJRU5ErkJggg==`}
             />
           <Head>
             <title>Tower of Hanoi</title>
@@ -131,7 +131,7 @@ export default function Home() {
           { bgLoaded ?
             <ScreenWrapper />
             :
-            <Flex display="fixed" direction="column" height="100vh" width="100vw" alignItems="center" justifyContent="center" backgroundColor="teal" z-index={10} >
+            <Flex display="fixed" direction="column" height="100vh" width="100vw" alignItems="center" justifyContent="center" backgroundColor="black" z-index={10} >
               <SpinnerLight />
             </Flex>
           }
