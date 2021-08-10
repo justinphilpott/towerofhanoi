@@ -126,6 +126,7 @@ export const screenFSM = createMachine<ScreenContext>(
               },
               RESTARTCHECK: [
                 {
+                  // currently a redundant check as the UI prevents this being called at any other time (not-started or finished.)
                   cond: gameInProgress,
                   target: 'restartDialog'
                 },
