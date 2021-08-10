@@ -4,4 +4,3 @@
 tsc
 yarn next lint
 npx lint-staged
-npx lint-staged
