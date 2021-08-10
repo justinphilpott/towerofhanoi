@@ -13,7 +13,7 @@ module.exports = withBundleAnalyzer(withPWA({
     locales: ["en"],
     defaultLocale: "en",
   },
-  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {  // eslint-disable-line
     // Replace React with Preact
     Object.assign(config.resolve.alias, {
       react: 'preact/compat',

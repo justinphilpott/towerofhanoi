@@ -1,6 +1,6 @@
 import { Global } from "@emotion/react"
 const Fonts = () => (
-  <Global
+  <Global  // eslint-disable-line
     styles={`
       /* pattaya-latin-400-normal*/
       @font-face {
