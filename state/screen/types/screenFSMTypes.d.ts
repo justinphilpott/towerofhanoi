@@ -1,15 +1,4 @@
 
-/**
- *
- */
-export interface ScreentateSchema {
-  states: {
-    start: {},
-    settings: {},
-    game: {},
-  }
-}
-
 // Screen context that stores the settings info to supply to the
 // Tower of Hanoi FSM
 export interface ScreenContext {
