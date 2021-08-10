@@ -2,16 +2,17 @@ import React from 'react'
 import { Peg } from './Peg'
 
 
+// @todo refine eslinting
 export interface GameProps {
-  state: GameConfig;
-  selectHandler: (pegIndex: number) => void;
+  state: GameConfig; // eslint-disable-line
+  selectHandler: (pegIndex: number) => void; // eslint-disable-line
 }
 
 /**
  * This takes in the game state and the selectHandler callback.
  * No logic is contained in here or deeper. Just rendering.
- * 
- * @returns 
+ *
+ * @returns
  */
 export const Game = ({ state, selectHandler }: GameProps) => {
 

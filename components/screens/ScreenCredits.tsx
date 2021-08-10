@@ -5,7 +5,6 @@ import {
   Heading,
   Flex,
   Text,
-  Box,
   Link
 } from "@chakra-ui/react"
 import  { useScreenSend } from '../../state/screen/ScreenFSMProvider';

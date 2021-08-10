@@ -1,6 +1,5 @@
-import React, { MouseEvent } from "react";
+import React from "react";
 import { Disk } from "./Disk"
-import useSound from "use-sound";
 
 
 export interface PegProps {
@@ -9,7 +8,7 @@ export interface PegProps {
   numDisks: number;
   selected: boolean;
   pegNum: number;
-  selectHandler: (pegIndex: number) => void;
+  selectHandler: (pegIndex: number) => void; // eslint-disable-line
 }
 
 /**

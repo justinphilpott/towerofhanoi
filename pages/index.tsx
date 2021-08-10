@@ -1,8 +1,8 @@
 import bgImg from '../public/crane_bg.webp'
 import Image from 'next/image'
 import Head from 'next/head'
-import { useState } from 'react'
-import { Flex, Heading } from '@chakra-ui/react'
+import React, { useState } from 'react'
+import { Flex } from '@chakra-ui/react'
 import { ScreenWrapper } from '../components/screens/ScreenWrapper'
 import { ScreenProvider } from '../state/screen/ScreenFSMProvider'; // @see https://github.com/vantanev/xstate-helpers#createreactcontexthelpers
 import Script from 'next/script'
