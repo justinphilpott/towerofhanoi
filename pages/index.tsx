@@ -123,7 +123,6 @@ export default function Home() {
             <link rel="apple-touch-startup-image" href="/icons/apple-splash-1334-750.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" />
             <link rel="apple-touch-startup-image" href="/icons/apple-splash-640-1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" />
             <link rel="apple-touch-startup-image" href="/icons/apple-splash-1136-640.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" />
-
             <link rel='mask-icon' href='/public/icons/safari-pinned-tab.svg' color='#5bbad5' />
 
             <meta name='twitter:card' content='Tower of Hanoi puzzle game by Justin Philpott' />
