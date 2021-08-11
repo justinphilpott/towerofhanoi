@@ -82,7 +82,7 @@ export default function Home() {
           <link rel='icon' type='image/png' sizes='32x32' href='/favicon_32x32.png' />
           <link rel='icon' type='image/png' sizes='16x16' href='/favicon_16x16.png' />
           <link rel='icon' href='/favicon.ico' />
-          
+
           <meta name='application-name' content='Tower of Hanoi' />
 
           <meta name='mobile-web-app-capable' content='yes' />
