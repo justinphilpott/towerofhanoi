@@ -1,7 +1,7 @@
 import React from "react";
 import { Flex } from "@chakra-ui/react";
 import dynamic from 'next/dynamic';
-import { ScreenStart } from "./ScreenStart";
+// import { ScreenStart } from "./ScreenStart";
 import { useScreenService } from '../../state/screen/ScreenFSMProvider';
 import { SpinnerLight } from '../../utils/spinnerLight';
 
@@ -42,7 +42,7 @@ export const ScreenWrapper = () => {
   return (
     <>
       {screenState.value === "start" &&
-        <ScreenStart />
+        true
       }
       {screenState.matches("game") &&
         <Flex
