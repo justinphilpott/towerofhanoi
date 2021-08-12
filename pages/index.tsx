@@ -6,7 +6,7 @@ import { Flex } from '@chakra-ui/react'
 // import { ScreenWrapper } from '../components/screens/ScreenWrapper'
 // import { ScreenProvider } from '../state/screen/ScreenFSMProvider'; // @see https://github.com/vantanev/xstate-helpers#createreactcontexthelpers
 import Script from 'next/script'
-import { SpinnerLight } from '../utils/spinnerLight';
+// import { SpinnerLight } from '../utils/spinnerLight';
 import { ScreenStart } from "../components/screens/ScreenStart";
 
 export default function Home() {
@@ -140,13 +140,7 @@ export default function Home() {
           <meta property='og:image' content='https://towerofhanoi.app/icons/icon-192x192.png' />
 
         </Head>
-        { bgLoaded ?
-          <ScreenStart />
-          :
-          <Flex display="fixed" direction="column" height="100vh" width="100vw" alignItems="center" justifyContent="center" backgroundColor="black" z-index={10} >
-            <SpinnerLight />
-          </Flex>
-        }
+        <ScreenStart />
       </Flex>
       <Script strategy="afterInteractive">
         {`
