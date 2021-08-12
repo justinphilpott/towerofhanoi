@@ -1,6 +1,6 @@
 {
   "name": "Tower of Hanoi",
-  "short_name": "Hanoi",
+  "short_name": "Tower of Hanoi",
   "theme_color": "#fdc173",
   "background_color": "#319795",
   "display": "fullscreen",
@@ -27,6 +27,12 @@
         "src": "/icons/icon-512x512.png",
         "sizes": "512x512",
         "type": "image/png"
+    },
+    {
+        "src": "/icons/safari-pinned-tab.svg",
+        "sizes": "384x384",
+        "type": "image/svg+xml",
+        "purpose": "maskable"
     }
   ]
 } 
