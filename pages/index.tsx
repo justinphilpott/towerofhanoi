@@ -58,7 +58,7 @@ export default function Home() {
   */
 
   /**
-   * these 
+   * these
    */
   const handlePlay = () => {
 
@@ -72,7 +72,7 @@ export default function Home() {
   const handleCredits = () => {
 
   }
-  
+
   return (
     <>
       <Flex height="100%" width="100vw" alignItems="center" justifyContent="center" position="fixed" overflow="hidden" backgroundColor="black">
@@ -92,6 +92,8 @@ export default function Home() {
           <link rel="manifest" href="/manifest.json" />
           <meta name='description' content='Tower of Hanoi puzzle game' />
           <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover" />
+
+          <meta httpEquiv="Content-Security-Policy" content="default-src 'self';" />
 
           <link rel="preload" href="./fonts/pattaya-regular-webfont.woff2" as="font" type="font/woff2" crossOrigin="" />
           <link rel="preload" href="./fonts/pattaya-regular-webfont.woff" as="font" type="font/woff" crossOrigin="" />
@@ -169,6 +171,7 @@ export default function Home() {
               </Flex>
               <Text textAlign="center" fontSize="sm" mt={1} fontWeight="bold"><Link onClick={ () => handleCredits() }>~ credits ~</Link></Text>
             </Flex>
+
           :
           <Flex display="fixed" direction="column" height="calc(var(--vh, 1vh) * 100)" width="100vw" alignItems="center" justifyContent="center" backgroundColor="black" z-index={10} >
             <SpinnerLight />

@@ -22,4 +22,25 @@ module.exports = withBundleAnalyzer(withPWA({
     });
     return config;
   },
+  async Headers() {
+    return [
+      {
+        source: '/',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY'
+          },
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block'
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff'
+          }
+        ]
+      }
+    ]
+  }
 }));
