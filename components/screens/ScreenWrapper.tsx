@@ -42,7 +42,8 @@ export const ScreenWrapper = () => {
   return (
     <>
       {screenState.value === "start" &&
-        true
+        <>
+        </>
       }
       {screenState.matches("game") &&
         <Flex

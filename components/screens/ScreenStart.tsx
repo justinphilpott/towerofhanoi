@@ -13,6 +13,18 @@ export const ScreenStart = () => {
   //const send = useScreenSend();
 
   /**
+   * Strategy to load XState etc
+   * 
+   * in a non-blocking way...
+   * 
+   * : ...
+   * 
+   * 
+   */
+
+
+
+  /**
    * these 
    */
   const handlePlay = () => {
