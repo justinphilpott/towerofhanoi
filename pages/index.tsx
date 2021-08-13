@@ -93,7 +93,7 @@ export default function Home() {
           <meta name='description' content='Tower of Hanoi puzzle game' />
           <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover" />
 
-          <meta httpEquiv="Content-Security-Policy" content="default-src 'self';" />
+          <meta httpEquiv="Content-Security-Policy" content="default-src '*.towerofhanoi.app';" />
 
           <link rel="preload" href="./fonts/pattaya-regular-webfont.woff2" as="font" type="font/woff2" crossOrigin="" />
           <link rel="preload" href="./fonts/pattaya-regular-webfont.woff" as="font" type="font/woff" crossOrigin="" />
