@@ -40,7 +40,7 @@ module.exports = withBundleAnalyzer(withPWA({
     });
     return config;
   },
-  async Headers() {
+  async headers() {
     return [
       {
         // Apply these headers to all routes in your application.
