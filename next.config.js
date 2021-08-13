@@ -3,6 +3,21 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 
+const securityHeaders = [
+  {
+    key: 'X-Frame-Options',
+    value: 'DENY'
+  },
+  {
+    key: 'X-XSS-Protection',
+    value: '1; mode=block'
+  },
+  {
+    key: 'X-Content-Type-Options',
+    value: 'nosniff'
+  }
+]
+
 module.exports = withBundleAnalyzer(withPWA({
   webpack5: true,
   pwa: {
@@ -12,6 +27,9 @@ module.exports = withBundleAnalyzer(withPWA({
   i18n: {
     locales: ["en"],
     defaultLocale: "en",
+  },
+  devIndicators: {
+    autoPrerender: false,
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {  // eslint-disable-line
     // Replace React with Preact
@@ -25,22 +43,10 @@ module.exports = withBundleAnalyzer(withPWA({
   async Headers() {
     return [
       {
-        source: '/',
-        headers: [
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY'
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block'
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff'
-          }
-        ]
-      }
+        // Apply these headers to all routes in your application.
+        source: '/(.*)',
+        headers: securityHeaders,
+      },
     ]
   }
 }));

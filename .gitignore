@@ -49,3 +49,6 @@ _old
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
+
+# local dev
+.reports/*
