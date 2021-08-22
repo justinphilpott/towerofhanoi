@@ -40,11 +40,11 @@ export const ScreenGame = () => {
 
   /**
    * read some state values from the state machine
-   * we also deduce some "meta state" from fsm state
+   * we also deduce some "meta state" from fsm state;
    * either this is done here in a component, or one could
    * have another layer of state machine logic, either above (hierarchical)
-   * or a separate machine that represents a different cross section
-   * through the state space.
+   * or a separate machine that represents a "different cross section
+   * through the state space."
    */
   const disks = hanoiState.context.numDisks;
   const pegs = hanoiState.context.numPegs;
@@ -88,6 +88,8 @@ export const ScreenGame = () => {
   }
 
   // The following should be normalised with a few obvious structural components
+  // @todo normalise
+  // @todo DRY the modals
   return (
     <>
       <Flex direction="column" width="100vw" height="100%" alignItems="center" background="linear-gradient(to bottom, transparent, 60%, #222)" position="relative">
@@ -300,7 +302,17 @@ export const ScreenGame = () => {
                       { numMoves === minMoves &&
                         <>
                           <Heading as="h1" size="xl" mb={3} flexGrow={1} textAlign="center">Well done!</Heading>
-                          <Text m={3} mt={0}>You found the optimal solution for the {pegs} peg, {disks} disc setup. Try with one more disk.</Text>
+                          <Text m={3} mt={0}>You found the optimal solution for the {pegs} peg, {disks} disc setup.
+                            {
+                              disks < 8 ?
+                                <> Try with one more disk.</>
+                              :
+                                pegs > 3 ?
+                                  <> Try with one less peg</>
+                                :
+                                  <></> // @todo here suggest a timed game
+                            }
+                          </Text>
                         </>
                       }
                       { numMoves < minMoves &&
@@ -318,8 +330,16 @@ export const ScreenGame = () => {
                     </>
                   }
 
+                  {
+                    disks < 8 ?
+                      <Button colorScheme="gold" flexGrow={1} mb={3} color="#000" onClick={() => { hanoiSend({ type: "RESETPLUSONEDISK"}); screenSend({ type: "RESTART"}); }}>Play +1 disk</Button>
+                    :
+                    pegs > 3 ?
+                      <Button colorScheme="gold" flexGrow={1} mb={3} color="#000" onClick={() => { hanoiSend({ type: "RESETLESSONEPEG"}); screenSend({ type: "RESTART"}); }}>Play -1 Peg</Button>
+                    :
+                      <></> // @todo here suggest a timed game...
+                  }
                   <Button colorScheme="teal" flexGrow={1} mb={3} onClick={() => { hanoiSend({ type: "RESET"}); screenSend({ type: "RESTART"}); }}>Play again</Button>
-                  <Button colorScheme="gold" flexGrow={1} mb={3} color="#000" onClick={() => { hanoiSend({ type: "RESETPLUSONE"}); screenSend({ type: "RESTART"}); }}>Play +1 disk</Button>
                   <Button colorScheme="salmon" flexGrow={1} onClick={() => screenSend({ type: "SETTINGS"})}>Settings</Button>
                 </Flex>
               </Flex>

@@ -95,12 +95,10 @@ import { timerFSM } from './timerFSM';
         always: [
           { target: 'movingDisk' }
         ],
-
-        // do the actual move...
-        // trigger animation @todo
+        // @todo animation
       },
       movingDisk: {
-        // animating state
+        // animating in progress state
         always: { target: 'moveComplete' }
       },
       moveComplete: {
@@ -119,7 +117,11 @@ import { timerFSM } from './timerFSM';
         always: ['diskSelection']
       },
       resetPlusOneDisk: {
-        entry: ['resetGameStatePlusOne'],
+        entry: ['resetGameStatePlusOneDisk'],
+        always: ['diskSelection']
+      },
+      resetLessOnePeg: {
+        entry: ['resetGameStateLessOnePeg'],
         always: ['diskSelection']
       },
 
@@ -128,11 +130,11 @@ import { timerFSM } from './timerFSM';
         always: ['diskSelection']
       },
 
-
       gameComplete: {
         on: {
           RESET: 'reset',
-          RESETPLUSONE: 'resetPlusOneDisk',
+          RESETPLUSONEDISK: 'resetPlusOneDisk',
+          RESETLESSONEPEG: 'resetLessOnePeg'
         }
       }
     }
@@ -157,7 +159,7 @@ import { timerFSM } from './timerFSM';
        *
        * plus one disk, if possible
        */
-       resetGameStatePlusOne: assign((context: HanoiContext, event) => {
+      resetGameStatePlusOneDisk: assign((context: HanoiContext, event) => {
         const newDisks = context.numDisks < 8 ? context.numDisks + 1 : context.numDisks;
         const gameBoard = initialGameBoardState(context.numPegs, newDisks);
         return {
@@ -165,6 +167,23 @@ import { timerFSM } from './timerFSM';
           moves: Array(),
           gameBoard: gameBoard,
           numDisks: newDisks
+        }
+      }),
+
+      /**
+       * set up the default game position, all disks on the left hand peg
+       *
+       * less one peg, if possible (games with fewer pegs get harder and longer)
+       */
+      resetGameStateLessOnePeg: assign((context: HanoiContext, event) => {
+        const newPegs = context.numPegs > 3 ? context.numPegs - 1 : context.numPegs;
+        console.log(newPegs);
+        const gameBoard = initialGameBoardState(newPegs, context.numDisks);
+        return {
+          selectedPeg: null,
+          moves: Array(),
+          gameBoard: gameBoard,
+          numPegs: newPegs
         }
       }),
 

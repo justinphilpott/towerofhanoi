@@ -39,5 +39,6 @@ export interface HanoiContext {
 export type HanoiEvent =
   | { type: 'SELECT', pegIndex: number }
   | { type: 'RESET' }
-  | { type: 'RESETPLUSONE' }
+  | { type: 'RESETPLUSONEDISK' }
+  | { type: 'RESETLESSONEPEG' }
   | { type: 'UNDO' }
