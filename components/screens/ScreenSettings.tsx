@@ -13,12 +13,12 @@ import {
   FormControl,
   FormLabel
 } from "@chakra-ui/react"
-import { useScreenService } from '../../state/screen/ScreenFSMProvider';
+import { useScreenActor } from '../../state/screen/ScreenFSMProvider';
 import { minMovesLookupTable } from '../../utils/hanoi';
 
 export const ScreenSettings = () => {
 
-  const [screenState, screenSend] = useScreenService();
+  const [screenState, screenSend] = useScreenActor();
 
   // need to read the disks and pegs data from the FSM
   const [numPegs, setNumPegs] = useState(screenState.context.numPegs);

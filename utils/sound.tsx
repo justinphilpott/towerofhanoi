@@ -79,3 +79,156 @@ export const useGameAudioControl = (autoplay: boolean) => {
       background="rgba(0, 0, 0, 0.2)"
     />] as const
 }
+
+/*
+  var music = new Audio("http://curtastic.com/nightmare.mp3")
+
+  var chime = new Audio("http://curtastic.com/gold.wav")
+
+  var nothing = new Audio("http://touchbasicapp.com/nothing.wav")
+
+  var allAudio = []
+
+  allAudio.push(music)
+
+  allAudio.push(chime)
+
+  var tapped = function() {
+
+    messagediv.innerHTML = "tapped"
+
+    // Play all audio files on the first tap and stop them immediately.
+
+    if(allAudio) {
+
+      for(var audio of allAudio) {
+
+        audio.play()
+
+        audio.pause()
+
+        audio.currentTime = 0
+
+      }
+
+      allAudio = null
+
+    }
+
+    
+
+    // We should be able to play music delayed now (not during the tap event).
+
+    messagediv.innerHTML = "Music starts in 2 seconds..."
+
+    setTimeout(function() {
+
+      messagediv.innerHTML = "Music playing. <button onclick='stop()'>Stop</button>"
+
+      music.play()
+
+    }, 2000)
+
+    
+
+  }
+
+  document.body.addEventListener('touchstart', tapped, false)
+
+  document.body.addEventListener('click', tapped, false)
+
+  
+
+  var stop = function() {
+
+    music.pause()
+
+    loop = null
+
+    document.body.removeEventListener('touchstart', tapped, false)
+
+    document.body.removeEventListener('click', tapped, false)
+
+  }
+
+  
+
+  // Check if audio starts already unlocked by playing a blank wav.
+
+  nothing.play().then(function() {
+
+    lockeddiv.innerHTML = "Audio started unlocked!"
+
+  }).catch(function(){
+
+    lockeddiv.innerHTML = "Audio started locked :("
+
+  })
+
+  
+
+  var loop = function() {
+
+    // Try to play chimes whenever we want (not during user action).
+
+    if(Math.random() < .01) {
+
+      chime.play().then(function(){
+
+        lockeddiv.innerHTML = "Audio is now unlocked!"
+
+      })
+
+    }
+
+    setTimeout(loop, 16)
+
+  }
+
+  loop()
+*/
+
+  /**
+   * possible sound solution 
+   * 
+   * useEffect
+   * on touch start
+   * activate audio component with a play and pause
+   * so we need the audio component exposed here to trigger playing
+   * 
+   * -- then pass the icon, play and stop functions down
+   * basically a soundControl object in to the game object that
+   * 
+   * there we need to start and stop the sound at various times...
+   * so context is not necessary here...
+   * 
+   * IOS sound fix
+   * https://curtisrobinson.medium.com/how-to-auto-play-audio-in-safari-with-javascript-21d50b0a2765
+   */
+
+  /*
+  useEffect(() => {
+
+    window.addEventListener("touchstart", startup);
+
+  })
+
+
+  const audioObject = 
+
+
+  const gameAudio = (audioObject) => {
+    
+
+
+    const icon = '';
+    const stop = () => {
+
+    }
+    const play = () => {
+      
+    }
+
+    return [icon, stop, play];
+  }
+  */

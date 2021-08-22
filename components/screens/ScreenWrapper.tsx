@@ -1,9 +1,9 @@
 import React from "react";
 import { Flex } from "@chakra-ui/react";
 import dynamic from 'next/dynamic';
-// import { ScreenStart } from "./ScreenStart";
-import { useScreenService } from '../../state/screen/ScreenFSMProvider';
+import { ScreenStart } from "./ScreenStart";
 import { SpinnerLight } from '../../utils/spinnerLight';
+import { ScreenProvider, useScreenActor } from '../../state/screen/ScreenFSMProvider';
 
 interface ScreenSettingsProps {}
 const ScreenSettings_Dynamic = dynamic<ScreenSettingsProps>(
@@ -35,15 +35,20 @@ const ScreenCredits_Dynamic = dynamic<ScreenCreditsProps>(
   }
 )
 
+interface ScreenWrapperProps {
+  initialState: string;
+}
 
-export const ScreenWrapper = () => {
-  const [screenState] = useScreenService();
+const ScreenWrapper_inner = ({ initialState }: ScreenWrapperProps ) => {
+
+  const [screenState] = useScreenActor();
+
+  console.log('initialState', initialState);
 
   return (
     <>
       {screenState.value === "start" &&
-        <>
-        </>
+        <ScreenStart />
       }
       {screenState.matches("game") &&
         <Flex
@@ -83,3 +88,11 @@ export const ScreenWrapper = () => {
     </>
   );
 };
+
+export const ScreenWrapper = ({initialState}: ScreenWrapperProps) => {
+  return (
+    <ScreenProvider>
+      <ScreenWrapper_inner initialState={initialState} />
+    </ScreenProvider>
+  )
+}

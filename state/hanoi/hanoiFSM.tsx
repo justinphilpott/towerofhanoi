@@ -1,24 +1,15 @@
 import { createMachine, assign } from 'xstate';
-import { createModel } from 'xstate/lib/model';
 import { initialGameBoardState } from './hanoiFSMActions';
 import { isSelected, emptyPegSelected, immoveableDiskSelected, inValidMoveSelection, gameCompleteCheck } from './hanoiFSMGuards';
 import { HanoiContext, HanoiEvent, Move } from './types/hanoiFSMTypes';
 import { assertEvent } from 'xstate-helpers';
 import { timerFSM } from './timerFSM';
 
-const HanoiFSMModel = createModel({
-  numDisks: 0,
-  numPegs: 0,
-  gameBoard: Array(Array()),
-  selectedPeg: 0,
-  moves: Array({})
-});
-
 /**
  * hanoiFSM
  *
  * select needs to determine if this is the first selection
- * or the move selection, if the selection is legal or not etc.... 
+ * or the move selection, if the selection is legal or not etc....
  */
  export const hanoiFSM = createMachine<HanoiContext, HanoiEvent>(
   {

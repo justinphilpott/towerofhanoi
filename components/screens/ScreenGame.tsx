@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { Button, Flex, Heading, ScaleFade, Text } from "@chakra-ui/react"
 import { Game } from '../towerofhanoi/Game';
-import { useScreenService, useScreenInterpreter } from '../../state/screen/ScreenFSMProvider';
+import { useScreenActor, useScreenInterpreter } from '../../state/screen/ScreenFSMProvider';
 import { useActor } from '@xstate/react';
 import { ImUndo2, ImLoop2, ImCross } from "react-icons/im"
 import { MdScreenRotation, MdClear } from "react-icons/md"
 import { IconButton } from "@chakra-ui/react";
 import { minMovesLookupTable } from '../../utils/hanoi';
 import { useGameAudioControl } from '../../utils/sound';
-import { useScreenAspect } from '../../hooks/useScreenAspect';
+import { useScreenAspect } from '../../utils/hooks/useScreenAspect';
 
 interface GameInfoProps {
   moves: number;
@@ -30,12 +30,12 @@ const GameInfo = ({moves, minMoves, showTime, showMoves}: GameInfoProps) => {
  */
 export const ScreenGame = () => {
 
-  // device rotate notify/dismiss
+  // device rotate notify/dismiss, debounce 250 delay
   const aspect = useScreenAspect(250);
   const [rotateDismissed, setRotateDismissed] = useState(false);
 
   // State machine handling
-  const [screenState, screenSend] = useScreenService();
+  const [screenState, screenSend] = useScreenActor();
   const [hanoiState, hanoiSend] = useActor(useScreenInterpreter().children.get('hanoiFSM')!);
 
   /**

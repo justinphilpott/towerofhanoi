@@ -23,7 +23,7 @@ const screenFSMModel = createModel({
 })
 
 /**
- * gameInProgress - infered elewhere
+ * gameInProgress - inferred elewhere
  * 
  * @todo no longer needed!
  */
@@ -45,6 +45,9 @@ export const screenFSM = createMachine<ScreenContext>(
     initial: 'start',
     context: screenFSMModel.initialContext,
     states: {
+      init: {
+
+      },
       start: {
         on: {
           PLAY: {

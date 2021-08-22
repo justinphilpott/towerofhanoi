@@ -20,6 +20,12 @@ Let me know if you do something cool with this :)
 
 
 
+To run lighthouse cli to check performance:
+https://github.com/GoogleChrome/lighthouse#cli-options
+yarn dlx lighthouse --view [https://towerofhanoi.app] --screenEmulation.disabled
+
+
+
 
 
 Artwork:
