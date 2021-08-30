@@ -52,12 +52,12 @@ const ScreenWrapper_inner = ({ initialState }: ScreenWrapperProps ) => {
   const screenFSMContext = useContext(XStateContext);
 
   const isScreenStart = useSelector(
-    screenFSMContext.screenActor as ActorRef<Event, EmittedFrom<T>>,
-      (state: EmittedFrom<typeof screenFSMContext.screenActor>) => {
-        return (state.value === "start")
-      }
-    );
-  }
+    screenFSMContext.screenActor,
+    (state: EmittedFrom<typeof screenFSMContext.screenActor>) => {
+      return (state.value === "start")
+    }
+  );
+
   const isScreenGame = useSelector(screenFSMContext.screenActor, (state: any) => (state.matches("game")));
   const isScreenSettings = useSelector(screenFSMContext.screenActor, (state: any) => (state.value === "start"));
   const isScreenCredits = useSelector(screenFSMContext.screenActor, (state: any) => (state.value === "start"));

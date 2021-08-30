@@ -9,10 +9,7 @@ export interface XStateContextInterface {
   setInitialState: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const XStateContext = createContext<XStateContextInterface | {}>({
-  screenActor: useInterpret(getScreenMachine('start')),
-  setInitialState: (value) => {}
-});
+export const XStateContext = createContext<XStateContextInterface | {}>({});
 
 export const XStateProvider = ({ children }) => {
   const [initialState, setInitialState] = useState('start');
