@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Button, Flex, Heading, ScaleFade, Text } from "@chakra-ui/react"
 import { Game } from '../towerofhanoi/Game';
-import { useScreenActor, useScreenInterpreter } from '../../state/screen/ScreenFSMProvider';
+import { XStateContext } from '../../state/screen/ScreenFSMContext';
 import { useActor } from '@xstate/react';
 import { ImUndo2, ImLoop2, ImCross } from "react-icons/im"
 import { MdScreenRotation, MdClear } from "react-icons/md"
@@ -9,6 +9,7 @@ import { IconButton } from "@chakra-ui/react";
 import { minMovesLookupTable } from '../../utils/hanoi';
 import { useGameAudioControl } from '../../utils/sound';
 import { useScreenAspect } from '../../utils/hooks/useScreenAspect';
+import { ActorRef } from 'xstate'
 
 interface GameInfoProps {
   moves: number;
@@ -25,6 +26,10 @@ const GameInfo = ({moves, minMoves, showTime, showMoves}: GameInfoProps) => {
   )
 }
 
+export type EmittedFrom<T> = T extends ActorRef<any, infer TEmitted>
+  ? TEmitted
+  : never;
+
 /**
  * ScreenGame
  */
@@ -35,8 +40,8 @@ export const ScreenGame = () => {
   const [rotateDismissed, setRotateDismissed] = useState(false);
 
   // State machine handling
-  const [screenState, screenSend] = useScreenActor();
-  const [hanoiState, hanoiSend] = useActor(useScreenInterpreter().children.get('hanoiFSM')!);
+  const screenActor:ActorRef<Event, EmittedFrom<T>> = useContext(XStateContext);
+  const [hanoiState, hanoiSend] = useActor(screenActor.getSnapshot().children.get('hanoiFSM')!);
 
   /**
    * read some state values from the state machine

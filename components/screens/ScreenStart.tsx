@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   Button,
   Heading,
@@ -6,11 +6,12 @@ import {
   Text,
   Link
 } from "@chakra-ui/react"
-import { useScreenSend } from '../../state/screen/ScreenFSMProvider';
+import { XStateContext } from '../../state/screen/ScreenFSMContext';
 
 export const ScreenStart = () => {
 
-  const send = useScreenSend();
+  const screenFSMContext = useContext(XStateContext);
+  const { send } = screenFSMContext.screenActor;
 
   return (
     <Flex direction="column" justifyContent="space-between" alignItems="center" height="calc(var(--vh, 1vh) * 100)" p={{ base: 6, sm: 8, md: 12, lg: 16, xl: 24 }} pb={{ base: 3, sm: 4, md: 8, lg: 12, xl: 20 }} rounded="6" position="relative">

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import {
   Button,
@@ -7,11 +7,12 @@ import {
   Text,
   Link
 } from "@chakra-ui/react"
-import  { useScreenSend } from '../../state/screen/ScreenFSMProvider';
+import  { useScreenSend } from '../../state/screen/ScreenFSMContext';
 
 export const ScreenCredits = () => {
 
-  const screenSend = useScreenSend();
+const screenFSMContext = useContext(XStateContext);
+const { send } = screenFSMContext.screenActor;
 
   return (
     <>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import {
   Button,
   Heading,
@@ -13,18 +13,19 @@ import {
   FormControl,
   FormLabel
 } from "@chakra-ui/react"
-import { useScreenActor } from '../../state/screen/ScreenFSMProvider';
+import { XStateContext } from '../../state/screen/ScreenFSMContext';
 import { minMovesLookupTable } from '../../utils/hanoi';
 
 export const ScreenSettings = () => {
 
-  const [screenState, screenSend] = useScreenActor();
+  const screenFSMContext = useContext(XStateContext);
+  const { screenContext } = screenFSMContext.screenActor;
 
   // need to read the disks and pegs data from the FSM
-  const [numPegs, setNumPegs] = useState(screenState.context.numPegs);
-  const [numDisks, setNumDisks] = useState(screenState.context.numDisks);
-  const [showTime, setShowTime] = useState(screenState.context.showTime);
-  const [showMoves, setShowMoves] = useState(screenState.context.showMoves);
+  const [numPegs, setNumPegs] = useState(screenContext.numPegs);
+  const [numDisks, setNumDisks] = useState(screenContext.numDisks);
+  const [showTime, setShowTime] = useState(screenContext.showTime);
+  const [showMoves, setShowMoves] = useState(screenContext.showMoves);
 
   const maxDisks = 8;
 

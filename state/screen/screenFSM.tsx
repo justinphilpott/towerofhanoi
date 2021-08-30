@@ -5,7 +5,6 @@ import { ScreenContext } from './types/screenFSMTypes';
 import { HanoiContext } from '../hanoi/types/hanoiFSMTypes'
 import { initialGameBoardState } from '../hanoi/hanoiFSMActions';
 
-
 /**
  * controls the screen logic, transitions between screens
  * and receives high level info on the game state from the hanoi
@@ -24,14 +23,13 @@ const screenFSMModel = createModel({
 
 /**
  * gameInProgress - inferred elewhere
- * 
+ *
  * @todo no longer needed!
  */
 const gameInProgress = () => {
 
   // Now done in react - @see
-  // This is now somehow a metastate...
-  //
+
   // actions: (context, event, { state }) => {
   //   state.children['some-id']?.getSnapshot();
   // }
@@ -39,15 +37,15 @@ const gameInProgress = () => {
   return true;
 }
 
-export const screenFSM = createMachine<ScreenContext>(
-  {
+/**
+ *
+ */
+export const getScreenMachine = (initialState: string) => {
+  let FSMStruct = {
     id: 'screenFSM',
     initial: 'start',
     context: screenFSMModel.initialContext,
     states: {
-      init: {
-
-      },
       start: {
         on: {
           PLAY: {
@@ -81,15 +79,15 @@ export const screenFSM = createMachine<ScreenContext>(
           }
         }
       },
-
+  
       game: {
         entry: ['initializeGameState'],
-
+  
         // now we invoke the hanoiFSM setting the initial state
         invoke: {
           id: 'hanoiFSM',
           src: hanoiFSM,
-
+  
           // here we can construct the initial state based on the values set in screenStart
           data: {
             numDisks: (context: HanoiContext) => context.numDisks,
@@ -100,7 +98,7 @@ export const screenFSM = createMachine<ScreenContext>(
             showTime: (context: HanoiContext) => context.showTime,
             showTutorial: (context: HanoiContext) => context.showTutorial
           },
-
+  
           // onDone will be set when the hanoiFSM reaches its final state
           onDone: {
             target: 'start',
@@ -159,71 +157,77 @@ export const screenFSM = createMachine<ScreenContext>(
         },
       },
     }
-  },
-  {
-    actions: {
+  };
+  // create the screen FSM with customised start
+  FSMStruct.initial = initialState;
 
-      /**
-       * set up the default game position, all disks on the left hand peg
-       */
-       initializeGameState: assign((context: ScreenContext) => {
-        const gameBoard = initialGameBoardState(context.numPegs, context.numDisks);
-        return {
-          selectedPeg: null,
-          gameBoard: gameBoard,
-          moves: Array()
-        }
-      }),
+  return createMachine<ScreenContext>(
+    FSMStruct,
+    {
+      actions: {
 
-      /**
-       * the the pegs and disks and the resulting game board following settings change
-       */
-      saveSettings: assign((context: ScreenContext, event) => {
-        return {
-          numPegs: event.numPegs,
-          numDisks: event.numDisks,
-          showMoves: event.showMoves,
-          showTime: event.showTime,
-          gameBoard: initialGameBoardState(event.numPegs, event.numDisks)
-        };
-      }),
+        /**
+         * set up the default game position, all disks on the left hand peg
+         */
+        initializeGameState: assign((context: ScreenContext) => {
+          const gameBoard = initialGameBoardState(context.numPegs, context.numDisks);
+          return {
+            selectedPeg: null,
+            gameBoard: gameBoard,
+            moves: Array()
+          }
+        }),
 
-      /**
-       * This must also turn off timer and moves count
-       */
-       storeTutorialContext: assign((context: ScreenContext, event) => { // eslint-disable-line
-        return {
-          numPegs: 3,
-          numDisks: 3,
-          showMoves: false,
-          showTime: false,
-          showTutorial: true,
-        };
-      }),
+        /**
+         * the the pegs and disks and the resulting game board following settings change
+         */
+        saveSettings: assign((context: ScreenContext, event) => {
+          return {
+            numPegs: event.numPegs,
+            numDisks: event.numDisks,
+            showMoves: event.showMoves,
+            showTime: event.showTime,
+            gameBoard: initialGameBoardState(event.numPegs, event.numDisks)
+          };
+        }),
 
-      /**
-       * Use to 
-       */
-      setInitialContext: assign((context: ScreenContext, event) => { // eslint-disable-line
-        return {
-          numPegs: 3,
-          numDisks: 5,
-          showMoves: true,
-          showTutorial: false,
-        };
-      }),
+        /**
+         * This must also turn off timer and moves count
+         */
+        storeTutorialContext: assign((context: ScreenContext, event) => { // eslint-disable-line
+          return {
+            numPegs: 3,
+            numDisks: 3,
+            showMoves: false,
+            showTime: false,
+            showTutorial: true,
+          };
+        }),
 
-      /**
-       * Use to go back to normal mode after tutorial @todo, extended state is getting messy
-       */
-      resetInitialContext: assign((context: ScreenContext, event) => { // eslint-disable-line
-        return {
-          showTutorial: false,
-        };
-      })
-    },
-    guards: {
-      gameInProgress
+        /**
+         * Use to 
+         */
+        setInitialContext: assign((context: ScreenContext, event) => { // eslint-disable-line
+          return {
+            numPegs: 3,
+            numDisks: 5,
+            showMoves: true,
+            showTutorial: false,
+          };
+        }),
+
+        /**
+         * Use to go back to normal mode after tutorial @todo, extended state is getting messy
+         */
+        resetInitialContext: assign((context: ScreenContext, event) => { // eslint-disable-line
+          return {
+            showTutorial: false,
+          };
+        })
+      },
+      guards: {
+        gameInProgress
+      }
     }
-  }
-);
+  );
+}
