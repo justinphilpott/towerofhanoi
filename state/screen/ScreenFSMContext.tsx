@@ -9,9 +9,9 @@ export interface XStateContextInterface {
   setInitialState: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const XStateContext = createContext<XStateContextInterface | {}>({});
+export const XStateContext = createContext({} as XStateContextInterface);
 
-export const XStateProvider = ({ children }) => {
+export const XStateProvider = ({ children }: any) => { // @todo remove any
   const [initialState, setInitialState] = useState('start');
 
   // generate a custom FSM depending upon the click of the

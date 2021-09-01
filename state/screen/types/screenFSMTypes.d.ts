@@ -1,3 +1,4 @@
+import { ActorRef } from 'xstate'
 
 // Screen context that stores the settings info to supply to the
 // Tower of Hanoi FSM
@@ -12,11 +13,18 @@ export interface ScreenContext {
 
 export type ScreenEvent =
   | { type: 'PLAY' }
-  | { type: 'SETTINGS', numPegs: number, numDisks: number }
+  | { type: 'SETTINGS', numPegs?: number, numDisks?: number }
   | { type: 'TUTORIAL' }
-  | { type: 'SAVE', numPegs: number, numDisks: number }
+  | { type: 'SAVE', numPegs: number, numDisks: number, showMoves: boolean, showTime: boolean }
   | { type: 'NEXT' }
   | { type: 'CLOSE' }
   | { type: 'QUITCHECK' }
   | { type: 'STAY' }
-  | { type: 'QUIT' };
+  | { type: 'QUIT' }
+  | { type: 'RESTART' }
+  | { type: 'CANCEL' }
+  | { type: 'RESTARTCHECK' };
+
+export type EmittedFrom<T> = T extends ActorRef<any, infer TEmitted>
+  ? TEmitted
+  : never;

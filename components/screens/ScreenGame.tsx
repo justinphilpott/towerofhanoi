@@ -1,31 +1,15 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react';
 import { Button, Flex, Heading, ScaleFade, Text } from "@chakra-ui/react"
 import { Game } from '../towerofhanoi/Game';
 import { XStateContext } from '../../state/screen/ScreenFSMContext';
-import { useActor } from '@xstate/react';
-import { ImUndo2, ImLoop2, ImCross } from "react-icons/im"
-import { MdScreenRotation, MdClear } from "react-icons/md"
-import { IconButton } from "@chakra-ui/react";
-import { minMovesLookupTable } from '../../utils/hanoi';
+import { useSelector } from '@xstate/react';
+import { minMovesLookupTable } from '../../utils/hanoiData';
 import { useGameAudioControl } from '../../utils/sound';
-import { useScreenAspect } from '../../utils/hooks/useScreenAspect';
-import { ActorRef } from 'xstate'
+import { ActorRef } from 'xstate';
+import { HanoiEvent } from '../../state/hanoi/types/hanoiFSMTypes';
+import { GameHeader } from './game/gameHeader';
 
-interface GameInfoProps {
-  moves: number;
-  minMoves: number;
-  showTime: boolean;
-  showMoves: boolean;
-}
-
-const GameInfo = ({moves, minMoves, showTime, showMoves}: GameInfoProps) => {
-  const timeString = showTime ? '12:23' : '';
-  const moveString = showMoves ? moves+" ("+minMoves+")":'';
-  return (
-    <Heading as="h2" size="md" mt={1} mb={1} mr={2} ml={2} alignSelf="flex-end" color="white">{timeString} {moveString}</Heading>
-  )
-}
-
+// @todo sort organisation of types
 export type EmittedFrom<T> = T extends ActorRef<any, infer TEmitted>
   ? TEmitted
   : never;
@@ -35,13 +19,13 @@ export type EmittedFrom<T> = T extends ActorRef<any, infer TEmitted>
  */
 export const ScreenGame = () => {
 
-  // device rotate notify/dismiss, debounce 250 delay
-  const aspect = useScreenAspect(250);
-  const [rotateDismissed, setRotateDismissed] = useState(false);
-
   // State machine handling
-  const screenActor:ActorRef<Event, EmittedFrom<T>> = useContext(XStateContext);
-  const [hanoiState, hanoiSend] = useActor(screenActor.getSnapshot().children.get('hanoiFSM')!);
+  const screenFSMContext = useContext(XStateContext);
+  const screenActor = screenFSMContext.screenActor;
+  const { send: screenSend } = screenActor;
+  // hanoi is the child of screen and invoked within it @see /state/screen/screenFSM.txt
+  const hanoiActor:ActorRef<HanoiEvent> = screenActor.getSnapshot().children.get('hanoiFSM');
+  const { send: hanoiSend } = hanoiActor;
 
   /**
    * read some state values from the state machine
@@ -51,20 +35,30 @@ export const ScreenGame = () => {
    * or a separate machine that represents a "different cross section
    * through the state space."
    */
-  const disks = hanoiState.context.numDisks;
-  const pegs = hanoiState.context.numPegs;
-  const tutorialMode = hanoiState.context.showTutorial;
-  const gameComplete = hanoiState.matches("gameComplete");
-  const numMoves = hanoiState.context.moves.length;
+  const disks:number = useSelector(hanoiActor, (state: EmittedFrom<typeof screenActor>) => (state.context.numDisks));
+  const pegs:number = useSelector(hanoiActor, (state: EmittedFrom<typeof screenActor>) => (state.context.numPegs));
+  const minMoves:number = minMovesLookupTable[pegs-3][disks-1];
+  const numMoves:number = useSelector(hanoiActor, (state) => (state.context.moves.length));
+
+  const showMoves:boolean = useSelector(hanoiActor, (state) => (state.context.showMoves));
+  const showTime:boolean = useSelector(hanoiActor, (state) => (state.context.showTime));
+
+
+  const gameComplete = useSelector(hanoiActor, (state) => (state.matches("gameComplete")));
   const midGame = numMoves > 0 && !gameComplete;
   const gameNotStarted = !midGame && !gameComplete;
-  const illegalMoveNotice =
-    hanoiState.matches("diskSelection.immoveableDiskSelected") ||
-    hanoiState.matches("diskSelection.emptyPegSelected") ||
-    hanoiState.matches("moveSelection.invalidMoveAttempt");
+  const tutorialMode = useSelector(hanoiActor, (state) => (state.context.showTutorial));
+  const awaitSelection = useSelector(hanoiActor, (state) => (state.matches("diskSelection.awaitSelection")));
+  const immoveableDiskSelected = useSelector(hanoiActor, (state) => (state.matches("diskSelection.immoveableDiskSelected")));
+  const emptyPegSelected = useSelector(hanoiActor, (state) => (state.matches("diskSelection.emptyPegSelected")));
+  const invalidMoveAttempt = useSelector(hanoiActor, (state) => (state.matches("diskSelection.invalidMoveAttempt")));
+  const illegalMoveNotice = immoveableDiskSelected || emptyPegSelected || invalidMoveAttempt;
 
-  // for use when count moves is turned on
-  const minMoves = minMovesLookupTable[pegs-3][disks-1];
+  const quitDialog = useSelector(screenActor, (state) => (state.matches("game.quitDialog")));
+  const restartDialog = useSelector(screenActor, (state) => (state.matches("game.restartDialog")));
+
+  const selectedPeg = useSelector(hanoiActor, (state) => (state.context.selectedPeg));
+  const gameboard:number[][] = useSelector(hanoiActor, (state) => (state.context.gameBoard)); //@todo might need to assign type
 
   // use custom audio hook @todo, make into a little track player, with generic hook behind
   const [stopAudio, gameAudioIcon] = useGameAudioControl(!tutorialMode); // we need to expose a stop control for this for when we exit the game while music is playing
@@ -80,7 +74,7 @@ export const ScreenGame = () => {
    * @param pegIndex
    */
   const selectHandler = (pegIndex: number) => {
-    hanoiSend({
+    hanoiActor.send({
       type: "SELECT",
       pegIndex: pegIndex
     })
@@ -89,109 +83,28 @@ export const ScreenGame = () => {
   // using useeffect here didn't work
   const handleQuit = async () => {
     await stopAudio();
-    screenSend({ type: "QUIT"});
+    screenSend({ type: "QUIT" });
   }
 
-  // The following should be normalised with a few obvious structural components
-  // @todo normalise
   // @todo DRY the modals
   return (
     <>
       <Flex direction="column" width="100vw" height="100%" alignItems="center" background="linear-gradient(to bottom, transparent, 60%, #222)" position="relative">
-        <Flex direction="row" width="100vw" p="2" mb="0" justifyContent="space-between" background="rgba(0, 0, 0, 0.1)" flexGrow={0}>
-          <Flex>
-            <IconButton
-              colorScheme="white"
-              aria-label="Quit"
-              icon={<ImCross />}
-              onClick={() => screenSend("QUITCHECK")}
-              alignSelf="flex-start"
-              mr="2"
-              mb="0"
-              background="rgba(0, 0, 0, 0.2)"
-            />
-            {gameAudioIcon}
-          </Flex>
-          {tutorialMode &&
-            <Heading as="h2" fontSize={{base: "1.2rem", sm: "1.8rem"}} mt={{base: "2", sm: "0"}} mb={0} mr={2} ml={2} color="white" textShadow="0 0 0.4em #0A3839">How to play</Heading>
-          }
-          {!tutorialMode &&
-            <GameInfo
-              moves={numMoves}
-              minMoves={minMoves}
-              showMoves={hanoiState.context.showMoves}
-              showTime={hanoiState.context.showTime}
-            />
-          }
-          <Flex>
-            <IconButton
-              colorScheme="white"
-              aria-label="Undo move"
-              icon={<ImUndo2 />}
-              onClick={() => hanoiSend('UNDO')}
-              alignSelf="flex-start"
-              mb="0"
-              ml="2"
-              mr="2"
-              isDisabled={!midGame}
-              background="rgba(0, 0, 0, 0.2)"
-            />
-            <IconButton
-              colorScheme="white"
-              aria-label="Restart game"
-              icon={<ImLoop2 />}
-              onClick={() => screenSend('RESTARTCHECK')} // this icon is currently only shown when we CAN logically restart, i.e. 
-              // midgame - screenFSM doesn't currently check if the game is midgame @todo remove hidden gotcha
-              alignSelf="flex-start"
-              mb="0"
-              isDisabled={!midGame}
-              background="rgba(0, 0, 0, 0.2)"
-            />
-          </Flex>
-        </Flex>
-
-        <Flex color="white" mt="0.5" mb="0.5" background="rgba(0, 0, 0, 0.3)" width="100vw">
-          {(aspect < 1 && !rotateDismissed) &&
-            <>
-              <ScaleFade in={true} initialScale={0.1}>
-                <Flex flexDirection="row"  alignItems="center" justifyContent="space-between"  width="100vw">
-                  <IconButton
-                    colorScheme="white"
-                    aria-label="Rotate device"
-                    icon={<MdScreenRotation />}
-                    alignSelf="flex-start"
-                    ml="2"
-                    mb="0"
-                    background="transparent"
-                  />
-                  <Text>rotate device for best view</Text>
-                  <IconButton
-                    colorScheme="white"
-                    aria-label="Quit"
-                    icon={<MdClear />}
-                    onClick={() => setRotateDismissed(true) }
-                    alignSelf="flex-start"
-                    mr="2"
-                    mb="0"
-                    background="transparent"
-                  />
-                </Flex>
-              </ScaleFade>
-            </>
-          }
-        </Flex>
-
-        {/* one could use a small state machine for the tutorial stages,
-            but notice that they are based mostly on extended
-            state, rather than the finite states...
-        */}
+        <GameHeader
+          screenSend={screenSend}
+          hanoiSend={hanoiSend}
+          gameInfo={{ numMoves, minMoves, showMoves, showTime }}
+          tutorialMode={tutorialMode}
+          midGame={midGame}
+          gameAudioIcon={gameAudioIcon}
+        />
         {tutorialMode &&
           <>
             <ScaleFade in={true} initialScale={0.8}>
               <Flex direction="column" alignItems="left" p="6" pt="3" pb="3" background="rgba(255, 255, 255, 0.8)" flexGrow={0} rounded={8} mr={4} ml={4}>
                 <Flex direction="column" alignItems="left" p="3">
 
-                  {(gameNotStarted && hanoiState.matches("diskSelection.awaitSelection")) &&
+                  {(gameNotStarted && awaitSelection) &&
                     <>
                       <Text mt={1} mb={1} color="black"><strong>Aim: move the tower of disks to the right hands side peg</strong><br />Click/tap the tower to start...</Text>
                     </>
@@ -199,25 +112,25 @@ export const ScreenGame = () => {
 
                   {!illegalMoveNotice &&
                     <>
-                      {numMoves === 0 && hanoiState.context.selectedPeg != null &&
+                      {numMoves === 0 && selectedPeg != null &&
                         <Text mt={1} mb={1} color="black"><strong>That&apos;s it</strong>, now tap on a peg to complete the first move...</Text>
                       }
 
-                      {numMoves === 1 && hanoiState.context.selectedPeg === null &&
+                      {numMoves === 1 && selectedPeg === null &&
                         <Text mt={1} mb={1} color="black"><strong>Great!</strong> Now select the next disk to move. <em>You can Undo moves or Restart, with the controls (above right).</em></Text>
                       }
 
-                      {numMoves === 1 && hanoiState.context.selectedPeg != null &&
+                      {numMoves === 1 && selectedPeg != null &&
                         <Text mt={1} mb={1} color="black"><strong>Ok</strong>, where to put it?</Text>
                       }
 
-                      {numMoves === 2 && hanoiState.context.selectedPeg === null &&
+                      {numMoves === 2 && selectedPeg === null &&
                         <Text mt={1} mb={1} color="black"><strong>Cool</strong>. <strong>Here&apos;s a tip</strong>: Think how to move the largest disk to right, and then which disk needs to move to achieve that, and so on...</Text>
                       }
 
                       {
                         (
-                          (numMoves === 2 && hanoiState.context.selectedPeg !== null) ||
+                          (numMoves === 2 && selectedPeg !== null) ||
                           (numMoves > 2 && !gameComplete)
                         ) &&
                         <Text mt={1} mb={1} color="black">Continue assembling the tower on the right hand peg...</Text>
@@ -225,15 +138,15 @@ export const ScreenGame = () => {
                     </>
                   }
 
-                  {hanoiState.matches("diskSelection.immoveableDiskSelected") &&
+                  {immoveableDiskSelected &&
                     <Text mt={1} mb={1} color="black">This disk has nowhere to go right now. <strong>Choose another disk to move...</strong></Text>
                   }
 
-                  {hanoiState.matches("diskSelection.emptyPegSelected") &&
+                  {emptyPegSelected &&
                     <Text mt={1} mb={1} color="black"><strong>Whoops!</strong> There no disks on this peg...</Text>
                   }
 
-                  {hanoiState.matches("moveSelection.invalidMoveAttempt") &&
+                  {invalidMoveAttempt &&
                     <Text mt={1} mb={1} color="black">You can&apos;t place a bigger disk on top of a smaller, that would be too easy! <strong>Choose another peg...</strong></Text>
                   }
 
@@ -262,10 +175,10 @@ export const ScreenGame = () => {
         }
 
         <Flex direction="column" width="100vw" alignItems="center" p="3" mb="auto" flexGrow={1} justifyContent="flex-end">
-          <Game state={hanoiState.context} selectHandler={selectHandler} />
+          <Game gameBoard={gameboard} selectedPeg={selectedPeg} selectHandler={selectHandler} />
         </Flex>
 
-        {screenState.matches("game.quitDialog") &&
+        {quitDialog &&
           <Flex position="absolute" direction="column" width="100vw" height="calc(var(--vh, 1vh) * 100)" alignItems="center" background="rgba(0, 0, 0, 0.6)" justifyContent="center" zIndex={1000}>
             <Flex direction="column" width="300px" background="rgba(255, 255, 255, 0.9)" p={6} rounded={8}>
               <Flex direction="column" flexWrap="wrap" width="100%" justifyContent="center">
@@ -273,13 +186,13 @@ export const ScreenGame = () => {
                 <Button colorScheme="purple" mb={3} onClick={() => {
                   handleQuit();
                 }}>Quit</Button>
-                <Button colorScheme="teal" onClick={() => screenSend({ type: "STAY"})}>{ tutorialMode ? "Continue" : "Play on" }</Button>
+                <Button colorScheme="teal" onClick={() => screenSend({ type: "STAY" })}>{ tutorialMode ? "Continue" : "Play on" }</Button>
               </Flex>
             </Flex>
           </Flex>
         }
 
-        {screenState.matches("game.restartDialog") &&
+        {restartDialog &&
           <Flex position="absolute" direction="column" width="100vw" height="calc(var(--vh, 1vh) * 100)" alignItems="center" background="rgba(0, 0, 0, 0.6)" justifyContent="center" zIndex={1000}>
             <Flex direction="column" width="300px" background="rgba(255, 255, 255, 0.9)" p={6} rounded={8}>
               <Flex direction="column" flexWrap="wrap" width="100%" justifyContent="center">
@@ -296,7 +209,7 @@ export const ScreenGame = () => {
             <ScaleFade in={true} initialScale={0.01}>
               <Flex direction="column" width="300px" background="rgba(255, 255, 255, 0.9)" p={6} m={6} rounded={8}>
                 <Flex direction="column" flexWrap="wrap" justifyContent="center">
-                  { hanoiState.context.showMoves &&
+                  { showMoves &&
                     <>
                       { numMoves > minMoves &&
                         <>
@@ -329,7 +242,7 @@ export const ScreenGame = () => {
                     </>
                   }
 
-                  { !hanoiState.context.showMoves &&
+                  { !showMoves &&
                     <>
                       <Heading as="h1" size="xl" mb={6} mr={3} flexGrow={1} textAlign="center">Game complete!</Heading>
                     </>

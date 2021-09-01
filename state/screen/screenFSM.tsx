@@ -127,7 +127,8 @@ export const getScreenMachine = (initialState: string) => {
               },
               RESTARTCHECK: [
                 {
-                  // currently a redundant check as the UI prevents this being called at any other time (not-started or finished.)
+                  // @todo fix redundant check as the UI currently prevents this being
+                  // called at any other time (not-started or finished.)
                   cond: gameInProgress,
                   target: 'restartDialog'
                 },

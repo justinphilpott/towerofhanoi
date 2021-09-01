@@ -3,10 +3,10 @@ import { Flex } from "@chakra-ui/react";
 import dynamic from 'next/dynamic';
 import { ScreenStart } from "./ScreenStart";
 import { SpinnerLight } from '../../utils/spinnerLight';
-import { XStateContext, XStateProvider, XStateContextInterface } from '../../state/screen/ScreenFSMContext';
+import { XStateContext, XStateProvider } from '../../state/screen/ScreenFSMContext';
 import { useSelector } from '@xstate/react';
-import { ActorRef } from 'xstate'
-import { ScreenEvent } from '../../state/screen/types/screenFSMTypes'
+import { EmittedFrom } from '../../state/screen/types/screenFSMTypes'
+
 
 interface ScreenSettingsProps {}
 const ScreenSettings_Dynamic = dynamic<ScreenSettingsProps>(
@@ -42,25 +42,27 @@ interface ScreenWrapperProps {
   initialState: string;
 }
 
-export type EmittedFrom<T> = T extends ActorRef<any, infer TEmitted>
-  ? TEmitted
-  : never;
-
 const ScreenWrapper_inner = ({ initialState }: ScreenWrapperProps ) => {
 
-  // const [screenState] = useScreenActor();
+  console.log(initialState);
   const screenFSMContext = useContext(XStateContext);
 
   const isScreenStart = useSelector(
     screenFSMContext.screenActor,
-    (state: EmittedFrom<typeof screenFSMContext.screenActor>) => {
-      return (state.value === "start")
-    }
+    (state: EmittedFrom<typeof screenFSMContext.screenActor>) => (state.value === "start")
   );
-
-  const isScreenGame = useSelector(screenFSMContext.screenActor, (state: any) => (state.matches("game")));
-  const isScreenSettings = useSelector(screenFSMContext.screenActor, (state: any) => (state.value === "start"));
-  const isScreenCredits = useSelector(screenFSMContext.screenActor, (state: any) => (state.value === "start"));
+  const isScreenGame = useSelector(
+    screenFSMContext.screenActor,
+    (state: EmittedFrom<typeof screenFSMContext.screenActor>) => (state.matches("game"))
+  );
+  const isScreenSettings = useSelector(
+    screenFSMContext.screenActor,
+    (state: EmittedFrom<typeof screenFSMContext.screenActor>) => (state.value === "settings")
+  );
+  const isScreenCredits = useSelector(
+    screenFSMContext.screenActor,
+    (state: EmittedFrom<typeof screenFSMContext.screenActor>) => (state.value === "credits")
+  );
 
   return (
     <>

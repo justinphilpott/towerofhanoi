@@ -1,10 +1,10 @@
 import React from 'react'
 import { Peg } from './Peg'
 
-
 // @todo refine eslinting
 export interface GameProps {
-  state: GameConfig; // eslint-disable-line
+  gameBoard: number[][]; // eslint-disable-line
+  selectedPeg: number;
   selectHandler: (pegIndex: number) => void; // eslint-disable-line
 }
 
@@ -14,20 +14,19 @@ export interface GameProps {
  *
  * @returns
  */
-export const Game = ({ state, selectHandler }: GameProps) => {
+export const Game = ({ gameBoard, selectedPeg, selectHandler }: GameProps) => {
 
-  const game = state.gameBoard;
-  const pegLengths: number[] = game.map((peg: number[]) => { return peg.length; })
+  const pegLengths: number[] = gameBoard.map((peg: number[]) => { return peg.length; })
   const numDisks: number = pegLengths.reduce((a, b) => { return a + b });
-  const numPegs: number = game.length;
+  const numPegs: number = gameBoard.length;
 
-  const selected = state.selectedPeg;
+  const selected = selectedPeg;
 
   return (
     <>
       <div className="game">
         {
-          game.map((pegDiscs: Array<number>, index: number) =>
+          gameBoard.map((pegDiscs: Array<number>, index: number) =>
             <Peg pegDiscs={pegDiscs} numPegs={numPegs} numDisks={numDisks} key={index} selected={selected === index} pegNum={index} selectHandler={selectHandler} />
           )
         }

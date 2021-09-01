@@ -5,7 +5,6 @@ import React, { useState } from 'react'
 import { Flex } from '@chakra-ui/react'
 import dynamic from 'next/dynamic';
 
-
 // import { ScreenProvider } from '../state/screen/ScreenFSMProvider'; // @see https://github.com/vantanev/xstate-helpers#createreactcontexthelpers
 import Script from 'next/script'
 import { SpinnerLight } from '../utils/spinnerLight';
@@ -15,7 +14,6 @@ export default function Home() {
   const [bgLoaded, setBgLoaded] = useState(false);
   const [fsmLoadInit, setfsmLoadInit] = useState(false);
   const [initialSelection, setInitialSelection] = useState('START');
-
 
   interface ScreenWrapper_dynamicProps {
     initialState: string;

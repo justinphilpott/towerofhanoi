@@ -14,18 +14,28 @@ import {
   FormLabel
 } from "@chakra-ui/react"
 import { XStateContext } from '../../state/screen/ScreenFSMContext';
-import { minMovesLookupTable } from '../../utils/hanoi';
+import { minMovesLookupTable } from '../../utils/hanoiData';
+import { EmittedFrom } from '../../state/screen/types/screenFSMTypes';
+import { useSelector } from '@xstate/react';
+
 
 export const ScreenSettings = () => {
 
   const screenFSMContext = useContext(XStateContext);
-  const { screenContext } = screenFSMContext.screenActor;
+  const { send: screenSend } = screenFSMContext.screenActor;
 
-  // need to read the disks and pegs data from the FSM
-  const [numPegs, setNumPegs] = useState(screenContext.numPegs);
-  const [numDisks, setNumDisks] = useState(screenContext.numDisks);
-  const [showTime, setShowTime] = useState(screenContext.showTime);
-  const [showMoves, setShowMoves] = useState(screenContext.showMoves);
+  const [numPegs, setNumPegs] = useState(
+    useSelector(screenFSMContext.screenActor, (state: EmittedFrom<typeof screenFSMContext.screenActor>) => (state.context.numPegs))
+  );
+  const [numDisks, setNumDisks] = useState(
+    useSelector(screenFSMContext.screenActor, (state: EmittedFrom<typeof screenFSMContext.screenActor>) => (state.context.numDisks))
+  );
+  const [showTime, setShowTime] = useState(
+    useSelector(screenFSMContext.screenActor, (state: EmittedFrom<typeof screenFSMContext.screenActor>) => (state.context.showTime))
+  );
+  const [showMoves, setShowMoves] = useState(
+    useSelector(screenFSMContext.screenActor, (state: EmittedFrom<typeof screenFSMContext.screenActor>) => (state.context.showMoves))
+  );
 
   const maxDisks = 8;
 

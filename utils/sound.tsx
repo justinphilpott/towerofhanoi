@@ -60,7 +60,7 @@ export const useGameAudioControl = (autoplay: boolean) => {
     }
   }
 
-  const stop = () => {
+  const stop = async () => {
     toggleAudio(false);
   }
 
