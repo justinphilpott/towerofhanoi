@@ -25,7 +25,7 @@ export const ScreenCredits = () => {
         <Flex justifyContent="space-between">
           <Text fontSize={{base: "0.8rem", md: "1rem", lg:"1.5rem"}} mb={2}>Full attributions and code: <Link href="https://github.com/justinphilpott/towerofhanoi/blob/master/README.md" fontWeight="bold">Tower of Hanoi on Github <ExternalLinkIcon mx="2px" /></Link></Text>
           <Button alignSelf="flex-end" ml="3" size="xs" colorScheme="teal" onClick={() => {
-            screenSend({ type: "QUIT" })
+            screenSend({ type: "EXIT" })
           }}>Back</Button>
         </Flex>
       </Flex>
