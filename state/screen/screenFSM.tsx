@@ -6,22 +6,6 @@ import { HanoiContext } from '../hanoi/types/hanoiFSMTypes'
 import { initialGameBoardState } from '../hanoi/hanoiFSMActions';
 
 /**
- * controls the screen logic, transitions between screens
- * and receives high level info on the game state from the hanoi
- * fsm.
- *
- * States are keys of states, CAPS keys are events.
- */
-const screenFSMModel = createModel({
-  numPegs: 3,
-  numDisks: 5,
-  gameBoard: Array(),
-  showMoves: true,
-  showTime: false,
-  showTutorial: false // get set either t/f false depending on the start screen selection anyway
-})
-
-/**
  * gameInProgress - inferred elewhere
  *
  * @todo no longer needed!
@@ -41,6 +25,23 @@ const gameInProgress = () => {
  *
  */
 export const getScreenMachine = (initialState: string) => {
+
+    /**
+   * controls the screen logic, transitions between screens
+   * and receives high level info on the game state from the hanoi
+   * fsm.
+   *
+   * States are keys of states, CAPS keys are events.
+   */
+  const screenFSMModel = createModel({
+    numPegs: 3,
+    numDisks: 5,
+    gameBoard: Array(),
+    showMoves: true,
+    showTime: false,
+    showTutorial: initialState === 'tutorial' ? true : false  // get set either t/f false depending on the start screen selection anyway
+  })
+
   let FSMStruct = {
     id: 'screenFSM',
     initial: 'start',
@@ -79,15 +80,14 @@ export const getScreenMachine = (initialState: string) => {
           }
         }
       },
-  
+
       game: {
         entry: ['initializeGameState'],
-  
         // now we invoke the hanoiFSM setting the initial state
         invoke: {
           id: 'hanoiFSM',
           src: hanoiFSM,
-  
+
           // here we can construct the initial state based on the values set in screenStart
           data: {
             numDisks: (context: HanoiContext) => context.numDisks,
@@ -98,7 +98,7 @@ export const getScreenMachine = (initialState: string) => {
             showTime: (context: HanoiContext) => context.showTime,
             showTutorial: (context: HanoiContext) => context.showTutorial
           },
-  
+
           // onDone will be set when the hanoiFSM reaches its final state
           onDone: {
             target: 'start',
@@ -160,7 +160,9 @@ export const getScreenMachine = (initialState: string) => {
     }
   };
   // create the screen FSM with customised start
-  FSMStruct.initial = initialState;
+  // both the tutorial and the game use the same FSM state, but with a flag set in context to render in tutorial mode
+  // @todo this could be done better, probably with a distinct 'tutorial' FSM state
+  FSMStruct.initial = initialState === 'tutorial' ? 'game' : initialState;
 
   return createMachine<ScreenContext>(
     FSMStruct,

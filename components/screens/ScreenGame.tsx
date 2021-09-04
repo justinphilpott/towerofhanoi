@@ -1,30 +1,26 @@
 import React, { useContext } from 'react';
 import { Button, Flex, Heading, ScaleFade, Text } from "@chakra-ui/react"
 import { Game } from '../towerofhanoi/Game';
-import { XStateContext } from '../../state/screen/ScreenFSMContext';
+import { XStateContext } from './ScreenWrapper';
 import { useSelector } from '@xstate/react';
 import { minMovesLookupTable } from '../../utils/hanoiData';
 import { useGameAudioControl } from '../../utils/sound';
-import { ActorRef } from 'xstate';
-import { HanoiEvent } from '../../state/hanoi/types/hanoiFSMTypes';
+import { Interpreter } from 'xstate';
+import { HanoiEvent, HanoiContext } from '../../state/hanoi/types/hanoiFSMTypes';
 import { GameHeader } from './game/gameHeader';
-
-// @todo sort organisation of types
-export type EmittedFrom<T> = T extends ActorRef<any, infer TEmitted>
-  ? TEmitted
-  : never;
 
 /**
  * ScreenGame
  */
 export const ScreenGame = () => {
 
+  console.log("ScreenGame");
+
   // State machine handling
-  const screenFSMContext = useContext(XStateContext);
-  const screenActor = screenFSMContext.screenActor;
+  const screenActor = useContext(XStateContext);
   const { send: screenSend } = screenActor;
   // hanoi is the child of screen and invoked within it @see /state/screen/screenFSM.txt
-  const hanoiActor:ActorRef<HanoiEvent> = screenActor.getSnapshot().children.get('hanoiFSM');
+  const hanoiActor = screenActor.children.get('hanoiFSM') as Interpreter<HanoiContext, any, HanoiEvent>;
   const { send: hanoiSend } = hanoiActor;
 
   /**
@@ -35,14 +31,15 @@ export const ScreenGame = () => {
    * or a separate machine that represents a "different cross section
    * through the state space."
    */
-  const disks:number = useSelector(hanoiActor, (state: EmittedFrom<typeof screenActor>) => (state.context.numDisks));
-  const pegs:number = useSelector(hanoiActor, (state: EmittedFrom<typeof screenActor>) => (state.context.numPegs));
+  const disks:number = useSelector(hanoiActor, (state) => (state.context.numDisks));
+  const pegs:number = useSelector(hanoiActor, (state) => (state.context.numPegs));
   const minMoves:number = minMovesLookupTable[pegs-3][disks-1];
   const numMoves:number = useSelector(hanoiActor, (state) => (state.context.moves.length));
 
   const showMoves:boolean = useSelector(hanoiActor, (state) => (state.context.showMoves));
   const showTime:boolean = useSelector(hanoiActor, (state) => (state.context.showTime));
 
+  console.log(disks, pegs, minMoves, numMoves, showMoves, showTime);
 
   const gameComplete = useSelector(hanoiActor, (state) => (state.matches("gameComplete")));
   const midGame = numMoves > 0 && !gameComplete;
@@ -66,7 +63,10 @@ export const ScreenGame = () => {
   /**
    * The components that represent the actual game, pegs and disks
    * are not dependent upon xstate, and could use any method of
-   * state management. SelectHandler connects Xstate in this implementation.
+   * state management. 
+   * 
+   * SelectHandler is the only causal connection between the game components
+   * and XState.
    *
    * It is the only event we need from the actual game board components:
    * pegs and disks and from that we know which peg has been clicked/tapped
@@ -74,7 +74,7 @@ export const ScreenGame = () => {
    * @param pegIndex
    */
   const selectHandler = (pegIndex: number) => {
-    hanoiActor.send({
+    hanoiSend({
       type: "SELECT",
       pegIndex: pegIndex
     })
@@ -82,7 +82,7 @@ export const ScreenGame = () => {
 
   // using useeffect here didn't work
   const handleQuit = async () => {
-    await stopAudio();
+    // await stopAudio();
     screenSend({ type: "QUIT" });
   }
 

@@ -13,7 +13,7 @@ import {
   FormControl,
   FormLabel
 } from "@chakra-ui/react"
-import { XStateContext } from '../../state/screen/ScreenFSMContext';
+import { XStateContext } from './ScreenWrapper';
 import { minMovesLookupTable } from '../../utils/hanoiData';
 import { EmittedFrom } from '../../state/screen/types/screenFSMTypes';
 import { useSelector } from '@xstate/react';
@@ -21,20 +21,20 @@ import { useSelector } from '@xstate/react';
 
 export const ScreenSettings = () => {
 
-  const screenFSMContext = useContext(XStateContext);
-  const { send: screenSend } = screenFSMContext.screenActor;
+  const screenActor = useContext(XStateContext);
+  const { send: screenSend } = screenActor;
 
   const [numPegs, setNumPegs] = useState(
-    useSelector(screenFSMContext.screenActor, (state: EmittedFrom<typeof screenFSMContext.screenActor>) => (state.context.numPegs))
+    useSelector(screenActor, (state: EmittedFrom<typeof screenActor>) => (state.context.numPegs))
   );
   const [numDisks, setNumDisks] = useState(
-    useSelector(screenFSMContext.screenActor, (state: EmittedFrom<typeof screenFSMContext.screenActor>) => (state.context.numDisks))
+    useSelector(screenActor, (state: EmittedFrom<typeof screenActor>) => (state.context.numDisks))
   );
   const [showTime, setShowTime] = useState(
-    useSelector(screenFSMContext.screenActor, (state: EmittedFrom<typeof screenFSMContext.screenActor>) => (state.context.showTime))
+    useSelector(screenActor, (state: EmittedFrom<typeof screenActor>) => (state.context.showTime))
   );
   const [showMoves, setShowMoves] = useState(
-    useSelector(screenFSMContext.screenActor, (state: EmittedFrom<typeof screenFSMContext.screenActor>) => (state.context.showMoves))
+    useSelector(screenActor, (state: EmittedFrom<typeof screenActor>) => (state.context.showMoves))
   );
 
   const maxDisks = 8;

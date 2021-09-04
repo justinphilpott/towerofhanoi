@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Flex } from "@chakra-ui/react";
 import dynamic from 'next/dynamic';
 import { ScreenStart } from "./ScreenStart";
 import { SpinnerLight } from '../../utils/spinnerLight';
-import { XStateContext, XStateProvider } from '../../state/screen/ScreenFSMContext';
-import { useSelector } from '@xstate/react';
-import { EmittedFrom } from '../../state/screen/types/screenFSMTypes'
-
+import { useInterpret, useSelector } from '@xstate/react';
+import { EmittedFrom, ScreenContext } from '../../state/screen/types/screenFSMTypes'
+import { getScreenMachine } from '../../state/screen/screenFSM';
+import { Interpreter, AnyEventObject } from 'xstate';
 
 interface ScreenSettingsProps {}
 const ScreenSettings_Dynamic = dynamic<ScreenSettingsProps>(
@@ -42,34 +42,34 @@ interface ScreenWrapperProps {
   initialState: string;
 }
 
-const ScreenWrapper_inner = ({ initialState }: ScreenWrapperProps ) => {
+export const XStateContext = React.createContext({} as Interpreter<ScreenContext, any, AnyEventObject, {
+  value: any;
+  context: ScreenContext;
+}>);
 
-  console.log(initialState);
-  const screenFSMContext = useContext(XStateContext);
+/**
+ * Initialise the screenState
+ */
+export const ScreenWrapper = ({ initialState }: ScreenWrapperProps ) => {
 
-  const isScreenStart = useSelector(
-    screenFSMContext.screenActor,
-    (state: EmittedFrom<typeof screenFSMContext.screenActor>) => (state.value === "start")
-  );
-  const isScreenGame = useSelector(
-    screenFSMContext.screenActor,
-    (state: EmittedFrom<typeof screenFSMContext.screenActor>) => (state.matches("game"))
-  );
-  const isScreenSettings = useSelector(
-    screenFSMContext.screenActor,
-    (state: EmittedFrom<typeof screenFSMContext.screenActor>) => (state.value === "settings")
-  );
-  const isScreenCredits = useSelector(
-    screenFSMContext.screenActor,
-    (state: EmittedFrom<typeof screenFSMContext.screenActor>) => (state.value === "credits")
-  );
+  console.log("screenWrapperstate", initialState);
+
+  // load screen actor (@see https://xstate.js.org/docs/guides/actors.html)
+  const screenActor = useInterpret(getScreenMachine(initialState));
+
+  const isStart = useSelector(screenActor, (state: EmittedFrom<typeof screenActor>) => (state.value === "start"));
+  const isGame = useSelector(screenActor, (state: EmittedFrom<typeof screenActor>) => (state.matches("game")));
+  const isSettings = useSelector(screenActor, (state: EmittedFrom<typeof screenActor>) => (state.value === "settings"));
+  const isCredits = useSelector(screenActor, (state: EmittedFrom<typeof screenActor>) => (state.value === "credits"));
+
+console.log(isStart, isGame, isSettings, isCredits);
 
   return (
-    <>
-      {isScreenStart &&
+    <XStateContext.Provider value={screenActor}>
+      {isStart &&
         <ScreenStart />
       }
-      {isScreenGame &&
+      {isGame &&
         <Flex
           height="calc(var(--vh, 1vh) * 100)"
           width="100vw"
@@ -79,7 +79,7 @@ const ScreenWrapper_inner = ({ initialState }: ScreenWrapperProps ) => {
           <ScreenGame_Dynamic />
         </Flex>
       }
-      {isScreenSettings &&
+      {isSettings &&
         <Flex
           height="calc(var(--vh, 1vh) * 100)"
           width="100vw"
@@ -91,7 +91,7 @@ const ScreenWrapper_inner = ({ initialState }: ScreenWrapperProps ) => {
           <ScreenSettings_Dynamic />
         </Flex>
       }
-      {isScreenCredits &&
+      {isCredits &&
         <Flex
           height="calc(var(--vh, 1vh) * 100)"
           width="100vw"
@@ -103,14 +103,6 @@ const ScreenWrapper_inner = ({ initialState }: ScreenWrapperProps ) => {
           <ScreenCredits_Dynamic />
         </Flex>
       }
-    </>
+    </XStateContext.Provider>
   );
 };
-
-export const ScreenWrapper = ({initialState}: ScreenWrapperProps) => {
-  return (
-    <XStateProvider>
-      <ScreenWrapper_inner initialState={initialState} />
-    </XStateProvider>
-  )
-}

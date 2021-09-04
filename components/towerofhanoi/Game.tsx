@@ -4,7 +4,7 @@ import { Peg } from './Peg'
 // @todo refine eslinting
 export interface GameProps {
   gameBoard: number[][]; // eslint-disable-line
-  selectedPeg: number;
+  selectedPeg: number | null;
   selectHandler: (pegIndex: number) => void; // eslint-disable-line
 }
 

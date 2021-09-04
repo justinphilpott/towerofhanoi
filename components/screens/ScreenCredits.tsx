@@ -7,12 +7,12 @@ import {
   Text,
   Link
 } from "@chakra-ui/react"
-import { XStateContext } from '../../state/screen/ScreenFSMContext';
+import { XStateContext } from './ScreenWrapper';
 
 export const ScreenCredits = () => {
 
-  const screenFSMContext = useContext(XStateContext);
-  const { send: screenSend } = screenFSMContext.screenActor;
+  const screenActor = useContext(XStateContext);
+  const { send: screenSend } = screenActor;
 
   return (
     <>

@@ -32,10 +32,10 @@ export default function Home() {
     // to be rendered by the screen wrapper
     setInitialSelection(action);
     setfsmLoadInit(true);
-    console.log(initialSelection);
-    console.log(fsmLoadInit);
+    console.log('initialSelection', initialSelection);
+    console.log('fsmLoadInit', fsmLoadInit);
   }
-
+  
   return (
     <>
       <Flex height="100%" width="100vw" alignItems="center" justifyContent="center" position="fixed" overflow="hidden" backgroundColor="black">

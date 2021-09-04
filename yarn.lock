@@ -5405,14 +5405,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xstate/inspect@npm:^0.4.1":
-  version: 0.4.1
-  resolution: "@xstate/inspect@npm:0.4.1"
+"@xstate/inspect@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "@xstate/inspect@npm:0.5.0"
   dependencies:
     fast-safe-stringify: ^2.0.7
   peerDependencies:
     ws: ^7.3.1
-  checksum: 51d5f91a52cb89252cf0ff4d979254c15cbea5b15dd8308865d9236e90261887588e300b7779ec7c70ce1488ee35d6cefc86e97b21078a359c27b76daba0c64e
+  checksum: 5588751ccc318b7a42ef0f65a1633135104e64d5571c4a9845ede00b331d5216f94a8552ab3695534233e1e3b692c49cb237e4f1d5d0fa0c4915277808843c89
   languageName: node
   linkType: hard
 
@@ -13926,7 +13926,7 @@ fsevents@^1.2.7:
     "@types/jest": ^26.0.23
     "@types/node": ^14.11.5
     "@types/react": ^16.9.51
-    "@xstate/inspect": ^0.4.1
+    "@xstate/inspect": ^0.5.0
     "@xstate/react": ^1.3.2
     babel-jest: ^26.6.3
     babel-loader: ^8.1.0
