@@ -82,7 +82,7 @@ export const ScreenGame = () => {
 
   // using useeffect here didn't work
   const handleQuit = async () => {
-    // await stopAudio();
+    stopAudio();
     screenSend({ type: "QUIT" });
   }
 

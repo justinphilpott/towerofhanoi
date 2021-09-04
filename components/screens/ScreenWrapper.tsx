@@ -55,7 +55,7 @@ export const ScreenWrapper = ({ initialState }: ScreenWrapperProps ) => {
   console.log("screenWrapperstate", initialState);
 
   // load screen actor (@see https://xstate.js.org/docs/guides/actors.html)
-  const screenActor = useInterpret(getScreenMachine(initialState));
+  const screenActor = useInterpret(getScreenMachine(initialState), { devTools: true });
 
   const isStart = useSelector(screenActor, (state: EmittedFrom<typeof screenActor>) => (state.value === "start"));
   const isGame = useSelector(screenActor, (state: EmittedFrom<typeof screenActor>) => (state.matches("game")));
