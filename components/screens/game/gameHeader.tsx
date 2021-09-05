@@ -79,8 +79,8 @@ export const GameHeader = ({hanoiSend, screenSend, gameInfo, tutorialMode, midGa
             colorScheme="white"
             aria-label="Restart game"
             icon={<ImLoop2 />}
-            onClick={() => screenSend('RESTARTCHECK')} // this icon is currently only shown when we CAN logically restart, i.e. 
-            // midgame - screenFSM doesn't currently check if the game is midgame @todo remove hidden gotcha
+            onClick={() => screenSend('RESTART')} // this icon is currently only shown when we CAN 
+            // logically restart, i.e. midgame - screenFSM doesn't currently check if the game is midgame
             alignSelf="flex-start"
             mb="0"
             isDisabled={!midGame}

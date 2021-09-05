@@ -52,8 +52,6 @@ export const XStateContext = React.createContext({} as Interpreter<ScreenContext
  */
 export const ScreenWrapper = ({ initialState }: ScreenWrapperProps ) => {
 
-  console.log("screenWrapperstate", initialState);
-
   // load screen actor (@see https://xstate.js.org/docs/guides/actors.html)
   const screenActor = useInterpret(getScreenMachine(initialState), { devTools: true });
 
@@ -61,8 +59,6 @@ export const ScreenWrapper = ({ initialState }: ScreenWrapperProps ) => {
   const isGame = useSelector(screenActor, (state: EmittedFrom<typeof screenActor>) => (state.matches("game")));
   const isSettings = useSelector(screenActor, (state: EmittedFrom<typeof screenActor>) => (state.value === "settings"));
   const isCredits = useSelector(screenActor, (state: EmittedFrom<typeof screenActor>) => (state.value === "credits"));
-
-console.log(isStart, isGame, isSettings, isCredits);
 
   return (
     <XStateContext.Provider value={screenActor}>

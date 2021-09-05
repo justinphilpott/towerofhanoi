@@ -23,7 +23,7 @@ export type ScreenEvent =
   | { type: 'QUIT' }
   | { type: 'RESTART' }
   | { type: 'CANCEL' }
-  | { type: 'RESTARTCHECK' };
+  | { type: 'RESTART' };
 
 export type EmittedFrom<T> = T extends ActorRef<any, infer TEmitted>
   ? TEmitted
