@@ -28,6 +28,16 @@ const ScreenGame_Dynamic = dynamic<ScreenGameProps>(
   }
 )
 
+interface ScreenTutorialProps {}
+const ScreenTutorial_Dynamic = dynamic<ScreenTutorialProps>(
+  () => import('./ScreenTutorial').then((mod) => mod.ScreenTutorial),
+  { loading: () =>
+    <Flex height="calc(var(--vh, 1vh) * 100)" width="100vw" alignItems="center" justifyContent="center" backgroundColor="transparent" z-index={10} >
+      <SpinnerLight />
+    </Flex>
+  }
+)
+
 interface ScreenCreditsProps {}
 const ScreenCredits_Dynamic = dynamic<ScreenCreditsProps>(
   () => import('./ScreenCredits').then((mod) => mod.ScreenCredits),
@@ -57,6 +67,7 @@ export const ScreenWrapper = ({ initialState }: ScreenWrapperProps ) => {
 
   const isStart = useSelector(screenActor, (state: EmittedFrom<typeof screenActor>) => (state.value === "start"));
   const isGame = useSelector(screenActor, (state: EmittedFrom<typeof screenActor>) => (state.matches("game")));
+  const isTutorial = useSelector(screenActor, (state: EmittedFrom<typeof screenActor>) => (state.matches("tutorial")));
   const isSettings = useSelector(screenActor, (state: EmittedFrom<typeof screenActor>) => (state.value === "settings"));
   const isCredits = useSelector(screenActor, (state: EmittedFrom<typeof screenActor>) => (state.value === "credits"));
 
@@ -73,6 +84,16 @@ export const ScreenWrapper = ({ initialState }: ScreenWrapperProps ) => {
           justifyContent="center"
         >
           <ScreenGame_Dynamic />
+        </Flex>
+      }
+      {isTutorial &&
+        <Flex
+          height="calc(var(--vh, 1vh) * 100)"
+          width="100vw"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <ScreenTutorial_Dynamic />
         </Flex>
       }
       {isSettings &&

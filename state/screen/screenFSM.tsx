@@ -44,7 +44,7 @@ export const getScreenMachine = (initialState: string) => {
             target: 'credits',
           },
           TUTORIAL: {
-            target: 'game',
+            target: 'tutorial',
             actions: ['setTutorialContext'] // set tutorial mode on
           }
         }
@@ -65,6 +65,81 @@ export const getScreenMachine = (initialState: string) => {
         }
       },
 
+      /**
+       * Tutorial
+       */
+      tutorial: {
+        entry: ['initializeTutorialState'], // configure the FSM context depending on tutorial mode setting
+        invoke: {
+          id: 'hanoiFSM',
+          src: hanoiFSM,
+
+          // here we can construct the initial state based on the values set in screenStart
+          data: {
+            numDisks: (context: HanoiContext) => context.numDisks,
+            numPegs: (context: HanoiContext) => context.numPegs,
+            gameBoard: (context: HanoiContext) => context.gameBoard,
+            moves: (context: HanoiContext) => context.moves,
+            showMoves: (context: HanoiContext) => context.showMoves,
+            showTime: (context: HanoiContext) => context.showTime
+          },
+
+          // onDone will be set when the hanoiFSM reaches its final state
+          onDone: {
+            target: 'start',
+          }
+        },
+        on: {
+          // go to the setting screen
+          SETTINGS: {
+            target: 'settings'
+          },
+          // PLAY event here caused issues that point to it being better to have
+          // @todo separate states for tutorial and game - selective re-use can occur
+          // neatly on the component level
+          QUIT: {
+            target: 'start'
+          }
+        },
+        initial: 'default',
+        states: {
+          default: {
+            on: {
+              QUITCHECK: {
+                target: 'quitDialog'
+              },
+              PLAY: {
+                target: '#screenFSM.game'
+
+              },
+            },
+          },
+          quitDialog: {
+            on: {
+              STAY: {
+                target: 'default'
+              },
+              QUIT: {
+                target: '#screenFSM.start'
+              },
+            }
+          },
+          restartDialog: {
+            on: {
+              CANCEL: {
+                target: 'default'
+              },
+              RESTART: {
+                target: 'default'
+              },
+            }
+          },
+        },
+      },
+
+      /**
+       * Game
+       */
       game: {
         entry: ['initializeGameState'], // configure the FSM context depending on tutorial mode setting
         invoke: {
@@ -105,16 +180,8 @@ export const getScreenMachine = (initialState: string) => {
             on: {
               QUITCHECK: {
                 target: 'quitDialog'
-              },
-              RESTART: [
-                {
-                  // @todo fix redundant check as the UI currently prevents this being
-                  // called at any other time (not-started or finished.)
-                  // cond: gameInProgress,
-                  target: 'restartDialog'
-                },
-              ]
-            },
+              }
+            }
           },
           quitDialog: {
             on: {
@@ -123,7 +190,7 @@ export const getScreenMachine = (initialState: string) => {
               },
               QUIT: {
                 target: '#screenFSM.start'
-              },
+              }
             }
           },
           restartDialog: {
@@ -133,17 +200,15 @@ export const getScreenMachine = (initialState: string) => {
               },
               RESTART: {
                 target: 'default'
-              },
+              }
             }
-          },
-        },
-      },
+          }
+        }
+      }
     }
   };
   // create the screen FSM with customised start
-  // both the tutorial and the game use the same FSM state, but with a flag set in context to render in tutorial mode
-  // @todo this could be done better, probably with a distinct 'tutorial' FSM state
-  FSMStruct.initial = initialState === 'tutorial' ? 'game' : initialState;
+  FSMStruct.initial = initialState;
 
   return createMachine<ScreenContext>(
     FSMStruct,
@@ -151,29 +216,27 @@ export const getScreenMachine = (initialState: string) => {
       actions: {
 
         /**
-         * set up the default game position, all disks on the left hand peg
+         * Initial game state
          */
         initializeGameState: assign((context: ScreenContext) => {
-          let updatedContext = {}
-
-          // initialize hanoiFSM for the tutorial, or for the standard game
-          if (context.showTutorial) {
-            updatedContext = {
-              selectedPeg: null,
-              gameBoard: initialGameBoardState(context.numPegs, 3),
-              moves: Array(),
-              showMoves: false,
-              showTime: false,
-              showTutorial: true,
-            }
-          } else {
-            updatedContext = {
-              selectedPeg: null,
-              gameBoard: initialGameBoardState(context.numPegs, context.numDisks),
-              moves: Array()
-            }
+          return {
+            selectedPeg: null,
+            gameBoard: initialGameBoardState(context.numPegs, context.numDisks),
+            moves: Array()
           }
-          return updatedContext;
+        }),
+
+        /**
+         * Initial tutorial state
+         */
+         initializeTutorialState: assign((context: ScreenContext) => {
+          return {
+            selectedPeg: null,
+            gameBoard: initialGameBoardState(context.numPegs, 3),
+            moves: Array(),
+            showMoves: false,
+            showTime: false,
+          }
         }),
 
         /**
@@ -198,8 +261,7 @@ export const getScreenMachine = (initialState: string) => {
             numPegs: 3,
             numDisks: 3,
             showMoves: false,
-            showTime: false,
-            showTutorial: true,
+            showTime: false
           };
         }),
 
@@ -212,13 +274,14 @@ export const getScreenMachine = (initialState: string) => {
             numPegs: 3,
             numDisks: 5,
             showMoves: true,
-            showTutorial: false,
             gameBoard: initialGameBoardState(3, 5)
           };
         }),
 
         /**
          * Use to go back to normal mode after tutorial, but leave other custom settings as they are
+         * 
+         * @todo still needed?
          */
         resetInitialContext: assign((context: ScreenContext, event) => { // eslint-disable-line
           console.log('reset initial context');

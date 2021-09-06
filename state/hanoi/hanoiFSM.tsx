@@ -3,7 +3,7 @@ import { initialGameBoardState } from './hanoiFSMActions';
 import { isSelected, emptyPegSelected, immoveableDiskSelected, inValidMoveSelection, gameCompleteCheck } from './hanoiFSMGuards';
 import { HanoiContext, HanoiEvent, Move } from './types/hanoiFSMTypes';
 import { assertEvent } from 'xstate-helpers';
-import { timerFSM } from './timerFSM';
+// import { timerFSM } from './timerFSM';
 
 /**
  * hanoiFSM
@@ -17,8 +17,7 @@ import { timerFSM } from './timerFSM';
     initial: 'start',
     states: {
 
-      // setup the timer machine and proceed to diskSelection.awaitingSelection
-      // TIMER TODO!
+      // @todo setup the timer machine and proceed to diskSelection.awaitingSelection
       start: {
         /*
         invoke: {
