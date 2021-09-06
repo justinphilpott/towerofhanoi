@@ -27,7 +27,7 @@ export const isSelected = (context: HanoiContext, event: HanoiEvent): boolean =>
   const topDisks = Array();
 
   // loop through all towers and get the top disks, including any zero height towers
-  context.gameBoard.forEach((peg, index) => {
+  context.gameBoard.forEach((peg) => {
     // treat the zero height towers as the biggest to make the following check simple
     let topDisk = peg.length === 0 ? context.numDisks + 1 : peg[0];
     topDisks.push(topDisk);
@@ -82,7 +82,7 @@ export const immoveableDiskSelected = (context: HanoiContext, event: HanoiEvent)
   const topDisks = Array();
 
   // loop through all towers and get the top disks, including any zero height towers
-  context.gameBoard.forEach((peg, index) => {
+  context.gameBoard.forEach((peg) => {
     // treat the zero height towers as the biggest to make the following check simple
     let topDisk = peg.length === 0 ? context.numDisks + 1 : peg[0];
     topDisks.push(topDisk);
