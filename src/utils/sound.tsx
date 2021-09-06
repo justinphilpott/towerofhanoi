@@ -64,9 +64,9 @@ export const useGameAudioControl = () => {
     toggleAudio(false);
   }
 
-  // return stop and play callbacks and the icon control component, not sure about this pattern
+  /* eslint-disable */
   return [stop,
-    <IconButton
+    <IconButton 
       colorScheme="white"
       color={ playing ? "white" : "grey" }
       aria-label="Audio on/off"
@@ -77,7 +77,7 @@ export const useGameAudioControl = () => {
       mb="0"
       isDisabled={false}
       background="rgba(0, 0, 0, 0.2)"
-    />] as const
+    />] as const 
 }
 
 /*
