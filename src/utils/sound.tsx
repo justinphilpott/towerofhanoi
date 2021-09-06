@@ -15,7 +15,7 @@ export const useAudio = (url: string) => {
       setPlaying(value);
     } else {
       setPlaying(!playing);
-    };
+    }
   }
 
   useEffect(() => {
@@ -42,10 +42,10 @@ export const useAudio = (url: string) => {
 
 /**
  * @returns callbacks and the audio control icon
- * 
+ *
  * @todo through various tracks
  */
-export const useGameAudioControl = (autoplay: boolean) => {
+export const useGameAudioControl = () => {
 
   // select a track at random
   const tracks = ['music/purrple-cat-equinox-opt.mp3', 'music/purrple-cat-floating-castle-opt.mp3', 'music/purrple-cat-mysterious-lights-opt.mp3', 'music/purrple-cat-wild-strawberry-opt.mp3', 'music/Uniq-Reverse-opt.mp3'];

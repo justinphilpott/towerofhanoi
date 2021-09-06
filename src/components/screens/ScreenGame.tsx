@@ -51,7 +51,7 @@ export const ScreenGame = () => {
   const gameboard:number[][] = useSelector(hanoiActor, (state) => (state.context.gameBoard)); //@todo might need to assign type
 
   // use custom audio hook @todo, make into a little track player, with generic hook behind
-  const [stopAudio, gameAudioIcon] = useGameAudioControl(true); // we need to expose a stop control for this for when we exit the game while music is playing
+  const [stopAudio, gameAudioIcon] = useGameAudioControl(); // we need to expose a stop control for this for when we exit the game while music is playing
 
   /**
    * The components that represent the actual game, pegs and disks

@@ -11,27 +11,19 @@ const Template: Story<GameProps> = (args) => <Game {...args} />;
 
 export const TowersOfHanoi = Template.bind({});
 TowersOfHanoi.args = {
-  state: {
-    gameBoard: [[1, 2, 3, 4, 5, 6, 7], [], []]
-  }
+  gameBoard: [[1, 2, 3, 4, 5, 6, 7], [], []]
 };
 export const TowersOfHanoiMidGame = Template.bind({});
 TowersOfHanoiMidGame.args = {
-  state: {
-    gameBoard: [[1], [2], [3]],
-  }
+  gameBoard: [[1], [2], [3]],
 };
 
 export const RevesPuzzle = Template.bind({});
 RevesPuzzle.args = {
-  state: {
-    gameBoard: [[1, 2, 3, 4, 5, 6, 7], [], [], []]
-  }
+  gameBoard: [[1, 2, 3, 4, 5, 6, 7], [], [], []]
 };
 
 export const RevesMidGame = Template.bind({});
 RevesMidGame.args = {
-  state: {
-    gameBoard: [[5, 6, 7], [1], [2, 3], [4]]
-  }
+  gameBoard: [[5, 6, 7], [1], [2, 3], [4]]
 };

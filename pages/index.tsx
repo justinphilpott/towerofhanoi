@@ -7,8 +7,8 @@ import dynamic from 'next/dynamic';
 
 // import { ScreenProvider } from '../state/screen/ScreenFSMProvider'; // @see https://github.com/vantanev/xstate-helpers#createreactcontexthelpers
 import Script from 'next/script'
-import { SpinnerLight } from '../utils/spinnerLight';
-import { ScreenStartFragment } from "../components/screens/screenStartFragment";
+import { SpinnerLight } from '../src/utils/spinnerLight';
+import { ScreenStartFragment } from "../src/components/screens/screenStartFragment";
 
 export default function Home() {
   const [bgLoaded, setBgLoaded] = useState(false);
@@ -19,7 +19,7 @@ export default function Home() {
     initialState: string;
   }
   const ScreenWrapper_dynamic = dynamic<ScreenWrapper_dynamicProps>(
-    () => import('../components/screens/ScreenWrapper').then((mod) => mod.ScreenWrapper),
+    () => import('../src/components/screens/ScreenWrapper').then((mod) => mod.ScreenWrapper),
     { loading: () =>
       <Flex height="calc(var(--vh, 1vh) * 100)" width="100vw" alignItems="center" justifyContent="center" backgroundColor="transparent" z-index={10} >
         <SpinnerLight />
