@@ -22,8 +22,7 @@ export const getScreenMachine = (initialState: string) => {
     numDisks: initialState === 'tutorial' ? 3 : 5,
     gameBoard: Array(),
     showMoves: true,
-    showTime: false,
-    showTutorial: initialState === 'tutorial' ? true : false  // get set either t/f false depending on the start screen selection anyway
+    showTime: false
   })
 
   let FSMStruct = {
@@ -34,8 +33,7 @@ export const getScreenMachine = (initialState: string) => {
       start: {
         on: {
           PLAY: {
-            target: 'game',
-            actions: ['resetInitialContext'] // set tutorial mode off
+            target: 'game'
           },
           SETTINGS: {
             target: 'settings',
@@ -44,8 +42,7 @@ export const getScreenMachine = (initialState: string) => {
             target: 'credits',
           },
           TUTORIAL: {
-            target: 'tutorial',
-            actions: ['setTutorialContext'] // set tutorial mode on
+            target: 'tutorial'
           }
         }
       },
@@ -110,8 +107,10 @@ export const getScreenMachine = (initialState: string) => {
               },
               PLAY: {
                 target: '#screenFSM.game'
-
               },
+              RESTART: {
+                target: 'restartDialog'
+              }
             },
           },
           quitDialog: {
@@ -129,7 +128,7 @@ export const getScreenMachine = (initialState: string) => {
               CANCEL: {
                 target: 'default'
               },
-              RESTART: {
+              RESTARTCONFIRM: {
                 target: 'default'
               },
             }
@@ -153,8 +152,7 @@ export const getScreenMachine = (initialState: string) => {
             gameBoard: (context: HanoiContext) => context.gameBoard,
             moves: (context: HanoiContext) => context.moves,
             showMoves: (context: HanoiContext) => context.showMoves,
-            showTime: (context: HanoiContext) => context.showTime,
-            showTutorial: (context: HanoiContext) => context.showTutorial
+            showTime: (context: HanoiContext) => context.showTime
           },
 
           // onDone will be set when the hanoiFSM reaches its final state
@@ -180,6 +178,9 @@ export const getScreenMachine = (initialState: string) => {
             on: {
               QUITCHECK: {
                 target: 'quitDialog'
+              },
+              RESTART: {
+                target: 'restartDialog'
               }
             }
           },
@@ -198,7 +199,7 @@ export const getScreenMachine = (initialState: string) => {
               CANCEL: {
                 target: 'default'
               },
-              RESTART: {
+              RESTARTCONFIRM: {
                 target: 'default'
               }
             }
@@ -232,7 +233,7 @@ export const getScreenMachine = (initialState: string) => {
          initializeTutorialState: assign((context: ScreenContext) => {
           return {
             selectedPeg: null,
-            gameBoard: initialGameBoardState(context.numPegs, 3),
+            gameBoard: initialGameBoardState(3, 3),
             moves: Array(),
             showMoves: false,
             showTime: false,
@@ -275,18 +276,6 @@ export const getScreenMachine = (initialState: string) => {
             numDisks: 5,
             showMoves: true,
             gameBoard: initialGameBoardState(3, 5)
-          };
-        }),
-
-        /**
-         * Use to go back to normal mode after tutorial, but leave other custom settings as they are
-         * 
-         * @todo still needed?
-         */
-        resetInitialContext: assign((context: ScreenContext, event) => { // eslint-disable-line
-          console.log('reset initial context');
-          return {
-            showTutorial: false,
           };
         })
       }

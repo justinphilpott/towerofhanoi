@@ -43,13 +43,6 @@ export const ScreenGame = () => {
 
   const gameComplete = useSelector(hanoiActor, (state) => (state.matches("gameComplete")));
   const midGame = numMoves > 0 && !gameComplete;
-//  const gameNotStarted = !midGame && !gameComplete;
-  const tutorialMode = useSelector(hanoiActor, (state) => (state.context.showTutorial));
-//  const awaitSelection = useSelector(hanoiActor, (state) => (state.matches("diskSelection.awaitSelection")));
-//  const immoveableDiskSelected = useSelector(hanoiActor, (state) => (state.matches("diskSelection.immoveableDiskSelected")));
-//  const emptyPegSelected = useSelector(hanoiActor, (state) => (state.matches("diskSelection.emptyPegSelected")));
-//  const invalidMoveAttempt = useSelector(hanoiActor, (state) => (state.matches("diskSelection.invalidMoveAttempt")));
-//  const illegalMoveNotice = immoveableDiskSelected || emptyPegSelected || invalidMoveAttempt;
 
   const quitDialog = useSelector(screenActor, (state) => (state.matches("game.quitDialog")));
   const restartDialog = useSelector(screenActor, (state) => (state.matches("game.restartDialog")));
@@ -107,7 +100,7 @@ export const ScreenGame = () => {
           <Flex position="absolute" direction="column" width="100vw" height="calc(var(--vh, 1vh) * 100)" alignItems="center" background="rgba(0, 0, 0, 0.6)" justifyContent="center" zIndex={1000}>
             <Flex direction="column" width="300px" background="rgba(255, 255, 255, 0.9)" p={6} rounded={8}>
               <Flex direction="column" flexWrap="wrap" width="100%" justifyContent="center">
-                <Heading as="h2" size="lg" mb={6} mr={3}>{ tutorialMode ? "Quit tutorial?" : "Quit game?" }</Heading>
+                <Heading as="h2" size="lg" mb={6} mr={3}>Quit game?</Heading>
                 <Button colorScheme="purple" mb={3} onClick={() => {
                   handleQuit();
                 }}>Quit</Button>
@@ -121,8 +114,8 @@ export const ScreenGame = () => {
           <Flex position="absolute" direction="column" width="100vw" height="calc(var(--vh, 1vh) * 100)" alignItems="center" background="rgba(0, 0, 0, 0.6)" justifyContent="center" zIndex={1000}>
             <Flex direction="column" width="300px" background="rgba(255, 255, 255, 0.9)" p={6} rounded={8}>
               <Flex direction="column" flexWrap="wrap" width="100%" justifyContent="center">
-                <Heading as="h2" size="lg" mb={6} mr={3}>{ tutorialMode ? "Restart tutorial?" : "Loose progress?" }</Heading>
-                <Button colorScheme="blue" mb={3} onClick={() => {hanoiSend({ type: "RESET"}); screenSend({ type: "RESTART"}); }}>Restart</Button>
+                <Heading as="h2" size="lg" mb={6} mr={3}>Loose progress?</Heading>
+                <Button colorScheme="blue" mb={3} onClick={() => {hanoiSend({ type: "RESET"}); screenSend({ type: "RESTARTCONFIRM"}); }}>Restart</Button>
                 <Button colorScheme="teal" onClick={() => screenSend({ type: "CANCEL"})}>Play on</Button>
               </Flex>
             </Flex>
@@ -175,14 +168,14 @@ export const ScreenGame = () => {
 
                   {
                     disks < 8 ?
-                      <Button colorScheme="gold" flexGrow={1} mb={3} color="#000" onClick={() => { hanoiSend({ type: "RESETPLUSONEDISK"}); screenSend({ type: "RESTART"}); }}>Play +1 disk</Button>
+                      <Button colorScheme="gold" flexGrow={1} mb={3} color="#000" onClick={() => { hanoiSend({ type: "RESETPLUSONEDISK"}); }}>Play +1 disk</Button>
                     :
                     pegs > 3 ?
-                      <Button colorScheme="gold" flexGrow={1} mb={3} color="#000" onClick={() => { hanoiSend({ type: "RESETLESSONEPEG"}); screenSend({ type: "RESTART"}); }}>Play -1 Peg</Button>
+                      <Button colorScheme="gold" flexGrow={1} mb={3} color="#000" onClick={() => { hanoiSend({ type: "RESETLESSONEPEG"}); }}>Play -1 Peg</Button>
                     :
                       <></> // @todo here suggest a timed game...
                   }
-                  <Button colorScheme="teal" flexGrow={1} mb={3} onClick={() => { hanoiSend({ type: "RESET"}); screenSend({ type: "RESTART"}); }}>Play again</Button>
+                  <Button colorScheme="teal" flexGrow={1} mb={3} onClick={() => { hanoiSend({ type: "RESET"}); }}>Play again</Button>
                   <Button colorScheme="salmon" flexGrow={1} onClick={() => screenSend({ type: "SETTINGS"})}>Settings</Button>
                 </Flex>
               </Flex>

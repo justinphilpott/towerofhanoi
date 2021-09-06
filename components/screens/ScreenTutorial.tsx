@@ -188,7 +188,7 @@ export const ScreenTutorial = () => {
             <Flex direction="column" width="300px" background="rgba(255, 255, 255, 0.9)" p={6} rounded={8}>
               <Flex direction="column" flexWrap="wrap" width="100%" justifyContent="center">
                 <Heading as="h2" size="lg" mb={6} mr={3}>Restart tutorial?</Heading>
-                <Button colorScheme="blue" mb={3} onClick={() => { hanoiSend({ type: "RESET"}); screenSend({ type: "RESTART"}); }}>Restart</Button>
+                <Button colorScheme="blue" mb={3} onClick={() => { hanoiSend({ type: "RESET"}); screenSend({ type: "RESTARTCONFIRM"}); }}>Restart</Button>
                 <Button colorScheme="teal" onClick={() => screenSend({ type: "CANCEL"})}>Continue</Button>
               </Flex>
             </Flex>

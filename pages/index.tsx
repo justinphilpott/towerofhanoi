@@ -119,7 +119,7 @@ export default function Home() {
         </Head>
         { bgLoaded ?
             !fsmLoadInit ?
-              <ScreenStartFragment handleClick={((action) => { console.log('handle', action); handleStartClick(action); })} />
+              <ScreenStartFragment handleClick={((action) => { handleStartClick(action); })} />
             :
               <ScreenWrapper_dynamic initialState={initialSelection} />
           :
