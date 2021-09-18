@@ -2,9 +2,11 @@
   "extends": ["next/core-web-vitals", "eslint:recommended", "plugin:react/recommended"],
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "rules": {
-    "react/display-name": "off"
+    "react/display-name": "off",
+    // "no-unused-vars": "off"
   }
 }

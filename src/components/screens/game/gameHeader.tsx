@@ -48,6 +48,7 @@ export const GameHeader = ({hanoiSend, screenSend, gameInfo, tutorialMode, midGa
             mr="2"
             mb="0"
             background="rgba(0, 0, 0, 0.2)"
+            data-testid="game-quit"
           />
           {gameAudioIcon}
         </Flex>
@@ -85,6 +86,7 @@ export const GameHeader = ({hanoiSend, screenSend, gameInfo, tutorialMode, midGa
             mb="0"
             isDisabled={!midGame}
             background="rgba(0, 0, 0, 0.2)"
+            data-testid="game-restart"
           />
         </Flex>
       </Flex>

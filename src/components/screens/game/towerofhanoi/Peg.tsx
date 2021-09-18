@@ -26,6 +26,7 @@ export const Peg = ({ pegDiscs, numPegs,  numDisks, selected, pegNum, selectHand
 
   return (<>
     <ul
+      data-testid={"peg"+(pegNum+1)}
       onClick={(event) => pegClickHandler(pegNum, event)}
       className="peg">
       {pegDiscs.map((diskNum: number) => <Disk diskNumber={diskNum} key={diskNum} selected={selected} numPegs={numPegs} />)}

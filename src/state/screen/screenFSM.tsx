@@ -1,23 +1,22 @@
 import { createMachine, assign } from 'xstate'
 import { createModel } from 'xstate/lib/model';
 import { hanoiFSM } from '../hanoi/hanoiFSM'
-import { ScreenContext } from './types/screenFSMTypes';
+import { ScreenContext, ScreenEvent } from './types/screenFSMTypes';
 import { HanoiContext } from '../hanoi/types/hanoiFSMTypes'
 import { initialGameBoardState } from '../hanoi/hanoiFSMActions';
 
-/**
- *
- */
-export const getScreenMachine = (initialState: string) => {
 
-    /**
-   * controls the screen logic, transitions between screens
-   * and receives high level info on the game state from the hanoi
-   * fsm.
-   *
-   * States are keys of states, CAPS keys are events.
-   */
-  const screenFSMModel = createModel({
+/**
+ * getFSMStruct
+ * 
+ * The Screen machine controls screen logic.
+ * 
+ * @param initialState this is used to create machines with different initial states
+ * @returns the structure of the FSM
+ */
+export const getFSMStruct = (initialState: string) => {
+
+   const screenFSMModel = createModel({
     numPegs: 3,
     numDisks: initialState === 'tutorial' ? 3 : 5,
     gameBoard: Array(),
@@ -44,6 +43,15 @@ export const getScreenMachine = (initialState: string) => {
           TUTORIAL: {
             target: 'tutorial'
           }
+        },
+        meta: {
+          test: async (page: any) => {
+            await page.waitForXPath("//h1[text() = 'The Tower of Hanoi']");
+            await page.waitForXPath("//button[text() = 'Play']");
+            await page.waitForXPath("//button[text() = 'How to play']");
+            await page.waitForXPath("//button[text() = 'Settings']");
+            await page.waitForXPath("//a[text() = '~ Credits ~']");
+          }
         }
       },
       settings: {
@@ -52,14 +60,24 @@ export const getScreenMachine = (initialState: string) => {
             target: 'start',
             actions: ['saveSettings']
           }
-        }
+        },
+        meta: {
+          test: async (page: any) => {
+            await page.waitForXPath("//h2[text() = 'Settings']");
+          }
+        },
       },
       credits: {
         on: {
           EXIT: {
             target: 'start',
           }
-        }
+        },
+        meta: {
+          test: async (page: any) => {
+            await page.waitForXPath("//h1[text() = 'The Tower of Hanoi']");
+          }
+        },
       },
 
       /**
@@ -84,6 +102,11 @@ export const getScreenMachine = (initialState: string) => {
           // onDone will be set when the hanoiFSM reaches its final state
           onDone: {
             target: 'start',
+          }
+        },
+        meta: {
+          test: async (page: any) => {
+            await page.waitForXPath("//h2[text() = 'How to play']");
           }
         },
         on: {
@@ -112,6 +135,11 @@ export const getScreenMachine = (initialState: string) => {
                 target: 'restartDialog'
               }
             },
+            meta: {
+              test: async (page: any) => {
+                await page.waitForXPath("//h2[text() = 'How to play']");
+              }
+            },
           },
           quitDialog: {
             on: {
@@ -121,7 +149,12 @@ export const getScreenMachine = (initialState: string) => {
               QUIT: {
                 target: '#screenFSM.start'
               },
-            }
+            },
+            meta: {
+              test: async (page: any) => {
+                await page.waitForXPath("//h2[text() = 'Quit tutorial?']");
+              }
+            },
           },
           restartDialog: {
             on: {
@@ -131,7 +164,12 @@ export const getScreenMachine = (initialState: string) => {
               RESTARTCONFIRM: {
                 target: 'default'
               },
-            }
+            },
+            meta: {
+              test: async (page: any) => {
+                await page.waitForXPath("//h2[text() = 'Restart tutorial?']");
+              }
+            },
           },
         },
       },
@@ -160,6 +198,11 @@ export const getScreenMachine = (initialState: string) => {
             target: 'start',
           }
         },
+        meta: {
+          test: async (page: any) => {
+            await page.waitForXPath("//li[contains(@class, 'size1')]"); // look for the first disk, which must exist in all games
+          }
+        },
         on: {
           // go to the setting screen
           SETTINGS: {
@@ -182,17 +225,27 @@ export const getScreenMachine = (initialState: string) => {
               RESTART: {
                 target: 'restartDialog'
               }
-            }
+            },
+            meta: {
+              test: async (page: any) => {
+                await page.waitForXPath("//li[contains(@class, 'size1')]");
+              }
+            },
           },
           quitDialog: {
             on: {
               STAY: {
-                target: 'default'
+                target: 'default',
               },
               QUIT: {
                 target: '#screenFSM.start'
               }
-            }
+            },
+            meta: {
+              test: async (page: any) => {
+                await page.waitForXPath("//h2[text() = 'Quit game?']");
+              }
+            },
           },
           restartDialog: {
             on: {
@@ -202,7 +255,12 @@ export const getScreenMachine = (initialState: string) => {
               RESTARTCONFIRM: {
                 target: 'default'
               }
-            }
+            },
+            meta: {
+              test: async (page: any) => {
+                await page.waitForXPath("//h2[text() = 'Restart game?']");
+              }
+            },
           }
         }
       }
@@ -211,74 +269,87 @@ export const getScreenMachine = (initialState: string) => {
   // create the screen FSM with customised start
   FSMStruct.initial = initialState;
 
-  return createMachine<ScreenContext>(
-    FSMStruct,
-    {
-      actions: {
+  return FSMStruct;
+}
 
-        /**
-         * Initial game state
-         */
-        initializeGameState: assign((context: ScreenContext) => {
-          return {
-            selectedPeg: null,
-            gameBoard: initialGameBoardState(context.numPegs, context.numDisks),
-            moves: Array()
-          }
-        }),
+/**
+ * 
+ * @param initialState 
+ * @returns 
+ */
+export const getFSMActions = () => {
+  return ({
+    actions: {
 
-        /**
-         * Initial tutorial state
-         */
-         initializeTutorialState: assign((context: ScreenContext) => {
-          return {
-            selectedPeg: null,
-            gameBoard: initialGameBoardState(3, 3),
-            moves: Array(),
-            showMoves: false,
-            showTime: false,
-          }
-        }),
+      /**
+       * Initial game state
+       */
+      initializeGameState: assign((context: ScreenContext) => {
+        return {
+          selectedPeg: null,
+          gameBoard: initialGameBoardState(context.numPegs, context.numDisks),
+          moves: Array()
+        }
+      }),
 
-        /**
-         * the the pegs and disks and the resulting game board following settings change
-         */
-        saveSettings: assign((context: ScreenContext, event) => {
-          return {
-            numPegs: event.numPegs,
-            numDisks: event.numDisks,
-            showMoves: event.showMoves,
-            showTime: event.showTime,
-            gameBoard: initialGameBoardState(event.numPegs, event.numDisks)
-          };
-        }),
+      /**
+       * Initial tutorial state
+       */
+      initializeTutorialState: assign((context: ScreenContext) => {
+        return {
+          selectedPeg: null,
+          gameBoard: initialGameBoardState(3, 3),
+          moves: Array(),
+          showMoves: false,
+          showTime: false,
+        }
+      }),
 
-        /**
-         * This must also turn off timer and moves count
-         */
-        setTutorialContext: assign((context: ScreenContext, event) => { // eslint-disable-line
-          console.log('set tutorial context');
-          return {
-            numPegs: 3,
-            numDisks: 3,
-            showMoves: false,
-            showTime: false
-          };
-        }),
+      /**
+       * the the pegs and disks and the resulting game board following settings change
+       */
+      saveSettings: assign((context: ScreenContext, event: any) => {
+        return {
+          numPegs: event.numPegs,
+          numDisks: event.numDisks,
+          showMoves: event.showMoves,
+          showTime: event.showTime,
+          gameBoard: initialGameBoardState(event.numPegs, event.numDisks)
+        };
+      }),
 
-        /**
-         * Use to
-         */
-        setInitialContext: assign((context: ScreenContext, event) => { // eslint-disable-line
-          console.log('set initial context');
-          return {
-            numPegs: 3,
-            numDisks: 5,
-            showMoves: true,
-            gameBoard: initialGameBoardState(3, 5)
-          };
-        })
-      }
+      /**
+       * This must also turn off timer and moves count
+       */
+      setTutorialContext: assign((context: ScreenContext, event) => { // eslint-disable-line
+        return {
+          numPegs: 3,
+          numDisks: 3,
+          showMoves: false,
+          showTime: false
+        };
+      }),
+
+      /**
+       * Use to
+       */
+      setInitialContext: assign((context: ScreenContext, event) => { // eslint-disable-line
+        return {
+          numPegs: 3,
+          numDisks: 5,
+          showMoves: true,
+          gameBoard: initialGameBoardState(3, 5)
+        };
+      })
     }
-  );
+  });
+}
+
+/**
+ * getScreenMachine
+ */
+export const getScreenMachine = (initialState: string) => {
+  return createMachine<ScreenContext>(
+    getFSMStruct(initialState),
+    getFSMActions())
 }

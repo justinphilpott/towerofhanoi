@@ -24,7 +24,7 @@ export const ScreenStartFragment = ({ handleClick }: ScreenStartFragmentProps ) 
         <Button size="md" textShadow="0px 0px 10px #fff" flexGrow={1} flexBasis={0} minWidth="130px" colorScheme="salmon" color="#000" m="0 0.5em 1.5em 0.5em" onClick={ () => handleClick('settings') }>Settings</Button>
       </Flex>
     </Flex>
-    <Text textAlign="center" fontSize="sm" mt={1} fontWeight="bold"><Link onClick={ () => handleClick('credits') }>~ credits ~</Link></Text>
+    <Text textAlign="center" fontSize="sm" mt={1} fontWeight="bold"><Link onClick={ () => handleClick('credits') }>~ Credits ~</Link></Text>
     </Flex>
   );
 }

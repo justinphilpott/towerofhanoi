@@ -113,7 +113,7 @@ export const ScreenSettings = () => {
       </Flex>
 
       <Flex direction="row">
-        <Button colorScheme="salmon" onClick={() => {
+        <Button data-testid="settings-done" colorScheme="salmon" onClick={() => {
           screenSend({ type: "SAVE", numPegs: numPegs, numDisks: numDisks, showMoves: showMoves, showTime: showTime })
         }}>Done</Button>
       </Flex>

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Button, Flex, Heading, ScaleFade, Text } from "@chakra-ui/react"
-import { Game } from '../towerofhanoi/Game';
+import { Game } from './game/towerofhanoi/Game';
 import { XStateContext } from './ScreenWrapper';
 import { useSelector } from '@xstate/react';
 import { minMovesLookupTable } from '../../utils/hanoiData';
@@ -101,10 +101,10 @@ export const ScreenGame = () => {
             <Flex direction="column" width="300px" background="rgba(255, 255, 255, 0.9)" p={6} rounded={8}>
               <Flex direction="column" flexWrap="wrap" width="100%" justifyContent="center">
                 <Heading as="h2" size="lg" mb={6} mr={3}>Quit game?</Heading>
-                <Button colorScheme="purple" mb={3} onClick={() => {
+                <Button data-testid="game-quit-confirm" colorScheme="purple" mb={3} onClick={() => {
                   handleQuit();
                 }}>Quit</Button>
-                <Button colorScheme="teal" onClick={() => screenSend({ type: "STAY" })}>Play on</Button>
+                <Button data-testid="game-quit-cancel" colorScheme="teal" onClick={() => screenSend({ type: "STAY" })}>Play on</Button>
               </Flex>
             </Flex>
           </Flex>
@@ -115,8 +115,8 @@ export const ScreenGame = () => {
             <Flex direction="column" width="300px" background="rgba(255, 255, 255, 0.9)" p={6} rounded={8}>
               <Flex direction="column" flexWrap="wrap" width="100%" justifyContent="center">
                 <Heading as="h2" size="lg" mb={6} mr={3}>Loose progress?</Heading>
-                <Button colorScheme="blue" mb={3} onClick={() => {hanoiSend({ type: "RESET"}); screenSend({ type: "RESTARTCONFIRM"}); }}>Restart</Button>
-                <Button colorScheme="teal" onClick={() => screenSend({ type: "CANCEL"})}>Play on</Button>
+                <Button data-testid="game-restart-confirm" colorScheme="blue" mb={3} onClick={() => {hanoiSend({ type: "RESET"}); screenSend({ type: "RESTARTCONFIRM"}); }}>Restart</Button>
+                <Button data-testid="game-restart-cancel" colorScheme="teal" onClick={() => screenSend({ type: "CANCEL"})}>Play on</Button>
               </Flex>
             </Flex>
           </Flex>
@@ -168,15 +168,15 @@ export const ScreenGame = () => {
 
                   {
                     disks < 8 ?
-                      <Button colorScheme="gold" flexGrow={1} mb={3} color="#000" onClick={() => { hanoiSend({ type: "RESETPLUSONEDISK"}); }}>Play +1 disk</Button>
+                      <Button data-testid="game-restart-confirm" colorScheme="gold" flexGrow={1} mb={3} color="#000" onClick={() => { hanoiSend({ type: "RESETPLUSONEDISK"}); }}>Play +1 disk</Button>
                     :
                     pegs > 3 ?
-                      <Button colorScheme="gold" flexGrow={1} mb={3} color="#000" onClick={() => { hanoiSend({ type: "RESETLESSONEPEG"}); }}>Play -1 Peg</Button>
+                      <Button data-testid="game-restart-confirm" colorScheme="gold" flexGrow={1} mb={3} color="#000" onClick={() => { hanoiSend({ type: "RESETLESSONEPEG"}); }}>Play -1 Peg</Button>
                     :
                       <></> // @todo here suggest a timed game...
                   }
-                  <Button colorScheme="teal" flexGrow={1} mb={3} onClick={() => { hanoiSend({ type: "RESET"}); }}>Play again</Button>
-                  <Button colorScheme="salmon" flexGrow={1} onClick={() => screenSend({ type: "SETTINGS"})}>Settings</Button>
+                  <Button data-testid="game-restart-confirm" colorScheme="teal" flexGrow={1} mb={3} onClick={() => { hanoiSend({ type: "RESET"}); }}>Play again</Button>
+                  <Button data-testid="start-settings" colorScheme="salmon" flexGrow={1} onClick={() => screenSend({ type: "SETTINGS"})}>Settings</Button>
                 </Flex>
               </Flex>
             </ScaleFade>
