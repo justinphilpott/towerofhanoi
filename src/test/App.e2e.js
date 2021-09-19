@@ -24,6 +24,15 @@ const play3PegGame = async (page) => {
   await page.click('[data-testid="peg3"]');
 }
 
+/**
+ * 
+ * @param {*} page 
+ */
+const startGame = async (page) => {
+  await page.click('[data-testid="peg1"]');
+  await page.click('[data-testid="peg3"]');
+}
+
 
 /**
  * define events
@@ -34,30 +43,23 @@ const getScreenEvents = () => {
     'PLAY': async page => {
       const result = await page.$x("//h2[text() = 'How to play']");
       if (result.length > 0) {
-        console.log("test1");        // play the game to reveal the dialog from
         // which we can fire the PLAY event (which takes us to the main game)
         await play3PegGame(page);
         await page.click('[data-testid="start-play"]');
-
       } else {
-        console.log('test2');
-                // here we are on the start screen so just click it
+        // here we are on the start screen so just click it
         await page.click('[data-testid="start-play"]');
-
       }
     },
     'SETTINGS': {
       exec: async (page) => {
         const result = await page.$x("//h2[text() = 'How to play']");
         if (result.length > 0) {
-          console.log("test1");        // play the game to reveal the dialog from
           // which we can fire the PLAY event (which takes us to the main game)
           await play3PegGame(page);
           await page.click('[data-testid="start-settings"]');
-
         } else {
-          console.log('test2');
-                  // here we are on the start screen so just click it
+          // here we are on the start screen so just click it
           await page.click('[data-testid="start-settings"]');
         }
       },
@@ -101,12 +103,16 @@ const getScreenEvents = () => {
       await page.click('[data-testid="game-quit-confirm"]'); // @todo make the naming match with restart/restart confirm
     },
     'RESTART': async page => {
+      console.log('game restart check');
+      await startGame(page);
       await page.click('[data-testid="game-restart"]');
     },
     'CANCEL': async page => {
+
       await page.click('[data-testid="game-restart-cancel"]');
     },
     'RESTARTCONFIRM': async page => {
+      console.log('game restart confirm');
       await page.click('[data-testid="game-restart-confirm"]');
     }
   }
@@ -273,7 +279,7 @@ describe('Screen FSM - Traverse initial states', () => {
 
     const testPlansall = screenMachineModel.getShortestPathPlans();
 
-    //const testPlans = testPlansall.slice(1, 4);
+    //const testPlans = testPlansall.slice(7, 9);
 
     testPlansall.forEach((plan, i) => {
 
@@ -281,7 +287,6 @@ describe('Screen FSM - Traverse initial states', () => {
 
         plan.paths.forEach((path, i) => {
 
-          console.log(plan.description);
           it(
             path.description,
             async () => {
@@ -314,33 +319,3 @@ describe('Screen FSM - Traverse initial states', () => {
   return machineWithAssertions;
 }
 
-
-/**
- * getScreenEvents
-
-
-const ScreenEvents = () => {
-
-  return {
-    CLICK_GOOD: async page => {
-      await page.click('[data-testid="good-button"]');
-    },
-    CLICK_BAD: async page => {
-      await page.click('[data-testid="bad-button"]');
-    },
-    CLOSE: async page => {
-      await page.click('[data-testid="close-button"]');
-    },
-    ESC: async page => {
-      await page.press('Escape');
-    },
-    SUBMIT: {
-      exec: async (page, event) => {
-        await page.type('[data-testid="response-input"]', event.value);
-        await page.click('[data-testid="submit-button"]');
-      },
-      cases: [{ value: 'something' }, { value: '' }]
-    }
-  }
-}
- */

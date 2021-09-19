@@ -24,7 +24,9 @@ export const getFSMStruct = (initialState: string) => {
     numDisks: initialState === 'tutorial' ? 3 : 5,
     gameBoard: Array(),
     showMoves: true,
-    showTime: false
+    showTime: false,
+    prevNumDisks: 5, // 
+    prevNumPegs: 3
   })
 
   let FSMStruct = {
@@ -88,6 +90,7 @@ export const getFSMStruct = (initialState: string) => {
        */
       tutorial: {
         entry: ['initializeTutorialState'], // configure the FSM context depending on tutorial mode setting
+        exit: ['restoreStateAfterTutorial'], // configure the FSM context depending on tutorial mode setting
         invoke: {
           id: 'hanoiFSM',
           src: hanoiFSM,
@@ -99,7 +102,9 @@ export const getFSMStruct = (initialState: string) => {
             gameBoard: (context: HanoiContext) => context.gameBoard,
             moves: (context: HanoiContext) => context.moves,
             showMoves: (context: HanoiContext) => context.showMoves,
-            showTime: (context: HanoiContext) => context.showTime
+            showTime: (context: HanoiContext) => context.showTime,
+            prevNumDisks: (context: HanoiContext) => context.numDisks,
+            prevNumPegs: (context: HanoiContext) => context.numPegs,
           },
 
           // onDone will be set when the hanoiFSM reaches its final state
@@ -261,7 +266,7 @@ export const getFSMStruct = (initialState: string) => {
             },
             meta: {
               test: async (page: any) => {
-                await page.waitForXPath("//h2[text() = 'Restart game?']");
+                await page.waitForXPath("//h2[text() = 'Loose progress?']");
               }
             },
           }
@@ -310,6 +315,16 @@ export const getFSMActions = () => {
         }
       }),
 
+      restoreStateAfterTutorial: assign((context: ScreenContext) => {
+        return {
+          numDisks: context.prevNumDisks,
+          numPegs: context.prevNumPegs,
+          selectedPeg: null,
+          gameBoard: initialGameBoardState(context.prevNumDisks, context.prevNumPegs),
+          moves: Array()
+        }
+      }),
+
       /**
        * the the pegs and disks and the resulting game board following settings change
        */
@@ -317,35 +332,13 @@ export const getFSMActions = () => {
         return {
           numPegs: event.numPegs,
           numDisks: event.numDisks,
+          prevNumPegs: event.numPegs,
+          prevNumDisks: event.numDisks,
           showMoves: event.showMoves,
           showTime: event.showTime,
           gameBoard: initialGameBoardState(event.numPegs, event.numDisks)
         };
       }),
-
-      /**
-       * This must also turn off timer and moves count
-       */
-      setTutorialContext: assign((context: ScreenContext, event) => { // eslint-disable-line
-        return {
-          numPegs: 3,
-          numDisks: 3,
-          showMoves: false,
-          showTime: false
-        };
-      }),
-
-      /**
-       * Use to
-       */
-      setInitialContext: assign((context: ScreenContext, event) => { // eslint-disable-line
-        return {
-          numPegs: 3,
-          numDisks: 5,
-          showMoves: true,
-          gameBoard: initialGameBoardState(3, 5)
-        };
-      })
     }
   });
 }

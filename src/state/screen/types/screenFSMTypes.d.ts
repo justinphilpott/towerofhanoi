@@ -7,7 +7,9 @@ export interface ScreenContext {
   numPegs: number;
   gameBoard: number[][],
   showMoves: boolean,
-  showTime: boolean
+  showTime: boolean,
+  prevNumDisks: number,
+  prevNumPegs: number
 }
 
 export type ScreenEvent =
