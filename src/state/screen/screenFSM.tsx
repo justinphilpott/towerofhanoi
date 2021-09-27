@@ -17,15 +17,15 @@ import { initialGameBoardState } from '../hanoi/hanoiFSMActions';
  * @param initialState this is used to create machines with different initial states
  * @returns the structure of the FSM
  */
-export const getFSMStruct = (initialState: string) => {
+export const getFSMStruct = (initialState: string, numDisks: number) => {
 
    const screenFSMModel = createModel({
     numPegs: 3,
-    numDisks: initialState === 'tutorial' ? 3 : 5,
+    numDisks: numDisks,
     gameBoard: Array(),
     showMoves: true,
     showTime: false,
-    prevNumDisks: 5, // 
+    prevNumDisks: numDisks, // 
     prevNumPegs: 3
   })
 
@@ -106,11 +106,7 @@ export const getFSMStruct = (initialState: string) => {
             prevNumDisks: (context: HanoiContext) => context.numDisks,
             prevNumPegs: (context: HanoiContext) => context.numPegs,
           },
-
-          // onDone will be set when the hanoiFSM reaches its final state
-          onDone: {
-            target: 'start',
-          }
+          // @todo would be better to use onDone when quitting the game, perhaps
         },
         meta: {
           test: async (page: any) => {
@@ -122,9 +118,6 @@ export const getFSMStruct = (initialState: string) => {
           SETTINGS: {
             target: 'settings'
           },
-          // PLAY event here caused issues that point to it being better to have
-          // @todo separate states for tutorial and game - selective re-use can occur
-          // neatly on the component level
           QUIT: {
             target: 'start'
           }
@@ -200,29 +193,21 @@ export const getFSMStruct = (initialState: string) => {
             showMoves: (context: HanoiContext) => context.showMoves,
             showTime: (context: HanoiContext) => context.showTime
           },
-
-          // onDone will be set when the hanoiFSM reaches its final state
-          onDone: {
-            target: 'start',
-          }
+          // @todo would be better to use onDone when quitting the game, perhaps
         },
         meta: {
           test: async (page: any) => {
             await page.waitForXPath("//li[contains(@class, 'size1')]"); // look for the first disk, which must exist in all games
           }
         },
+        /*
         on: {
           // go to the setting screen
           SETTINGS: {
             target: 'settings'
-          },
-          // PLAY event here caused issues that point to it being better to have
-          // @todo separate states for tutorial and game - selective re-use can occur
-          // neatly on the component level
-          QUIT: {
-            target: 'start'
           }
         },
+        */
         initial: 'default',
         states: {
           default: {
@@ -348,6 +333,6 @@ export const getFSMActions = () => {
  */
 export const getScreenMachine = (initialState: string) => {
   return createMachine<ScreenContext>(
-    getFSMStruct(initialState),
+    getFSMStruct(initialState, 5),
     getFSMActions())
 }

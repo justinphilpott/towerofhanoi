@@ -6,23 +6,7 @@ import { initialGameBoardState } from '../state/hanoi/hanoiFSMActions';
 
 const { getByTestId, getByLabelText, getByText } = queries;
 
-
-const play3PegGame = async (page) => {
-  await page.click('[data-testid="peg1"]');
-  await page.click('[data-testid="peg3"]');
-  await page.click('[data-testid="peg1"]');
-  await page.click('[data-testid="peg2"]');
-  await page.click('[data-testid="peg3"]');
-  await page.click('[data-testid="peg2"]');
-  await page.click('[data-testid="peg1"]');
-  await page.click('[data-testid="peg3"]');
-  await page.click('[data-testid="peg2"]');
-  await page.click('[data-testid="peg1"]');
-  await page.click('[data-testid="peg2"]');
-  await page.click('[data-testid="peg3"]');
-  await page.click('[data-testid="peg1"]');
-  await page.click('[data-testid="peg3"]');
-}
+const testNumDisks = 5;
 
 /**
  * 
@@ -33,6 +17,69 @@ const startGame = async (page) => {
   await page.click('[data-testid="peg3"]');
 }
 
+/**
+ * 
+ * @returns 
+ */
+const solveGame = async (page, n, fromPeg, toPeg, auxPeg) => {
+	if (n===1) {
+    await page.click('[data-testid="peg'+fromPeg+'"]');
+    await page.click('[data-testid="peg'+toPeg+'"]');
+    return
+	}
+	solveGame(page, n-1, fromPeg, auxPeg, toPeg);
+  await page.click('[data-testid="peg'+fromPeg+'"]');
+  await page.click('[data-testid="peg'+toPeg+'"]');
+	solveGame(page, n-1, auxPeg, toPeg, fromPeg);
+}
+
+/**
+ * solveThreePegGame
+ * 
+ * @todo create generalised x numbers of pegs algo
+ * @todo move into main game code to use for auto play function
+ * 
+ * @param {*} n 
+ * @param {*} source 
+ * @param {*} target 
+ * @param {*} auxiliary 
+ */
+const createThreePegSolution = (numDisks, source, auxiliary, target) => {
+
+  let moves = [];
+
+  const tohSolve = (numDisks, source, auxiliary, target) => {
+    if (numDisks === 1) {
+      moves.push({ src: source, dest: target });
+    } else {
+      // Move n - 1 disks from source to auxiliary, so they are out of the way
+      tohSolve(numDisks - 1, source, target, auxiliary)
+      moves.push({ src: source, dest: target });
+      // Move the n - 1 disks that we left on auxiliary onto target
+      tohSolve(numDisks - 1, auxiliary, source, target)
+    }
+  }
+  tohSolve(numDisks, source, auxiliary, target);
+  return moves;
+}
+
+
+/**
+ * performMoveSequence
+ *
+ * for testing purposes, play out a sequence of moves
+ * 
+ * @param {*} page
+ * @param {*} moves
+ */
+const performMoveSequence = async (page, moves) => {
+  const numMoves = moves.length;
+  for(let i = 0; i < numMoves; i++) {
+    await page.click('[data-testid="peg'+moves[i].src+'"]');
+    await page.click('[data-testid="peg'+moves[i].dest+'"]');
+  }
+}
+
 
 /**
  * define events
@@ -41,32 +88,32 @@ const getScreenEvents = () => {
 
   return {
     'PLAY': async page => {
-      const result = await page.$x("//h2[text() = 'How to play']");
-      if (result.length > 0) {
-        // which we can fire the PLAY event (which takes us to the main game)
-        await play3PegGame(page);
+      const test_start = await page.$x("//h1[text() = 'The Tower of Hanoi']");
+      if (test_start.length > 0) {
+        // here we are on the start screen so just click it
         await page.click('[data-testid="start-play"]');
       } else {
-        // here we are on the start screen so just click it
+        // which we can fire the PLAY event (which takes us to the main game)
+        await performMoveSequence(page, createThreePegSolution(testNumDisks, 1, 2, 3))
         await page.click('[data-testid="start-play"]');
       }
     },
     'SETTINGS': {
       exec: async (page) => {
-        const result = await page.$x("//h2[text() = 'How to play']");
-        if (result.length > 0) {
-          // which we can fire the PLAY event (which takes us to the main game)
-          await play3PegGame(page);
+        const test_start = await page.$x("//h1[text() = 'The Tower of Hanoi']");
+        if (test_start.length > 0) {
+          // here we are on the start screen so just click it
           await page.click('[data-testid="start-settings"]');
         } else {
-          // here we are on the start screen so just click it
+          // which we can fire the PLAY event (which takes us to the main game)
+          await performMoveSequence(page, createThreePegSolution(testNumDisks, 1, 2, 3))
           await page.click('[data-testid="start-settings"]');
         }
       },
       cases: [
         {
-          numPegs: 3,
-          numDisks: 8
+          numPegs: testNumDisks,
+          numDisks: 3
         }
       ]
     },
@@ -85,11 +132,13 @@ const getScreenEvents = () => {
       },
       cases: [
         {
-          numPegs: 3,
-          numDisks: 8,
+          numPegs: testNumDisks,
+          numDisks: 3,
           showMoves: true,
           showTime: false,
-          gameBoard: initialGameBoardState(3, 8)
+          gameBoard: initialGameBoardState(3, testNumDisks),
+          prevNumDisks: testNumDisks,
+          prevNumPegs: 3
         }
       ]
     },
@@ -97,22 +146,24 @@ const getScreenEvents = () => {
       await page.click('[data-testid="game-quit"]');
     },
     'STAY': async page => {
+      await startGame(page);
       await page.click('[data-testid="game-quit-cancel"]');
     },
     'QUIT': async page => {
+      const test_tutorial = await page.$x("//h2[text() = 'How to play']");
+      if (test_tutorial.length > 0) {
+        await performMoveSequence(page, createThreePegSolution(3, 1, 2, 3))
+      }
       await page.click('[data-testid="game-quit-confirm"]'); // @todo make the naming match with restart/restart confirm
     },
     'RESTART': async page => {
-      console.log('game restart check');
       await startGame(page);
       await page.click('[data-testid="game-restart"]');
     },
     'CANCEL': async page => {
-
       await page.click('[data-testid="game-restart-cancel"]');
     },
     'RESTARTCONFIRM': async page => {
-      console.log('game restart confirm');
       await page.click('[data-testid="game-restart-confirm"]');
     }
   }
@@ -269,7 +320,7 @@ describe('Screen FSM - Traverse initial states', () => {
   describe('Screen FSM - initial-state: settings', () => {
 
     // get Screen machine with initial state as start
-    const screenMachineDef = getFSMStruct('settings');
+    const screenMachineDef = getFSMStruct('settings', 3);
     // assertions are in the state machine definition
     const screenMachineActions = getFSMActions(); // parameter is not currently necessary
     const screenMachine = createMachine(screenMachineDef, screenMachineActions);
@@ -278,9 +329,7 @@ describe('Screen FSM - Traverse initial states', () => {
     );
 
     const testPlansall = screenMachineModel.getShortestPathPlans();
-
-    //const testPlans = testPlansall.slice(7, 9);
-
+    // const testPlans = testPlansall.slice(20, 22);
     testPlansall.forEach((plan, i) => {
 
       describe(plan.description, () => {
@@ -297,7 +346,7 @@ describe('Screen FSM - Traverse initial states', () => {
 
               await path.test(page);
             },
-            20000
+            40000
           );
 
         });

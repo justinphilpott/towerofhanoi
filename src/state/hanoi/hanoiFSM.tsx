@@ -176,7 +176,6 @@ import { assertEvent } from 'xstate-helpers';
        */
       resetGameStateLessOnePeg: assign((context: HanoiContext, event) => {
         const newPegs = context.numPegs > 3 ? context.numPegs - 1 : context.numPegs;
-        console.log(newPegs);
         const gameBoard = initialGameBoardState(newPegs, context.numDisks);
         return {
           selectedPeg: null,

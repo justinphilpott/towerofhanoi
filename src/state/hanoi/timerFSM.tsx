@@ -78,7 +78,6 @@ export const timerFSM = createMachine<TimerContext, TimerEvent>({
        * reset the timer to the start position
        */
       resetTimer: assign((context: TimerContext, event) => {
-        console.log('reset timer');
         return {
           elapsed: 0,
         }

@@ -59,7 +59,6 @@ export const useScreenAspect = (delay = 1000) => {
   useLayoutEffect(() => {
 
     const db_handleResize = db(function handleResize() {
-      console.log('handle resize');
       setAspect(calcAspect());
     }, delay);
 

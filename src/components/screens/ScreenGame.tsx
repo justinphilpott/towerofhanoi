@@ -14,8 +14,6 @@ import { GameHeader } from './game/gameHeader';
  */
 export const ScreenGame = () => {
 
-  console.log("ScreenGame");
-
   // State machine handling
   const screenActor = useContext(XStateContext);
   const { send: screenSend } = screenActor;
