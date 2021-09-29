@@ -1,3 +1,8 @@
+/**
+ * not yet in use
+ * 
+ * @todo repurpose example timer machine
+ */
 import { createMachine, assign } from "xstate";
 
 interface TimerContext {

@@ -8,6 +8,7 @@ import { EmittedFrom, ScreenContext } from '../../state/screen/types/screenFSMTy
 import { getScreenMachine } from '../../state/screen/screenFSM';
 import { Interpreter, AnyEventObject } from 'xstate';
 
+// dynamic loading
 interface ScreenSettingsProps {}
 const ScreenSettings_Dynamic = dynamic<ScreenSettingsProps>(
   () => import('./ScreenSettings').then((mod) => mod.ScreenSettings),
@@ -59,10 +60,14 @@ export const XStateContext = React.createContext({} as Interpreter<ScreenContext
 
 /**
  * Initialise the screenState
+ * 
+ * initialState is given to allow us to enter the statemachine that controls the screen flow at any of the major
+ * states given what is clicked in the HTML screenStartFragment.txt. This is in order to remove XState code
+ * and processing from the critical path. This gives c. 20% reduction in first load size
  */
 export const ScreenWrapper = ({ initialState }: ScreenWrapperProps ) => {
 
-  // load screen actor (@see https://xstate.js.org/docs/guides/actors.html)
+  // load screen actor (@see https://xstate.js.org/docs/guides/actors.html) with custom start state
   const screenActor = useInterpret(getScreenMachine(initialState), { devTools: true });
 
   const isStart = useSelector(screenActor, (state: EmittedFrom<typeof screenActor>) => (state.value === "start"));

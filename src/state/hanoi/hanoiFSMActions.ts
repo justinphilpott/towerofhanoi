@@ -14,7 +14,6 @@ export const initialGameBoardState = (numPegs:number, numDisks:number): number[]
   const firstPeg = Array(numDisks+1).keys();
   pegs[0] = [...firstPeg]; // place the disks on the first peg
   pegs[0].shift(); // make 1 based
-  // peg.fill([], 1); // strange behaviour using fill
 
   for(let p = 1; p < numPegs; p++) {
     pegs[p] = Array();

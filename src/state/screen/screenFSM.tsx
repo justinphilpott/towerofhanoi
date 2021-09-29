@@ -11,9 +11,6 @@ import { initialGameBoardState } from '../hanoi/hanoiFSMActions';
  * 
  * The Screen machine controls screen logic.
  * 
- * @todo add mainGameState.numPegs and numDisks, in order that we can 
- * save this while we do the tutorial and then reset to old value
- * 
  * @param initialState this is used to create machines with different initial states
  * @returns the structure of the FSM
  */
@@ -89,8 +86,8 @@ export const getFSMStruct = (initialState: string, numDisks: number) => {
        * Tutorial
        */
       tutorial: {
-        entry: ['initializeTutorialState'], // configure the FSM context depending on tutorial mode setting
-        exit: ['restoreStateAfterTutorial'], // configure the FSM context depending on tutorial mode setting
+        entry: ['initializeTutorialState'],
+        exit: ['restoreStateAfterTutorial'],
         invoke: {
           id: 'hanoiFSM',
           src: hanoiFSM,

@@ -37,8 +37,6 @@ export const ScreenGame = () => {
   const showMoves:boolean = useSelector(hanoiActor, (state) => (state.context.showMoves));
   const showTime:boolean = useSelector(hanoiActor, (state) => (state.context.showTime));
 
-  console.log(disks, pegs, minMoves, numMoves, showMoves, showTime);
-
   const gameComplete = useSelector(hanoiActor, (state) => (state.matches("gameComplete")));
   const midGame = numMoves > 0 && !gameComplete;
 

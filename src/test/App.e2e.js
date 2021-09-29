@@ -17,21 +17,6 @@ const startGame = async (page) => {
   await page.click('[data-testid="peg3"]');
 }
 
-/**
- * 
- * @returns 
- */
-const solveGame = async (page, n, fromPeg, toPeg, auxPeg) => {
-	if (n===1) {
-    await page.click('[data-testid="peg'+fromPeg+'"]');
-    await page.click('[data-testid="peg'+toPeg+'"]');
-    return
-	}
-	solveGame(page, n-1, fromPeg, auxPeg, toPeg);
-  await page.click('[data-testid="peg'+fromPeg+'"]');
-  await page.click('[data-testid="peg'+toPeg+'"]');
-	solveGame(page, n-1, auxPeg, toPeg, fromPeg);
-}
 
 /**
  * solveThreePegGame
@@ -83,6 +68,11 @@ const performMoveSequence = async (page, moves) => {
 
 /**
  * define events
+ * 
+ * I notice here that there is a bit of hassle with differentiating event context
+ * because the same events are fired from different contexts, and so there is a tradeoff
+ * between specificity of event naming (and thus statemachine complexity/verbosity)
+ * and event definitions for model based testing.
  */
 const getScreenEvents = () => {
 
@@ -169,202 +159,50 @@ const getScreenEvents = () => {
   }
 }
 
-/**
- * @deprecated
- * 
- * getAssertions]
- * 
- * I feel this really wants to sit within the one machine definition, but
- * this also feels like bloating out the client side state machine.
- * So the next best thing is to match the structure, so that we can
- * programmatically merge.
- * 
- * structure is of the format:
- * 
- * states: {
- *   statename: {
- *     meta [assertions for this state]: {
- *       
- *     },
- *     events [specific events that can be triggered from this state, and how]: {
- *       eventName:
- *     }
- *     states: {
- *       substatename [structure as statename]: {}
- *     }
- *   }
- * }
- * 
- * @see ScreenFSM
- */
-const getScreenAssertions = () => {
-
-  return {
-    states: {
-      start: {
-        events: {
-          PLAY: async page => {
-            await page.click('[data-testid="good-button"]'); //page.$x("//button[contains(., 'Button text')]");
-          },
-          SETTINGS: async page => {
-            await page.click('[data-testid="good-button"]');
-          },
-          CREDITS: async page => {
-            await page.click('[data-testid="good-button"]');
-          },
-          TUTORIAL: async page => {
-            await page.click('[data-testid="good-button"]');
-          },
-        },
-        meta: {
-          test: async page => {
-            await page.waitForXPath("//h1[text() = 'The Tower of Hanoi']");
-            await page.waitForXPath("//button[text() = 'Play']");
-            await page.waitForXPath("//button[text() = 'Tutorial']");
-            await page.waitForXPath("//button[text() = 'Settings']");
-            await page.waitForXPath("//a[text() = 'Credits']");
-          }
-        }
-      },
-      settings: {
-        meta: {
-          test: async page => {
-            await page.waitForXPath("//h2[text() = 'Settings']");
-          }
-        }
-      },
-      credits: {
-        meta: {
-          test: async page => {
-            await page.waitForXPath("//h1[text() = 'The Tower of Hanoi']");
-          }
-        }
-      },
-      tutorial: {
-        meta: {
-          test: async page => {
-            await page.waitForXPath("//h2[text() = 'How to play']");
-          }
-        },
-        states: {
-          default: {
-            meta: {
-              test: async page => {
-                await page.waitForXPath("//h2[text() = 'How to play']");
-              }
-            },
-          },
-          quitDialog: {
-            meta: {
-              test: async page => {
-                await page.waitForXPath("//h2[text() = 'Quit tutorial?']");
-              }
-            },
-          },
-          restartDialog: {
-            meta: {
-              test: async page => {
-                await page.waitForXPath("//h2[text() = 'Restart tutorial?']");
-              }
-            },
-          }
-        }
-      },
-      game: {
-        meta: {
-          test: async page => {
-            await page.waitForXPath("//l1[contains(@class, 'size1')]"); // look for the first disk, which must exist in all games
-          }
-        },
-        states: {
-          default: {
-            meta: {
-              test: async page => {
-                await page.waitForXPath("//li[contains(@class, 'size1')]");
-              }
-            },
-          },
-          quitDialog: {
-            meta: {
-              test: async page => {
-                await page.waitForXPath("//h2[text() = 'Quit game?']");
-              }
-            },
-          },
-          restartDialog: {
-            meta: {
-              test: async page => {
-                await page.waitForXPath("//h2[text() = 'Restart game?']");
-              }
-            },
-          }
-        }
-      }
-    }
-  };
-}
 
 /**
  * the state machine ScreenFSM (which invokes HanoiFSM) can be started
  * in each of its 5 top level states, so we need to test the machine as started
  * from all the possible initial states
  * - normally a state machine would have only one initial state.
+ * 
+ * For brevity here we test only from the initial state === 'play'
  *
- * @see assertions in the state machine definition
+ * @see assertions in the state machine definition screenFSM.tsx
  */
-describe('Screen FSM - Traverse initial states', () => {
+describe('Screen FSM - Test application screen transition', () => {
 
-  /**
-   * initial state: start
-   */
-  describe('Screen FSM - initial-state: settings', () => {
+  // get Screen machine with initial state as specified
+  const screenMachineDef = getFSMStruct('game', 3);
+  // assertions are in the state machine definition
+  const screenMachineActions = getFSMActions(); // parameter is not currently necessary
+  const screenMachine = createMachine(screenMachineDef, screenMachineActions);
+  const screenMachineModel = createModel(screenMachine).withEvents(
+    getScreenEvents()
+  );
 
-    // get Screen machine with initial state as start
-    const screenMachineDef = getFSMStruct('settings', 3);
-    // assertions are in the state machine definition
-    const screenMachineActions = getFSMActions(); // parameter is not currently necessary
-    const screenMachine = createMachine(screenMachineDef, screenMachineActions);
-    const screenMachineModel = createModel(screenMachine).withEvents(
-      getScreenEvents()
-    );
+  const testPlansall = screenMachineModel.getShortestPathPlans();
+  //const testPlans = testPlansall.slice(0, 16);
+  testPlansall.forEach((plan, i) => {
 
-    const testPlansall = screenMachineModel.getShortestPathPlans();
-    // const testPlans = testPlansall.slice(20, 22);
-    testPlansall.forEach((plan, i) => {
+    describe(plan.description, () => {
 
-      describe(plan.description, () => {
+      plan.paths.forEach((path, i) => {
 
-        plan.paths.forEach((path, i) => {
+        it(
+          path.description,
+          async () => {
+            await page.goto(`http://localhost:${process.env.PORT || '3000'}`);
+            // we need to drive the app past the initial flat HTML
+            const doc = await getDocument(page);
+            const button = await getByText(doc, "Play");
+            button.click();
 
-          it(
-            path.description,
-            async () => {
-              await page.goto(`http://localhost:${process.env.PORT || '3000'}`);
-              const doc = await getDocument(page);
-              const button = await getByText(doc, "Settings");
-              button.click();
-
-              await path.test(page);
-            },
-            40000
-          );
-
-        });
+            await path.test(page);
+          },
+          100000
+        );
       });
     });
-
-    //it('should have full coverage', () => {
-    //  return screenMachineModel.testCoverage();
-    //});
   });
 });
-
-
-/**
- * mergeAssertions
- */
- const getMergedAssertions = (assertions, machineDef) => {
-  const machineWithAssertions = {};
-  return machineWithAssertions;
-}
-
