@@ -24,6 +24,7 @@ const securityHeaders = [
 
 module.exports = withBundleAnalyzer(withPWA({
   webpack5: true,
+  runMode: process.env.NODE_ENV,
   pwa: {
     dest: 'public',
     disable: process.env.NODE_ENV === 'development',

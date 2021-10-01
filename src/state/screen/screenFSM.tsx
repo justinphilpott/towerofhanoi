@@ -214,6 +214,9 @@ export const getFSMStruct = (initialState: string, numDisks: number) => {
               },
               RESTART: {
                 target: 'restartDialog'
+              },
+              QUIT: {
+                target: '#screenFSM.start'
               }
             },
             meta: {
@@ -328,8 +331,8 @@ export const getFSMActions = () => {
 /**
  * getScreenMachine
  */
-export const getScreenMachine = (initialState: string) => {
+export const getScreenMachine = (initialState: string, numDisks: number) => {
   return createMachine<ScreenContext>(
-    getFSMStruct(initialState, 5),
+    getFSMStruct(initialState, numDisks),
     getFSMActions())
 }

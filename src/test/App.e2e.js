@@ -63,6 +63,7 @@ const performMoveSequence = async (page, moves) => {
     await page.click('[data-testid="peg'+moves[i].src+'"]');
     await page.click('[data-testid="peg'+moves[i].dest+'"]');
   }
+  return true;
 }
 
 
@@ -122,8 +123,8 @@ const getScreenEvents = () => {
       },
       cases: [
         {
-          numPegs: testNumDisks,
-          numDisks: 3,
+          numPegs: 3,
+          numDisks: testNumDisks,
           showMoves: true,
           showTime: false,
           gameBoard: initialGameBoardState(3, testNumDisks),
@@ -143,8 +144,13 @@ const getScreenEvents = () => {
       const test_tutorial = await page.$x("//h2[text() = 'How to play']");
       if (test_tutorial.length > 0) {
         await performMoveSequence(page, createThreePegSolution(3, 1, 2, 3))
+      } else {
+        await performMoveSequence(page, createThreePegSolution(testNumDisks, 1, 2, 3))
       }
-      await page.click('[data-testid="game-quit-confirm"]'); // @todo make the naming match with restart/restart confirm
+      const test_dialog = await page.$x("//h2[text() = 'Well done!']");
+      if(test_dialog) {
+        page.click('[data-testid="game-quit-confirm"]'); // @todo make the naming match with restart/restart confirm
+      }
     },
     'RESTART': async page => {
       await startGame(page);
@@ -182,7 +188,7 @@ describe('Screen FSM - Test application screen transition', () => {
   );
 
   const testPlansall = screenMachineModel.getShortestPathPlans();
-  //const testPlans = testPlansall.slice(0, 16);
+  // const testPlans = testPlansall.slice(0, 10);
   testPlansall.forEach((plan, i) => {
 
     describe(plan.description, () => {

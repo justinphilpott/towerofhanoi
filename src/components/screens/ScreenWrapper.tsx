@@ -7,6 +7,7 @@ import { useInterpret, useSelector } from '@xstate/react';
 import { EmittedFrom, ScreenContext } from '../../state/screen/types/screenFSMTypes'
 import { getScreenMachine } from '../../state/screen/screenFSM';
 import { Interpreter, AnyEventObject } from 'xstate';
+import getConfig from 'next/config'
 
 // dynamic loading
 interface ScreenSettingsProps {}
@@ -68,7 +69,7 @@ export const XStateContext = React.createContext({} as Interpreter<ScreenContext
 export const ScreenWrapper = ({ initialState }: ScreenWrapperProps ) => {
 
   // load screen actor (@see https://xstate.js.org/docs/guides/actors.html) with custom start state
-  const screenActor = useInterpret(getScreenMachine(initialState), { devTools: true });
+  const screenActor = useInterpret(getScreenMachine(initialState, 3), { devTools: true });
 
   const isStart = useSelector(screenActor, (state: EmittedFrom<typeof screenActor>) => (state.value === "start"));
   const isGame = useSelector(screenActor, (state: EmittedFrom<typeof screenActor>) => (state.matches("game")));

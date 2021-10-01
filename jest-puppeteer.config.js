@@ -5,7 +5,7 @@ module.exports = {
     launchTimeout: 5000
   },
   launch: {
-    headless: false,
-    slowMo: 20 // running it faster causes some tests to fail, and this will likely be system dependent
+    headless: true,
+    slowMo: 20 // running it faster causes some tests to fail
   }
 };

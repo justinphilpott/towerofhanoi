@@ -1,21 +1,52 @@
 
-To work with this software locally just do the following:
+The Tower of Hanoi
 
-"yarn"
-"yarn dev"
+Developed initially just as a test of the XState state management library, I then decided to create an app to package the basic puzzle and release it for fun and learning.
 
-...
-
-You can also deploy this to vercel
+XState concepts:
+Finite state: enumerable 
 
 
 
 
-License:
 
-This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
 
-Let me know if you do something cool with this :)
+
+To get setup locally:
+
+Install:
+$ yarn
+
+Run in dev mode:
+$ yarn dev
+
+
+
+
+
+
+
+
+
+Work in progress:
+- Write an audio player that works on IOS
+- Implement timed games
+- Setup MBT for the HanoiFSM
+
+
+
+Tests:
+
+End to end test with Puppeteer.
+
+- Be sure to run a build first
+
+yarn e2e
+
+Settings are in jest-puppeteer.config.js
+
+
+
 
 
 
@@ -25,8 +56,7 @@ https://github.com/GoogleChrome/lighthouse#cli-options
 yarn dlx lighthouse --view [https://towerofhanoi.app] --screenEmulation.disabled
 
 
-
-
+Attributions:
 
 Artwork:
 
@@ -66,3 +96,9 @@ https://creativecommons.org/licenses/by/4.0/
 Inspiration
 
 ...
+
+
+
+License:
+
+This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.

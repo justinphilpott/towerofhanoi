@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Button, Flex, Heading, ScaleFade, Text } from "@chakra-ui/react"
+import { Button, Flex, Heading, Text } from "@chakra-ui/react"
 import { Game } from './game/towerofhanoi/Game';
 import { XStateContext } from './ScreenWrapper';
 import { useSelector } from '@xstate/react';
@@ -120,62 +120,60 @@ export const ScreenGame = () => {
 
         {gameComplete &&
           <Flex position="absolute" direction="column" width="100vw" height="calc(var(--vh, 1vh) * 100)" alignItems="center" background="rgba(0, 0, 0, 0.6)" justifyContent="center" zIndex={1000}>
-            <ScaleFade in={true} initialScale={0.01}>
-              <Flex direction="column" width="300px" background="rgba(255, 255, 255, 0.9)" p={6} m={6} rounded={8}>
-                <Flex direction="column" flexWrap="wrap" justifyContent="center">
-                  { showMoves &&
-                    <>
-                      { numMoves > minMoves &&
-                        <>
-                          <Heading as="h1" size="xl" mb={3} flexGrow={1} textAlign="left">Good...</Heading>
-                          <Text mb={3} mt={0}>Think how you can complete this with fewer moves.</Text>
-                        </>
-                      }
-                      { numMoves === minMoves &&
-                        <>
-                          <Heading as="h1" size="xl" mb={3} flexGrow={1} textAlign="center">Well done!</Heading>
-                          <Text m={3} mt={0}>You found the optimal solution for the {pegs} peg, {disks} disc setup.
-                            {
-                              disks < 8 ?
-                                <> Try with one more disk.</>
+            <Flex direction="column" width="300px" background="rgba(255, 255, 255, 0.9)" p={6} m={6} rounded={8}>
+              <Flex direction="column" flexWrap="wrap" justifyContent="center">
+                { showMoves &&
+                  <>
+                    { numMoves > minMoves &&
+                      <>
+                        <Heading as="h1" size="xl" mb={3} flexGrow={1} textAlign="left">Good...</Heading>
+                        <Text mb={3} mt={0}>Think how you can complete this with fewer moves.</Text>
+                      </>
+                    }
+                    { numMoves === minMoves &&
+                      <>
+                        <Heading as="h1" size="xl" mb={3} flexGrow={1} textAlign="center">Well done!</Heading>
+                        <Text m={3} mt={0}>You found the optimal solution for the {pegs} peg, {disks} disc setup.
+                          {
+                            disks < 8 ?
+                              <> Try with one more disk.</>
+                            :
+                              pegs > 3 ?
+                                <> Try with one less peg</>
                               :
-                                pegs > 3 ?
-                                  <> Try with one less peg</>
-                                :
-                                  <></> // @todo here suggest a timed game
-                            }
-                          </Text>
-                        </>
-                      }
-                      { numMoves < minMoves &&
-                        <>
-                          <Heading as="h1" size="xl" mb={3} flexGrow={1} textAlign="center">Wow!</Heading>
-                          <Text m={3} mt={0}>You have shown that my minimum moves calculations are wrong, pls get in touch!</Text>
-                        </>
-                      }
-                    </>
-                  }
+                                <></> // @todo here suggest a timed game
+                          }
+                        </Text>
+                      </>
+                    }
+                    { numMoves < minMoves &&
+                      <>
+                        <Heading as="h1" size="xl" mb={3} flexGrow={1} textAlign="center">Wow!</Heading>
+                        <Text m={3} mt={0}>You have shown that my minimum moves calculations are wrong, pls get in touch!</Text>
+                      </>
+                    }
+                  </>
+                }
 
-                  { !showMoves &&
-                    <>
-                      <Heading as="h1" size="xl" mb={6} mr={3} flexGrow={1} textAlign="center">Game complete!</Heading>
-                    </>
-                  }
+                { !showMoves &&
+                  <>
+                    <Heading as="h1" size="xl" mb={6} mr={3} flexGrow={1} textAlign="center">Game complete!</Heading>
+                  </>
+                }
 
-                  {
-                    disks < 8 ?
-                      <Button data-testid="game-restart-confirm" colorScheme="gold" flexGrow={1} mb={3} color="#000" onClick={() => { hanoiSend({ type: "RESETPLUSONEDISK"}); }}>Play +1 disk</Button>
-                    :
-                    pegs > 3 ?
-                      <Button data-testid="game-restart-confirm" colorScheme="gold" flexGrow={1} mb={3} color="#000" onClick={() => { hanoiSend({ type: "RESETLESSONEPEG"}); }}>Play -1 Peg</Button>
-                    :
-                      <></> // @todo here suggest a timed game...
-                  }
-                  <Button data-testid="game-restart-confirm" colorScheme="teal" flexGrow={1} mb={3} onClick={() => { hanoiSend({ type: "RESET"}); }}>Play again</Button>
-                  <Button data-testid="start-settings" colorScheme="salmon" flexGrow={1} onClick={() => screenSend({ type: "SETTINGS"})}>Settings</Button>
-                </Flex>
+                {
+                  disks < 8 ?
+                    <Button data-testid="game-restart-confirm" colorScheme="gold" flexGrow={1} mb={3} color="#000" onClick={() => { hanoiSend({ type: "RESETPLUSONEDISK"}); }}>Play +1 disk</Button>
+                  :
+                  pegs > 3 ?
+                    <Button data-testid="game-restart-confirm" colorScheme="gold" flexGrow={1} mb={3} color="#000" onClick={() => { hanoiSend({ type: "RESETLESSONEPEG"}); }}>Play -1 Peg</Button>
+                  :
+                    <></> // @todo here suggest a timed game...
+                }
+                <Button data-testid="game-restart-confirm" colorScheme="teal" flexGrow={1} mb={3} onClick={() => { hanoiSend({ type: "RESET"}); }}>Play again</Button>
+                <Button data-testid="game-quit-confirm" colorScheme="purple" flexGrow={1} onClick={ () => { handleQuit(); } }>Quit</Button>
               </Flex>
-            </ScaleFade>
+            </Flex>
           </Flex>
         }
       </Flex>

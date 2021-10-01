@@ -93,59 +93,57 @@ export const ScreenTutorial = () => {
           midGame={midGame}
           gameAudioIcon={gameAudioIcon}
         />
-        <ScaleFade in={true} initialScale={0.8}>
-          <Flex direction="column" alignItems="left" p="6" pt="3" pb="3" background="rgba(255, 255, 255, 0.8)" flexGrow={0} rounded={8} mr={4} ml={4}>
-            <Flex direction="column" alignItems="left" p="3">
+        <Flex direction="column" alignItems="left" p="6" pt="3" pb="3" background="rgba(255, 255, 255, 0.8)" flexGrow={0} rounded={8} mr={4} ml={4}>
+          <Flex direction="column" alignItems="left" p="3">
 
-              {(gameNotStarted && awaitSelection) &&
-                <>
-                  <Text mt={1} mb={1} color="black"><strong>Aim: move the tower of disks to the right hands side peg</strong><br />Click/tap the tower to start...</Text>
-                </>
-              }
+            {(gameNotStarted && awaitSelection) &&
+              <>
+                <Text mt={1} mb={1} color="black"><strong>Aim: move the tower of disks to the right hands side peg</strong><br />Click/tap the tower to start...</Text>
+              </>
+            }
 
-              {!illegalMoveNotice &&
-                <>
-                  {numMoves === 0 && selectedPeg != null &&
-                    <Text mt={1} mb={1} color="black"><strong>That&apos;s it</strong>, now tap on a peg to complete the first move...</Text>
-                  }
+            {!illegalMoveNotice &&
+              <>
+                {numMoves === 0 && selectedPeg != null &&
+                  <Text mt={1} mb={1} color="black"><strong>That&apos;s it</strong>, now tap on a peg to complete the first move...</Text>
+                }
 
-                  {numMoves === 1 && selectedPeg === null &&
-                    <Text mt={1} mb={1} color="black"><strong>Great!</strong> Now select the next disk to move. <em>You can Undo moves or Restart, with the controls (above right).</em></Text>
-                  }
+                {numMoves === 1 && selectedPeg === null &&
+                  <Text mt={1} mb={1} color="black"><strong>Great!</strong> Now select the next disk to move. <em>You can Undo moves or Restart, with the controls (above right).</em></Text>
+                }
 
-                  {numMoves === 1 && selectedPeg != null &&
-                    <Text mt={1} mb={1} color="black"><strong>Ok</strong>, where to put it?</Text>
-                  }
+                {numMoves === 1 && selectedPeg != null &&
+                  <Text mt={1} mb={1} color="black"><strong>Ok</strong>, where to put it?</Text>
+                }
 
-                  {numMoves === 2 && selectedPeg === null &&
-                    <Text mt={1} mb={1} color="black"><strong>Cool</strong>. <strong>Here&apos;s a tip</strong>: Think how to move the largest disk to right, and then which disk needs to move to achieve that, and so on...</Text>
-                  }
+                {numMoves === 2 && selectedPeg === null &&
+                  <Text mt={1} mb={1} color="black"><strong>Cool</strong>. <strong>Here&apos;s a tip</strong>: Think how to move the largest disk to right, and then which disk needs to move to achieve that, and so on...</Text>
+                }
 
-                  {
-                    (
-                      (numMoves === 2 && selectedPeg !== null) ||
-                      (numMoves > 2 && !gameComplete)
-                    ) &&
-                    <Text mt={1} mb={1} color="black">Continue assembling the tower on the right hand peg...</Text>
-                  }
-                </>
-              }
+                {
+                  (
+                    (numMoves === 2 && selectedPeg !== null) ||
+                    (numMoves > 2 && !gameComplete)
+                  ) &&
+                  <Text mt={1} mb={1} color="black">Continue assembling the tower on the right hand peg...</Text>
+                }
+              </>
+            }
 
-              {immoveableDiskSelected &&
-                <Text mt={1} mb={1} color="black">This disk has nowhere to go right now. <strong>Choose another disk to move...</strong></Text>
-              }
+            {immoveableDiskSelected &&
+              <Text mt={1} mb={1} color="black">This disk has nowhere to go right now. <strong>Choose another disk to move...</strong></Text>
+            }
 
-              {emptyPegSelected &&
-                <Text mt={1} mb={1} color="black"><strong>Whoops!</strong> There no disks on this peg...</Text>
-              }
+            {emptyPegSelected &&
+              <Text mt={1} mb={1} color="black"><strong>Whoops!</strong> There no disks on this peg...</Text>
+            }
 
-              {invalidMoveAttempt &&
-                <Text mt={1} mb={1} color="black">You can&apos;t place a bigger disk on top of a smaller, that would be too easy! <strong>Choose another peg...</strong></Text>
-              }
+            {invalidMoveAttempt &&
+              <Text mt={1} mb={1} color="black">You can&apos;t place a bigger disk on top of a smaller, that would be too easy! <strong>Choose another peg...</strong></Text>
+            }
 
-            </Flex>
           </Flex>
-        </ScaleFade>
+        </Flex>
 
         {gameComplete &&
           <>

@@ -32,8 +32,6 @@ export default function Home() {
     // to be rendered by the screen wrapper
     setInitialSelection(action);
     setfsmLoadInit(true);
-    console.log('initialSelection', initialSelection);
-    console.log('fsmLoadInit', fsmLoadInit);
   }
   
   return (
