@@ -132,8 +132,8 @@ export const ScreenGame = () => {
                     }
                     { numMoves === minMoves &&
                       <>
-                        <Heading as="h1" size="xl" mb={3} flexGrow={1} textAlign="center">Well done!</Heading>
-                        <Text m={3} mt={0}>You found the optimal solution for the {pegs} peg, {disks} disc setup.
+                        <Heading as="h1" size="xl" mb={3} flexGrow={1} textAlign="left">Well done!</Heading>
+                        <Text mb={3} mt={0}>You found the optimal solution for the {pegs} peg, {disks} disc setup.
                           {
                             disks < 8 ?
                               <> Try with one more disk.</>

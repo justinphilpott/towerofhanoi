@@ -1,37 +1,36 @@
 
-The Tower of Hanoi
+# The Tower of Hanoi
+[Tower of Hanoi web app](https://towerofhanoi.app)
 
-Developed initially just as a test of the XState state management library, I then decided to create an app to package the basic puzzle and release it for fun and learning.
+Developed initially as a test to learn the XState state management library, I then decided to create an app to package the basic puzzle and release it for fun and learning.
 
-XState concepts:
-Finite state: enumerable 
-
-
-
-
-
-
-
-To get setup locally:
+## Local development:
 
 Install:
-$ yarn
+`$ yarn`
 
 Run in dev mode:
-$ yarn dev
+`$ yarn dev`
+
+## XState concepts:
+Finite state: A single enumerable state value that can be one of a finite set of defined states, with defined transitions between state values, triggered by a defined set of events.
+Extended state: a store of variables that can be updated by actions fired as part of state transitions
+
+[XState Documentation](https://xstate.js.org/docs/)
 
 
+## Full documentation:
+[Tower of Hanoi app docs]()
 
 
+## Todo:
+- [ ] Write an audio player that works on IOS
+- [ ] Implement timed games
+- [ ] Setup MBT for the HanoiFSM
 
+### Known bugs:
+- [ ] IOS play music fails.
 
-
-
-
-Work in progress:
-- Write an audio player that works on IOS
-- Implement timed games
-- Setup MBT for the HanoiFSM
 
 
 

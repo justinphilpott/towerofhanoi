@@ -6,6 +6,6 @@ module.exports = {
   },
   launch: {
     headless: true,
-    slowMo: 20 // running it faster causes some tests to fail
+    slowMo: 20 // @todo fix - running it faster causes some tests to fail
   }
 };
