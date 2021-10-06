@@ -4,6 +4,10 @@ import { getFSMStruct, getFSMActions } from '../state/screen/screenFSM'
 import { getDocument, queries, waitFor } from 'pptr-testing-library'
 import { initialGameBoardState } from '../state/hanoi/hanoiFSMActions';
 
+const localTestURI = `http://localhost:${process.env.PORT || '3000'}`;
+const prodTestURI = "https://towerofhanoi.app";
+const testURI = localTestURI;
+
 const { getByTestId, getByLabelText, getByText } = queries;
 
 const testNumDisks = 5;
@@ -16,7 +20,6 @@ const startGame = async (page) => {
   await page.click('[data-testid="peg1"]');
   await page.click('[data-testid="peg3"]');
 }
-
 
 /**
  * solveThreePegGame
@@ -86,7 +89,10 @@ const getScreenEvents = () => {
       } else {
         // which we can fire the PLAY event (which takes us to the main game)
         await performMoveSequence(page, createThreePegSolution(testNumDisks, 1, 2, 3))
-        await page.click('[data-testid="start-play"]');
+        const test_dialog = await page.$x("//h2[text() = 'Well done!']");
+        if(test_dialog) {
+          page.click('[data-testid="start-play"]'); // @todo make the naming match with restart/restart confirm
+        }
       }
     },
     'SETTINGS': {
@@ -98,7 +104,10 @@ const getScreenEvents = () => {
         } else {
           // which we can fire the PLAY event (which takes us to the main game)
           await performMoveSequence(page, createThreePegSolution(testNumDisks, 1, 2, 3))
-          await page.click('[data-testid="start-settings"]');
+          const test_dialog = await page.$x("//h2[text() = 'Well done!']");
+          if(test_dialog) {
+            page.click('[data-testid="start-settings"]'); // @todo make the naming match with restart/restart confirm
+          }
         }
       },
       cases: [
@@ -165,7 +174,6 @@ const getScreenEvents = () => {
   }
 }
 
-
 /**
  * the state machine ScreenFSM (which invokes HanoiFSM) can be started
  * in each of its 5 top level states, so we need to test the machine as started
@@ -176,10 +184,10 @@ const getScreenEvents = () => {
  *
  * @see assertions in the state machine definition screenFSM.tsx
  */
-describe('Screen FSM - Test application screen transition', () => {
+describe('Screen FSM - Test application screen transitions', () => {
 
   // get Screen machine with initial state as specified
-  const screenMachineDef = getFSMStruct('game', 3);
+  const screenMachineDef = getFSMStruct('start', 3);
   // assertions are in the state machine definition
   const screenMachineActions = getFSMActions(); // parameter is not currently necessary
   const screenMachine = createMachine(screenMachineDef, screenMachineActions);
@@ -188,7 +196,12 @@ describe('Screen FSM - Test application screen transition', () => {
   );
 
   const testPlansall = screenMachineModel.getShortestPathPlans();
-  // const testPlans = testPlansall.slice(0, 10);
+  // const testPlans = testPlansall.slice(0, 15);
+  const pageLoadOptions = {
+    timeout: 20000,
+    waitUntil: ['domcontentloaded']
+  };
+
   testPlansall.forEach((plan, i) => {
 
     describe(plan.description, () => {
@@ -198,11 +211,17 @@ describe('Screen FSM - Test application screen transition', () => {
         it(
           path.description,
           async () => {
-            await page.goto(`http://localhost:${process.env.PORT || '3000'}`);
             // we need to drive the app past the initial flat HTML
-            const doc = await getDocument(page);
-            const button = await getByText(doc, "Play");
-            button.click();
+            // so quickest is to load the credits screen and then quit to start, and test from here
+            await page.goto(testURI, pageLoadOptions);
+            page.waitForSelector('[data-testid="start-credits"]')
+            .then(
+              await page.click('[data-testid="start-credits"]')
+            );
+            page.waitForSelector('[data-testid="credits-exit"]')
+            .then(
+              await page.click('[data-testid="credits-exit"]')
+            )
 
             await path.test(page);
           },

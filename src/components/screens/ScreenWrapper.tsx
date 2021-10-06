@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import dynamic from 'next/dynamic';
 import { ScreenStart } from "./ScreenStart";
 import { SpinnerLight } from '../../utils/spinnerLight';
@@ -7,46 +7,81 @@ import { useInterpret, useSelector } from '@xstate/react';
 import { EmittedFrom, ScreenContext } from '../../state/screen/types/screenFSMTypes'
 import { getScreenMachine } from '../../state/screen/screenFSM';
 import { Interpreter, AnyEventObject } from 'xstate';
-import getConfig from 'next/config'
 
 // dynamic loading
 interface ScreenSettingsProps {}
 const ScreenSettings_Dynamic = dynamic<ScreenSettingsProps>(
   () => import('./ScreenSettings').then((mod) => mod.ScreenSettings),
-  { loading: () =>
-    <Flex height="calc(var(--vh, 1vh) * 100)" width="100vw" alignItems="center" justifyContent="center" backgroundColor="transparent" z-index={10} >
-      <SpinnerLight />
-    </Flex>
+  {
+    loading: ({error}) => {
+      if (error) {
+        return <Flex height="calc(var(--vh, 1vh) * 100)" position="absolute" top="0px" left="0px" bottom="0px" right="0px" width="100vw" alignItems="center" justifyContent="center" backgroundColor="transparent" z-index={10} >
+          <Flex direction="column" width="80%" background="rgba(255, 255, 255, 0.9)" p={6} rounded={8}>
+            <Text fontSize={{base: "1.2rem", md: "1.8rem", lg:"2.5rem"}} z-index={100} color="black">! Please check your connection and reload...</Text>
+          </Flex>
+        </Flex>
+      }
+      return <Flex height="calc(var(--vh, 1vh) * 100)" width="100vw" alignItems="center" justifyContent="center" backgroundColor="transparent" z-index={10} >
+        <SpinnerLight />
+      </Flex>
+    }
   }
 )
 
 interface ScreenGameProps {}
 const ScreenGame_Dynamic = dynamic<ScreenGameProps>(
   () => import('./ScreenGame').then((mod) => mod.ScreenGame),
-  { loading: () =>
-    <Flex height="calc(var(--vh, 1vh) * 100)" width="100vw" alignItems="center" justifyContent="center" backgroundColor="transparent" z-index={10} >
-      <SpinnerLight />
-    </Flex>
+  {
+    loading: ({error}) => {
+      if (error) {
+        return <Flex height="calc(var(--vh, 1vh) * 100)" position="absolute" top="0px" left="0px" bottom="0px" right="0px" width="100vw" alignItems="center" justifyContent="center" backgroundColor="transparent" z-index={10} >
+          <Flex direction="column" width="80%" background="rgba(255, 255, 255, 0.9)" p={6} rounded={8}>
+            <Text fontSize={{base: "1.2rem", md: "1.8rem", lg:"2.5rem"}} z-index={100} color="black">! Please check your connection and reload...</Text>
+          </Flex>
+        </Flex>
+      }
+      return <Flex height="calc(var(--vh, 1vh) * 100)" width="100vw" alignItems="center" justifyContent="center" backgroundColor="transparent" z-index={10} >
+        <SpinnerLight />
+      </Flex>
+    }
   }
 )
 
 interface ScreenTutorialProps {}
 const ScreenTutorial_Dynamic = dynamic<ScreenTutorialProps>(
   () => import('./ScreenTutorial').then((mod) => mod.ScreenTutorial),
-  { loading: () =>
-    <Flex height="calc(var(--vh, 1vh) * 100)" width="100vw" alignItems="center" justifyContent="center" backgroundColor="transparent" z-index={10} >
-      <SpinnerLight />
-    </Flex>
+  {
+    loading: ({error}) => {
+      if (error) {
+        return <Flex height="calc(var(--vh, 1vh) * 100)" position="absolute" top="0px" left="0px" bottom="0px" right="0px" width="100vw" alignItems="center" justifyContent="center" backgroundColor="transparent" z-index={10} >
+          <Flex direction="column" width="80%" background="rgba(255, 255, 255, 0.9)" p={6} rounded={8}>
+            <Text fontSize={{base: "1.2rem", md: "1.8rem", lg:"2.5rem"}} z-index={100} color="black">! Please check your connection and reload...</Text>
+          </Flex>
+        </Flex>
+      }
+      return <Flex height="calc(var(--vh, 1vh) * 100)" width="100vw" alignItems="center" justifyContent="center" backgroundColor="transparent" z-index={10} >
+        <SpinnerLight />
+      </Flex>
+    }
   }
 )
 
 interface ScreenCreditsProps {}
 const ScreenCredits_Dynamic = dynamic<ScreenCreditsProps>(
   () => import('./ScreenCredits').then((mod) => mod.ScreenCredits),
-  { loading: () =>
-    <Flex height="calc(var(--vh, 1vh) * 100)" width="100vw" alignItems="center" justifyContent="center" backgroundColor="transparent" z-index={10} >
-      <SpinnerLight />
-    </Flex>
+  {
+    loading: ({error}) => {
+      if (error) {
+        return <Flex height="calc(var(--vh, 1vh) * 100)" position="absolute" top="0px" left="0px" bottom="0px" right="0px" width="100vw" alignItems="center" justifyContent="center" backgroundColor="transparent" z-index={10} >
+          <Flex direction="column" width="80%" background="rgba(255, 255, 255, 0.9)" p={6} rounded={8}>
+            <Text fontSize={{base: "1.2rem", md: "1.8rem", lg:"2.5rem"}} z-index={100} color="black">! Please check your connection and reload...</Text>
+          </Flex>
+        </Flex>
+      }
+      return <Flex height="calc(var(--vh, 1vh) * 100)" width="100vw" alignItems="center" justifyContent="center" backgroundColor="transparent" z-index={10} >
+        <SpinnerLight />
+      </Flex>
+    }
   }
 )
 

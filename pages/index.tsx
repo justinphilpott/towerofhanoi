@@ -2,7 +2,7 @@ import bgImg from '../public/crane_bg.webp'
 import Image from 'next/image'
 import Head from 'next/head'
 import React, { useState } from 'react'
-import { Flex } from '@chakra-ui/react'
+import { Flex, Text } from '@chakra-ui/react'
 import dynamic from 'next/dynamic';
 
 // import { ScreenProvider } from '../state/screen/ScreenFSMProvider'; // @see https://github.com/vantanev/xstate-helpers#createreactcontexthelpers
@@ -20,10 +20,19 @@ export default function Home() {
   }
   const ScreenWrapper_dynamic = dynamic<ScreenWrapper_dynamicProps>(
     () => import('../src/components/screens/ScreenWrapper').then((mod) => mod.ScreenWrapper),
-    { loading: () =>
-      <Flex height="calc(var(--vh, 1vh) * 100)" width="100vw" alignItems="center" justifyContent="center" backgroundColor="transparent" z-index={10} >
-        <SpinnerLight />
-      </Flex>
+    {
+      loading: ({error}) => {
+        if (error) {
+          return <Flex height="calc(var(--vh, 1vh) * 100)" position="absolute" top="0px" left="0px" bottom="0px" right="0px" width="100vw" alignItems="center" justifyContent="center" backgroundColor="transparent" z-index={10} >
+            <Flex direction="column" width="80%" background="rgba(255, 255, 255, 0.9)" p={6} rounded={8}>
+              <Text fontSize={{base: "1.2rem", md: "1.8rem", lg:"2.5rem"}} z-index={100} color="black">! Please check your connection and reload...</Text>
+            </Flex>
+          </Flex>
+        }
+        return <Flex height="calc(var(--vh, 1vh) * 100)" width="100vw" alignItems="center" justifyContent="center" backgroundColor="transparent" z-index={10} >
+          <SpinnerLight />
+        </Flex>
+      }
     }
   )
 
@@ -40,6 +49,7 @@ export default function Home() {
         <Image
           src={bgImg}
           onLoadingComplete={() => { if(!bgLoaded) { setBgLoaded(true) } }}
+          onError={() => {}}
           layout="fill"
           objectFit="cover"
           quality={50}

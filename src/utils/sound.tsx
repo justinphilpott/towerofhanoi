@@ -80,20 +80,17 @@ export const useGameAudioControl = () => {
     toggleAudio(false);
   }
 
-  const audioIcon = error ? <></> : <IconButton 
+  /* eslint-disable */
+  return [stop, <IconButton 
     colorScheme="white"
     color={ playing ? "white" : "grey" }
     aria-label="Audio on/off"
-    icon={ playable ? <Icon as={ImMusic} /> : <SpinnerLightSmall /> }
+    icon={ playable ? <Icon as={ImMusic} /> : error ? <Icon as={ImMusic} /> : <SpinnerLightSmall /> }
     onClick={() => handleAudioIconClick()}
     alignSelf="flex-start"
     mr="2"
     mb="0"
     isDisabled={false}
     background="rgba(0, 0, 0, 0.2)"
-  />
-
-  /* eslint-disable */
-  return [stop,
-    audioIcon] as const 
+  />] as const;
 }

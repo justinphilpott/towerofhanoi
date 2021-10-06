@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Button, Flex, Heading, ScaleFade, Text } from "@chakra-ui/react"
+import { Button, Flex, Heading, Text } from "@chakra-ui/react"
 import { Game } from './game/towerofhanoi/Game';
 import { XStateContext } from './ScreenWrapper';
 import { useSelector } from '@xstate/react';
@@ -148,17 +148,15 @@ export const ScreenTutorial = () => {
         {gameComplete &&
           <>
             <Flex position="absolute" direction="column" width="100vw" height="calc(var(--vh, 1vh) * 100)" alignItems="center" background="rgba(0, 0, 0, 0.6)" justifyContent="center" zIndex={1000}>
-              <ScaleFade in={true} initialScale={0.01}>
-                <Flex direction="column" width="300px" background="rgba(255, 255, 255, 0.9)" p={6} m={6} rounded={8}>
-                  <Heading as="h1" size="xl" mb={3} mr={3} flexGrow={1} textAlign="left">Well done!</Heading>
-                  <Text mt={1} mb={6} color="black">Now you are ready to try with more disks! Check out game settings for other interesting options...</Text>
-                  <Flex direction="row" flexWrap="wrap" justifyContent="space-between">
-                    <Button data-testid="start-play" size="md" textShadow="0px 0px 10px #fff" mr={2} flexGrow={1} flexBasis={0} minWidth="60px" colorScheme="teal" color="#000" onClick={ () => screenSend({ type: 'PLAY' }) }>Play</Button>
-                    <Button data-testid="start-settings" size="md" textShadow="0px 0px 10px #fff" mr={2} flexGrow={1} flexBasis={0} minWidth="60px" colorScheme="salmon" color="#000" onClick={ () => screenSend({ type: 'SETTINGS' }) }>Settings</Button>
-                    <Button data-testid="game-quit-confirm" size="md" textShadow="0px 0px 10px #fff" flexGrow={1} flexBasis={0} minWidth="60px" colorScheme="purple" color="#000" onClick={() => { handleQuit() }}>Quit</Button>
-                  </Flex>
+              <Flex direction="column" width="300px" background="rgba(255, 255, 255, 0.9)" p={6} m={6} rounded={8}>
+                <Heading as="h1" size="xl" mb={3} mr={3} flexGrow={1} textAlign="left">Well done!</Heading>
+                <Text mt={1} mb={6} color="black">Now you are ready to try with more disks! Check out game settings for other interesting options...</Text>
+                <Flex direction="row" flexWrap="wrap" justifyContent="space-between">
+                  <Button data-testid="start-play" size="md" textShadow="0px 0px 10px #fff" mr={2} flexGrow={1} flexBasis={0} minWidth="60px" colorScheme="teal" color="#000" onClick={ () => screenSend({ type: 'PLAY' }) }>Play</Button>
+                  <Button data-testid="start-settings" size="md" textShadow="0px 0px 10px #fff" mr={2} flexGrow={1} flexBasis={0} minWidth="60px" colorScheme="salmon" color="#000" onClick={ () => screenSend({ type: 'SETTINGS' }) }>Settings</Button>
+                  <Button data-testid="game-quit-confirm" size="md" textShadow="0px 0px 10px #fff" flexGrow={1} flexBasis={0} minWidth="60px" colorScheme="purple" color="#000" onClick={() => { handleQuit() }}>Quit</Button>
                 </Flex>
-              </ScaleFade>
+              </Flex>
             </Flex>
           </>
         }

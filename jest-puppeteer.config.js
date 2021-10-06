@@ -5,7 +5,8 @@ module.exports = {
     launchTimeout: 5000
   },
   launch: {
-    headless: true,
-    slowMo: 20 // @todo fix - running it faster causes some tests to fail
+    headless: false,
+    slowMo: 25,
+    // devtools: true 
   }
 };
