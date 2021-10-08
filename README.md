@@ -18,10 +18,10 @@ Developed initially as a test to learn the XState state management library. I th
 ## Local development:
 
 Install:
-`$ yarn`
+```$ yarn```
 
 Run in dev mode:
-`$ yarn dev`
+```$ yarn dev```
 
 ## XState concepts:
 Finite state: A single enumerable state value that can be one of a finite defined set, with defined transitions between state values, triggered by a defined set of events.
