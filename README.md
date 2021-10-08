@@ -2,13 +2,13 @@
 # The Tower of Hanoi
 [Tower of Hanoi web app](https://towerofhanoi.app)
 
-Developed initially as a test to learn the XState state management library, I then decided to create an app to package the basic puzzle and release it for fun and learning.
+Developed initially as a test to learn the XState state management library. I then decided to create an app to package the basic puzzle and release it for fun and learning. The games allows you to play games with 1-8 disks and 3-5 pegs. Moves counts can be shown along with minimum moves for each game to allow you to understand how to solve the game better. For the 3 peg game there are clear methods to achieve this, for the 4 peg game and beyond, deciding what is exactly optimal is not so clear!
 
 ## Full documentation:
-[Tower of Hanoi app docs]()
+[Tower of Hanoi app docs](https://app.gitbook.com/@jphildev/s/towerofhanoi/)
 
 ## Known issues/todo:
-- [ ] Audio handling rewrite needed to work on IOS
+- [ ] Audio handling tweak needed to work on IOS
 - [ ] Delays on some dialogs in E2E tests
 - [ ] Tutorial resets "show moves" flag in XState context
 - [ ] Implement timed games
@@ -23,35 +23,16 @@ Run in dev mode:
 `$ yarn dev`
 
 ## XState concepts:
-Finite state: A single enumerable state value that can be one of a finite set of defined states, with defined transitions between state values, triggered by a defined set of events.
-Extended state: a store of variables that can be updated by actions fired as part of state transitions
+Finite state: A single enumerable state value that can be one of a finite defined set, with defined transitions between state values, triggered by a defined set of events.
+Extended state: a store of variables that can be updated by actions fired as part of state transitions.
 
 [XState Documentation](https://xstate.js.org/docs/)
-
-## Tests:
-
-End to end test with Puppeteer.
-
-- Be sure to run a build first
-
-`yarn e2e`
-
-Settings are in jest-puppeteer.config.js
-
-## Performance
-
-To run lighthouse cli to check performance:
-https://github.com/GoogleChrome/lighthouse#cli-options
-
-`yarn dlx lighthouse --view [https://towerofhanoi.app] --screenEmulation.disabled`
-
 
 ## Attributions:
 
 ### Artwork:
 
 "Lilypad" by and with thanks to Slumberbean (specific permission obtained) - http://www.slumberbean.com
-
 
 ### Music:
 
