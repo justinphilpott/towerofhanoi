@@ -1,7 +1,7 @@
 # Table of contents
 
 * [Introduction](README.md)
-* [The puzzle](the-puzzle.md)
+* [The classic puzzle](the-puzzle.md)
 * [Modelling game state: XState](xstate-usage.md)
 * [Optimizations](optimizations.md)
 * [Tests](tests/README.md)
