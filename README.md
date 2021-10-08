@@ -14,6 +14,14 @@ Developed initially as a test to learn the XState state management library. I th
 - [ ] Implement timed games
 - [ ] Setup MBT for the HanoiFSM
 
+Audio handling tweak needed to work on IOS
+Delays on some dialogs in E2E tests
+Some test events could be better implemented
+Tutorial resets "show moves" flag in XState context
+Implement timed games
+Setup MBT for the HanoiFSM
+
+
 ## Local development:
 
 Install:
