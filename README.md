@@ -2,7 +2,7 @@
 # The Tower of Hanoi
 [Tower of Hanoi web app](https://towerofhanoi.app)
 
-Developed initially as a test to learn the XState state management library. I then decided to create an app to package the basic puzzle and release it for fun and learning. The games allows you to play games with 1-8 disks and 3-5 pegs. Moves counts can be shown along with minimum moves for each game to allow you to understand how to solve the game better. For the 3 peg game there are clear methods to achieve this, for the 4 peg game and beyond, deciding what is exactly optimal is not so clear!
+Developed initially as a test to learn the XState state management library. I then decided to create a web app to package the basic puzzle and release it for fun and learning. The game allows you to play variations with 1-8 disks and 3-5 pegs. Moves counts can be shown along with minimum moves for each game for a challenge and to allow you to understand how to solve the game better. For the 3 peg game there are clear methods to achieve this, for the 4 peg game and beyond, deciding what is exactly optimal is not so clear!
 
 ## Full documentation:
 [Tower of Hanoi app docs](https://app.gitbook.com/@jphildev/s/towerofhanoi/)
@@ -10,17 +10,10 @@ Developed initially as a test to learn the XState state management library. I th
 ## Known issues/todo:
 - [ ] Audio handling tweak needed to work on IOS
 - [ ] Delays on some dialogs in E2E tests
+- [ ] Some test events could be better implemented
 - [ ] Tutorial resets "show moves" flag in XState context
 - [ ] Implement timed games
 - [ ] Setup MBT for the HanoiFSM
-
-Audio handling tweak needed to work on IOS
-Delays on some dialogs in E2E tests
-Some test events could be better implemented
-Tutorial resets "show moves" flag in XState context
-Implement timed games
-Setup MBT for the HanoiFSM
-
 
 ## Local development:
 
