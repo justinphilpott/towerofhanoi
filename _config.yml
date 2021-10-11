@@ -1,6 +1,6 @@
 title: "Tower of Hanoi docs"
 remote_theme: pmarsceill/just-the-docs
-color_scheme: "hanoi"
+color_scheme: hanoi
 
 
 search_enabled: true

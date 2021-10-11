@@ -1,5 +1,6 @@
 ---
 description: An overview of the original puzzle game
+nav_order: 3
 ---
 
 # The classic puzzle
