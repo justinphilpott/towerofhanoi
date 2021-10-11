@@ -1,5 +1,5 @@
 ---
-title: 
+title: Modelling and XState
 description: Discussing state and process analysis and modelling with state machines
 nav_order: 4
 ---
