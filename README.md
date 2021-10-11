@@ -6,7 +6,7 @@ Developed initially as a test to learn the XState state management library. I th
 
 
 ## Full documentation:
-[Tower of Hanoi app docs](https://app.gitbook.com/@jphildev/s/towerofhanoi/)
+[Tower of Hanoi app docs](https://docs.towerofhanoi.app)
 
 
 ## Known issues/todo:
