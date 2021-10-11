@@ -1,5 +1,8 @@
 ---
 description: Why this puzzle?
+title: Inspiration
+has_children: false
+nav_order: 3
 ---
 
 # Inspiration
@@ -27,8 +30,8 @@ It was the early 80's and my father was a head librarian. I didn't know it then,
 
 I put some time aside and coded and learned about State machines and a couple of other bits in the process and here's one of the results:
 
-{% hint style="success" %}
+
 Have a play: [towerofhanoi.app](https://towerofhanoi.app)
 
 And check out the [code on github](https://github.com/justinphilpott/towerofhanoi) and give me a star (. ❛ ᴗ ❛.)
-{% endhint %}
+

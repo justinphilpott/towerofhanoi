@@ -1,5 +1,8 @@
 ---
 description: An overview of some of the optimizations put in place
+title: Optimizations
+has_children: true
+nav_order: 2
 ---
 
 # Optimizations
@@ -18,9 +21,8 @@ A few performance tweaks have been made so far:
 
 See the performance testing section: 
 
-{% content-ref url="tests/" %}
-[tests](tests/)
-{% endcontent-ref %}
+
+
 
 
 
