@@ -1,4 +1,19 @@
-title: "Tower of Hanoi"
+title: "Tower of Hanoi docs"
 remote_theme: pmarsceill/just-the-docs
-color_scheme: "light"
+color_scheme: "hanoi"
 search_enabled: true
+
+
+
+aux_links:
+  "towerofhanoi.app":
+    - "//towerofhanoi.app"
+
+# Makes Aux links open in a new tab. Default is false
+aux_links_new_tab: false
+
+# Back to top link
+back_to_top: true
+back_to_top_text: "Back to top"
+
+footer_content: "Copyright &copy; 2021 Justin Philpott. Distributed by an <a href=\"https://github.com/pmarsceill/just-the-docs/tree/master/LICENSE.txt\">MIT license.</a>"
