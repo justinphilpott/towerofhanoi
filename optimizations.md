@@ -1,8 +1,8 @@
 ---
-description: An overview of some of the optimizations put in place
 title: Optimizations
+description: An overview of some of the optimizations put in place
 has_children: true
-nav_order: 2
+nav_order: 5
 ---
 
 # Optimizations

@@ -1,17 +1,18 @@
 ---
+title: The original puzzle
 description: An overview of the original puzzle game
 nav_order: 3
 ---
 
 # The classic puzzle
 
-### Game Structure
+## Game Structure
 
 Here's a screenshot from the [Tower of Hanoi app](https://towerofhanoi.app) that shows the start position of the 3peg, 5 disc variation of the game.
 
 ![screenshot from towerofhanoi.app](.gitbook/assets/toh\_5peg.png)
 
-### Aim and rules
+## Aim and rules
 
 The aim is to move the discs from the start peg to the destination peg (in this case the one on the right)  using the spare peg in the middle. The following rules are to be adhered to:
 
@@ -23,9 +24,9 @@ The aim is to move the discs from the start peg to the destination peg (in this 
 
 We aim to complete the puzzle with as few moves as possible. For the 3 peg game, the minimum number of moves is:
 
-$$
+
 min. moves = 2^n-1
-$$
+
 
 Where n is the number of disks that we choose to play with. The power of the exponential means that a 5 disks game will require 31 moves, but a 10 disk game requires just over a thousand, and a 20 disk game over a million moves. It makes one wonder who has completed the largest version of this game!? There is a legend about an [Indian](https://en.wikipedia.org/wiki/India) temple in [Kashi Vishwanath](https://en.wikipedia.org/wiki/Kashi_Vishwanath_Temple) containing a large room with three time-worn posts in it, surrounded by 64 golden disks. Acting out the command of an ancient prophecy, [Brahmin](https://en.wikipedia.org/wiki/Brahmin) priests have been moving these disks in accordance with the immutable rules of Brahma since that time. The puzzle is therefore also known as the Tower of [Brahma](https://en.wikipedia.org/wiki/Brahma). According to the legend, when the last move of the puzzle is completed, the world will end. 
 

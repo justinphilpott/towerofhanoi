@@ -1,4 +1,4 @@
-title: "Tower of Hanoi docs"
+title: "Tower of Hanoi"
 remote_theme: pmarsceill/just-the-docs
 color_scheme: hanoi
 
@@ -30,7 +30,7 @@ search:
 
 
 # Set a path/url to a logo that will be displayed instead of the title
-logo: "/assets/images/gameFront.png"
+
 
 
 aux_links:
