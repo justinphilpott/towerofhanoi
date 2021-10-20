@@ -23,7 +23,7 @@ export const ScreenCredits = () => {
         <Text fontSize={{base: "0.8rem", md: "1rem", lg:"1.5rem"}} mb={2}>Artwork by <Link href="https://Slumberbean.com" fontWeight="bold">Slumberbean.com <ExternalLinkIcon mx="2px" /></Link></Text>
         <Text fontSize={{base: "0.8rem", md: "1rem", lg:"1.5rem"}} mb={2}>Music by <Link href="https://purrplecat.com/" fontWeight="bold">Purrple Cat <ExternalLinkIcon mx="2px" /></Link> and <Link href="https://soundcloud.com/uniqofficial/" fontWeight="bold">Uniq <ExternalLinkIcon mx="2px" /></Link></Text>
         <Flex justifyContent="space-between">
-          <Text fontSize={{base: "0.8rem", md: "1rem", lg:"1.5rem"}} mb={2}>Full attributions and code: <Link href="https://github.com/justinphilpott/towerofhanoi/blob/master/README.md" fontWeight="bold">Tower of Hanoi on Github <ExternalLinkIcon mx="2px" /></Link></Text>
+          <Text fontSize={{base: "0.8rem", md: "1rem", lg:"1.5rem"}} mb={2}>Full attributions and code: <Link href="https://github.com/justinphilpott/towerofhanoi" fontWeight="bold">Tower of Hanoi on Github <ExternalLinkIcon mx="2px" /></Link></Text>
           <Button data-testid="credits-exit" alignSelf="flex-end" ml="3" size="xs" colorScheme="teal" onClick={() => {
             screenSend({ type: "EXIT" })
           }}>Back</Button>
