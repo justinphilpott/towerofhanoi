@@ -2,7 +2,7 @@
 title: Inspiration
 description: Why this puzzle?
 has_children: false
-nav_order: 2
+nav_order: 10
 ---
 
 # Inspiration

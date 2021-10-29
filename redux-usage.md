@@ -1,8 +1,8 @@
 ---
-title: State modelling
-description: Discussing state and process analysis
+title: Modelling and State
+description: Discussing state and process analysis and modelling with state machines
 nav_order: 4
-has_children: true 
+has_parent:
 ---
 
 # State modelling and XState
@@ -60,7 +60,3 @@ The FSM ()
 
 
 [https://stately.ai/viz/a089225e-02b9-45e4-864f-1716283596fc](https://stately.ai/viz/a089225e-02b9-45e4-864f-1716283596fc)
-
-
-
-# Redux version

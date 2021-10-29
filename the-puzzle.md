@@ -1,16 +1,15 @@
 ---
-title: The puzzle
-description: An overview of the original puzzle game
-nav_order: 3
+title: The original puzzle
+description: An overview of the original puzzle game as invented by Édouard Lucas
+nav_order: 2
 ---
 
 # The classic puzzle
 
 ## Game Structure
+In the below picture of an old illustration of the game we see first the start position, a mid game position, and then the end position. This version of the game could be called a "3-8" game - 3 pegs, 8 disks.
 
-Here's a screenshot from the [Tower of Hanoi app](https://towerofhanoi.app) that shows the start position of the 3peg, 5 disc variation of the game.
-
-![screenshot from towerofhanoi.app](/assets/images/game1.jpg)
+![]({{ site.url }}/assets/images/game1.jpg)
 
 ## Aim and rules
 
@@ -31,18 +30,19 @@ Where n is the number of disks that we choose to play with. The power of the exp
 
 ## History of the puzzle
 
-The puzzle was invented by the French mathematician Édouard Lucas in 1883. One of its many origin myths is a story about an Indian temple in Kashi Vishwanath which contains a large room with three time-worn posts in it, surrounded by 64 golden disks. Brahmin priests, carrying out the command of an ancient prophecy, have been moving these disks in accordance with the immutable rules of Brahma since that time. The puzzle is therefore also known as the Tower of Brahma puzzle. And according to the legend, when the last move of the puzzle is completed, the world will end.
+This puzzle dates from 1883 when it was published in Paris by a certain N Claus de Siam of the College of Li-Sou-Stian. The French involvement in IndoChina at that time expalins the names. In fact this name and college are anagrams of Lucas d'Amiens who was teaching at the Lycée Saint-Louis. The inventor of the puzzle was then the French mathematician Eduard Lucas who is best known for his results in number theory. In particuar he studied the Fibonacci sequence and the associated Lucas sequence named after him.
 
-If those priests were able to move the disks at a rate of one per second, using the smallest number of moves, it would take them (with supernatural dedication and longevity) 2^64 − 1 seconds or roughly 585 billion years to finish, which is about 42 times the current age of the universe.
- (WikiPedia)
+The "legend" which accompanied the game stated that in Benares in the reign of the Emperor Fo Hi there was a temple, with a dome which marked the centre of the world, beneath which priests moved golden discs between diamond needles, a cubit high and as thick as the body of a bee. The discs could be moved between needles, but only on the condition that no disc could be on top of a smaller one.
 
-Read another more famous story of the [power of the exponential](https://purposefocuscommitment.medium.com/the-rice-and-the-chess-board-story-the-power-of-exponential-growth-b1f7bd70aaca)
+God placed 64 gold discs on one needle at the creation and it was the priests' task to move all the discs to one of the other needles.
+
+It was claimed that when they had completed the task, needles, tower, temple and Bramins would crumble away into dust and with a thunderclap the Universe would end.
+
+Since it would have taken them at least 264−12^{64} - 1264−1 moves, which even at one move a second (and no mistakes!) would take over 580 billion years, that has never been tested. (source: [https://mathshistory.st-andrews.ac.uk](https://mathshistory.st-andrews.ac.uk){:target="_blank" rel="noopener"})
+
+Read another more famous story of the [power of the exponential](https://purposefocuscommitment.medium.com/the-rice-and-the-chess-board-story-the-power-of-exponential-growth-b1f7bd70aaca){:target="_blank" rel="noopener"}
 
 
-
-
-
-![The four disk game - Reve's puzzle.](<.gitbook/assets/Screenshot from 2021-10-08 10-27-20.png>)
 
 ### Research
 

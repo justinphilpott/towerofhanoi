@@ -2,6 +2,7 @@ title: "Tower of Hanoi"
 remote_theme: pmarsceill/just-the-docs
 color_scheme: hanoi
 
+markdown: kramdown
 
 search_enabled: true
 search:
@@ -36,9 +37,11 @@ search:
 aux_links:
   "towerofhanoi.app":
     - "//towerofhanoi.app"
+  "github":
+    - "https://github.com/justinphilpott"  
 
 # Makes Aux links open in a new tab. Default is false
-aux_links_new_tab: false
+aux_links_new_tab: true
 
 # Back to top link
 back_to_top: true
