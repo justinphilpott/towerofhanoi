@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import { ScreenStart } from "./ScreenStart";
 import { SpinnerLight } from '../../utils/spinnerLight';
 import { useInterpret, useSelector } from '@xstate/react';
-import { EmittedFrom, ScreenContext } from '../../state/screen/types/screenFSMTypes'
+import { EmittedFrom, ScreenContext, ScreenEvent } from '../../state/screen/types/screenFSMTypes'
 import { getScreenMachine } from '../../state/screen/screenFSM';
 import { Interpreter, AnyEventObject } from 'xstate';
 
@@ -63,7 +63,7 @@ export const XStateContext = React.createContext({} as Interpreter<ScreenContext
 export const ScreenWrapper = ({ initialState }: ScreenWrapperProps ) => {
 
   // load screen actor (@see https://xstate.js.org/docs/guides/actors.html)
-  const screenActor = useInterpret(getScreenMachine(initialState), { devTools: true });
+  const screenActor = useInterpret<any, any>(getScreenMachine(initialState), { devTools: true }); // type handling needs upgrade!
 
   const isStart = useSelector(screenActor, (state: EmittedFrom<typeof screenActor>) => (state.value === "start"));
   const isGame = useSelector(screenActor, (state: EmittedFrom<typeof screenActor>) => (state.matches("game")));

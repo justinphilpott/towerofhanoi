@@ -71,6 +71,8 @@ export const ScreenTutorial = () => {
    * @param pegIndex
    */
   const selectHandler = (pegIndex: number) => {
+    console.log("pegIndex", pegIndex);
+    
     hanoiSend({
       type: "SELECT",
       pegIndex: pegIndex

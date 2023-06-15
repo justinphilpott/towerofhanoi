@@ -13,7 +13,13 @@ import { assertEvent } from 'xstate-helpers';
  */
  export const hanoiFSM = createMachine<HanoiContext, HanoiEvent>(
   {
+    // tsTypes: {} as import("./hanoiFSM.typegen").Typegen0,
+    predictableActionArguments: true,
     id: 'hanoiFSM',
+    schema: {
+      context: {} as HanoiContext,
+      events: {} as HanoiEvent,
+    },
     initial: 'start',
     states: {
 

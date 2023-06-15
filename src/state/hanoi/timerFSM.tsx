@@ -20,6 +20,7 @@ type TimerEvent =
 
 
 export const timerFSM = createMachine<TimerContext, TimerEvent>({
+  predictableActionArguments: true,
   id: 'timerEvent',
   initial: "initial",
 

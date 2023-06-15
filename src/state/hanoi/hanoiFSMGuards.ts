@@ -107,6 +107,7 @@ export const immoveableDiskSelected = (context: HanoiContext, event: HanoiEvent)
  * @returns
  */
 export const gameCompleteCheck = (context: HanoiContext, event: HanoiEvent): boolean => {
+  console.log(context);
   if(context.gameBoard[context.numPegs-1].length === context.numDisks) {
     return true;
   } else {

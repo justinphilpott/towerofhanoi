@@ -26,6 +26,7 @@ export const getScreenMachine = (initialState: string) => {
   })
 
   let FSMStruct = {
+    predictableActionArguments: true,
     id: 'screenFSM',
     initial: 'start',
     context: screenFSMModel.initialContext,
@@ -230,8 +231,10 @@ export const getScreenMachine = (initialState: string) => {
         /**
          * Initial tutorial state
          */
-         initializeTutorialState: assign((context: ScreenContext) => {
+         initializeTutorialState: assign(() => {
           return {
+            numPegs: 3,
+            numDisks: 3,
             selectedPeg: null,
             gameBoard: initialGameBoardState(3, 3),
             moves: Array(),
