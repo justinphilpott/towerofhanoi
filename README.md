@@ -1,12 +1,12 @@
 
 To work with this software locally just do the following:
 
-"yarn"
-"yarn dev"
+"pnpm"
+"pnpm dev"
 
 ...
 
-You can also deploy this to vercel
+You can also deploy this to vercel: 
 
 
 
@@ -18,14 +18,9 @@ This work is licensed under a <a rel="license" href="http://creativecommons.org/
 Let me know if you do something cool with this :)
 
 
-
-
 To run lighthouse cli to check performance:
 https://github.com/GoogleChrome/lighthouse#cli-options
 yarn dlx lighthouse --view [https://towerofhanoi.app] --screenEmulation.disabled
-
-
-
 
 
 Artwork:
@@ -65,4 +60,4 @@ https://creativecommons.org/licenses/by/4.0/
 
 Inspiration
 
-...
+@see the docs

@@ -1,5 +1,5 @@
 import bgImg from '../public/crane_bg.webp'
-import Image from 'next/image'
+import Image from "next/legacy/image"
 import Head from 'next/head'
 import React, { useState } from 'react'
 import { Flex } from '@chakra-ui/react'
