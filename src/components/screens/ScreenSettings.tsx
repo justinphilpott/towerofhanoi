@@ -100,11 +100,10 @@ export const ScreenSettings = () => {
           <Box ml={6} mr={6}>
             <FormControl display="flex" justifyContent="space-between" flexGrow={1} alignItems="center">
               <FormLabel htmlFor="show-timer" mb="0" color="grey">
-              Timed games (soon!)
+              Timed games
               </FormLabel>
               <Switch colorScheme="teal" size="lg" id="show-timer"
                 isChecked={showTime}
-                isDisabled={true}
                 onChange={(e) => setShowTime(e.target.checked)}
               />
             </FormControl>
